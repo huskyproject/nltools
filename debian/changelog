@@ -1,3 +1,9 @@
+nltools (1.2.1-1) stable; urgency=low
+
+  * nltools 1.2 release
+
+ -- Pavel Andreew <pavel@collage.etel.ru>  Sun, 10 Nov 2002 14:38:52 +0500
+
 nltools (1.2-6) unstable; urgency=low
 
   * New cvs version
