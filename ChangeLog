@@ -1,3 +1,12 @@
+2002-07-24 Wednesday 15:00  mche
+
+	* src/.cvsignore (1.1): no message
+
+2002-07-24 Wednesday 14:59  mche
+
+	* src/: makefile.mvc (1.7), makefile.mvcdll (1.3): corrected
+	makefiles
+
 2002-07-22 Monday 13:56  mche
 
 	* src/: makefile.mvc (1.6), makefile.mvcdll (1.2): corrected file
