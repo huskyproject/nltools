@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-I../.. -DUNIX
-LFLAGS=-s -L../../fidoconf 
+LFLAGS=-s -L../../fidoconf -L../../smapi
 
 all: nldiff nlcrc ulc nlupdate
 
@@ -14,10 +14,10 @@ nlcrc: crc16.o nlcrc.o
 	$(CC) $(LFLAGS) -o nlcrc crc16.o nlcrc.o
 
 ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
-	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfigsun
+	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfigsun -lsmapisun
 
 nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
-	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfigsun
+	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfigsun -lsmapisun
 
 clean:
 	-rm *.o
