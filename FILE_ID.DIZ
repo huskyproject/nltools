@@ -11,6 +11,6 @@ sysop/node  number lookup  in Msged  and
 other mail editors.  The tools are fido-
 config integrated,  but can also be used
 standalone. Public Domain software  with 
-source code, compiles a lot of Unix sys-
-tems.  Executables for OS/2, Windows 95/
-98/NT, DOS(DPMI) and Linux included.
+source code,  compiles on  a lot of Unix 
+systems and on OS/2, Win32 and DOS.
+
