@@ -1,3 +1,13 @@
+2002-08-02 Friday 09:28  mche
+
+	* src/nlupdate.c (1.25): restored portability for msvc compiler
+	that was broken by previos revisions
+
+2002-08-02 Friday 09:16  mche
+
+	* src/: makefile.mvc (1.8), makefile.mvcdll (1.4), nlupdate.c
+	(1.24): makefiles corrected
+
 2002-08-01 Thursday 10:15  d.sergienko
 
 	* Makefile (1.8): removed patmat.o from Makefile
