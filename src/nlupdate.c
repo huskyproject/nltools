@@ -18,13 +18,13 @@
 
 #include <huskylib/compiler.h>
 #include <fidoconf/fidoconf.h>
-#include <fidoconf/xstr.h>
-#include <fidoconf/adcase.h>
+#include <huskylib/xstr.h>
+#include <huskylib/adcase.h>
 #include <fidoconf/common.h>
-#include <fidoconf/log.h>
+#include <huskylib/log.h>
 
 #if !(defined(_MSC_VER) && (_MSC_VER >= 1200))
-#include <fidoconf/dirlayer.h>
+#include <huskylib/dirlayer.h>
 #endif
 #include "nlstring.h"
 #include "nlfind.h"

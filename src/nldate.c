@@ -3,7 +3,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include <fidoconf/log.h>
+#include <huskylib/log.h>
 #include "julian.h"
 #include "nldate.h"
 #include "nlstring.h"

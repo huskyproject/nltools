@@ -4,11 +4,11 @@
 #include <errno.h>
 
 #include <fidoconf/fidoconf.h>
-#include <fidoconf/log.h>
+#include <huskylib/log.h>
 
 #include "ulc.h"
 #if !(defined(_MSC_VER) && (_MSC_VER >= 1200))
-#include <fidoconf/dirlayer.h>
+#include <huskylib/dirlayer.h>
 #endif
 #include "nlstring.h"
 #include "nlfind.h"

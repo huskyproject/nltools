@@ -4,7 +4,7 @@
 #include <errno.h>
 
 #include <fidoconf/fidoconf.h>
-#include <fidoconf/log.h>
+#include <huskylib/log.h>
 #include "nlstring.h"
 #include "julian.h"
 #include "nlfind.h"

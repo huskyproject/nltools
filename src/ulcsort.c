@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include <fidoconf/log.h>
+#include <huskylib/log.h>
 #include "nlstring.h"
 #include "ulc.h"
 
