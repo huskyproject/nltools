@@ -1,11 +1,12 @@
 .PHONY: default
 
 INSTDIR = /usr/local/bin
+INCDIR = /usr/local/include
 
 default: nldiff nlcrc ulc nlupdate
 
 CC=gcc
-CFLAGS=-g -I../../smapi -I../../fidoconfig -DUNIX
+CFLAGS=-g -I$(INCDIR) -DUNIX
 LFLAGS=-g -L../../fidoconfig 
 
 .c.o: 
