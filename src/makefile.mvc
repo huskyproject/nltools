@@ -9,7 +9,7 @@ TLIB=   lib -nologo
 FCONFL=	..\..\fidoconf\fconfmvc.lib ..\..\smapi\fexist.obj
 NLTOOLSL=	nltoolsmvc.lib
 
-OBJS    = ulcsort.obj ulcomp.obj crc16.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj ffind.obj patmat.obj fexist.obj trail.obj
+OBJS    = ulcsort.obj ulcomp.obj crc16.obj string.obj nldate.obj julian.obj nlfind.obj ffind.obj patmat.obj fexist.obj trail.obj
 
 .c.obj:
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
