@@ -1,3 +1,21 @@
+2002-07-29 Monday 10:28  mche
+
+	* src/: nllog.c (1.5), nllog.h (1.7): no message
+
+2002-07-29 Monday 10:16  stas
+
+	* src/: fexist.c (1.6), ffind.c (1.2), patmat.c (1.3), patmat.h
+	(1.2): Remove obsolete files
+
+2002-07-29 Monday 10:13  stas
+
+	* src/: makefile.bco (1.7), makefile.bcw (1.5), makefile.be (1.4),
+	makefile.cyg (1.3), makefile.djg (1.4), makefile.emo (1.7),
+	makefile.emx (1.5), makefile.inc (1.2), makefile.lnx (1.10),
+	makefile.mgw (1.6), makefile.sun (1.11), makefile.unx (1.6),
+	makefile.wco (1.2), makefile.wcw (1.10): Update makefiles, fix
+	compilation bug
+
 2002-07-27 Saturday 10:51  mche
 
 	* src/: nldate.c (1.7), nlfind.c (1.9), nlupdate.c (1.22), ulc.c
