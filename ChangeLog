@@ -1,5 +1,9 @@
 Current Version
 --------------
+
+Di  16 Nov 1999 23:19:07 CET
+tobi:
+- fixed problem that only occured with IBM C compilers.
 	
 Wed Oct 13 10:49:05 MET DST 1999 
 mtt:

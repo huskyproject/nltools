@@ -83,7 +83,7 @@ unsigned short analyze_rest(FILE *f)
     crc16_init(&crc);
 
     errno = 0;         
-    while (((l = fread(buffer, 1, BUFSZ, f)) > 0) && !errno && p == NULL)
+    while (((l = fread(buffer, 1, BUFSZ, f)) > 0) && p == NULL)
     {
         buffer[l] = '\0';
         p = (unsigned char *) strchr((char *) buffer, 0x1A);
