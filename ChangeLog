@@ -1,3 +1,9 @@
+2002-11-05 Tuesday 11:29  mche
+
+	* src/: makefile.cyg (1.7), makefile.inc (1.4), makefile.mgw (1.8),
+	nlcrc.c (1.5), nldiff.c (1.10), ulc.c (1.14), ulcomp.c (1.11): code
+	cleanup
+
 2002-10-22 Tuesday 10:54  sfpavel
 
 	* debian/changelog (1.7): New debian package
