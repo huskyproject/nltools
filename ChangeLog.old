@@ -1,0 +1,131 @@
+Current Version
+---------------
+
+So  17 Sep 2000 17:56:21 CEST
+tobi:
+- Fixed Julian day number calculation
+- Introduced debug mode (set the NLDEBUG env var to 1 to activate)
+
+Tue Aug 15 00:10:17 UTC 2000
+sms:
+- Fixed uninitialized variable in nlupdate.c (could cause nlupdate not to find 
+  any full update)
+
+Fr  11 Aug 2000 01:20:41 CEST
+tobi:
+- New nodelist format: Points4D. For 4D pointlists (with "Boss" entries etc.)
+
+Thu Aug 10 14:25:40 MEZ 2000
+tobi:
+- Relaxed the checking of the nodelist header line to allow non-conforming
+  nodelists (like the wipost pointlist, etc. pp.) to pass.
+- Bugfixes for the previous checkin.
+
+Thu Aug 10 13:24:07 MEZ 2000
+tobi:
+- New feature: previously, you needed to unpack the first instance of a
+  nodelist manually into the nodelist directory, before nlupdate could find
+  updates for it. Now, if there is a FullUpdate configured, nlupdate will use
+  the most recent full update file to create the instance of the nodelist if
+  none is present.
+
+Thu Aug 10 13:01:49 MEST 2000
+tobi (migrated from stable):
+- fixed possible core dump on unusual error situations
+
+Thu Aug 10 12:33:31 MEZ 2000
+tobi (migrated from stable):
+- fixed logfile entry for failed fullupdate attempt
+
+Mon Aug  7 00:55:28 GMT 2000
+tobi:
+- fixed superfluous empty lines in log file
+- adaptions for BeOS                    
+
+NLTOOLS-1.1
+-----------
+(forked off for release in July 2000)
+	
+Fr  14 Jul 2000 01:00:27 CEST
+tobi:
+- final cleanups before the release
+
+Wed May 17 22:14:00 UTC 2000
+sms:
+- added smapi to Makefile
+ 
+Mon May  8 17:40:14 NOVST 2000
+max (patch from Alex Bronin):
+- MS Visual C porting
+
+Thu Mar 23 10:15:52 MSK 2000
+max (patch from Serguei Revtov):
+- change Win makefile to compile with new includes
+
+Mon Mar 20 08:56:28 MSK 2000
+max (patch from Serguei Revtov):
+- change legacy SUN makefile to compile with new includes, simplifying
+
+Mo   7 Feb 2000 00:07:24 CET
+tobi:
+- Nodediff and -list update files were not rejected if they contained an
+  invalid header line (even though this invalid line was detected).
+
+So   2 Jan 2000 11:28:26 CET
+tobi:
+- When nldiff was invoked with a nodediff filename that had the same
+  extension as the nodelist filename (obviously an user error) and the -n
+  parameter was given, the original nodelist was deleted. Fixed.
+
+Tue Dec 28 21:39:50 MET 1999
+tobi:
+- Fixed bug on Unix that could, in the situation that a nodelist and two 
+  consequent nodediffs were found, lead to the situation that only the
+  first nodediff was applied, but not the second one. (On a consecutive
+  run, though, of course the second one was also applied).
+
+Tue Dec 28 19:25:59 MET 1999
+ml:
+- Removed some unnecessary variables
+- Added makefile for Watcom C for Windows
+
+Tue 30 Nov 1999 22:10:01 CET
+sms:
+- fixed some misuses of ++ in ulcomp.c
+(Remark by TE: I don't think those caused any problems, they were both
+ ANSI and K&R proofed)
+
+NLTOOLS 1.0 Public Release
+--------------------------
+
+Sun 28 Nov 1999 03:00:00 CET
+tobi:
+- lots of last minute bug fixes, cleaned up everything, prepared for release
+
+Di  16 Nov 1999 23:19:07 CET
+tobi:
+- fixed problem that only occured with IBM C compilers.
+	
+Wed Oct 13 10:49:05 MET DST 1999 
+mtt:
+- fixed makefile.sun
+- added include of stddef.h (where size_t is defined) to string.c
+
+Wed Oct 13 10:31:36 MET DST 1999
+mtt:
+- fixed typo in linux makefile
+- added sun makefile
+- removed nldiff binary :-)
+
+Mo  11 Okt 1999 00:20:20 CEST
+- Fixed the sort routine. It was buggy and slow, so I replaced it with
+  the brute force method (read everything into RAM) until I find time to
+  do it better.
+- added Points24 support
+- revised documentation
+
+Fri Oct  8 19:31:06 MET DST 1999 (tobi)
+- first version in CVS
+- contains nldiff, nlcrc, ulc
+- ulc is still very slow due to broken sort routine
+- nlupdate still missing
