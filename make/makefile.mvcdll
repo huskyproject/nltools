@@ -1,59 +1,76 @@
 # $Id$
+#
 # Microsoft Visual C++ Makefile for build dinamic program(s)
-# with Internal ZIP (Zlib) support
 # No support for the Husky build environment.
 #
 # Tested on MS Visual C 6.0
 #
+include makefile.inc
 
-HPTZIP=0
+DEBUG=0
 
-!if $(HPTZIP) == 1
+USE_HPTZIP=0
+
+!if $(USE_HPTZIP) == 1
 HPTZIPL = ..\..\hptzip\make\hptzip.lib
 HPTZIPI = -I..\..\hptzip
 HPTZIPD = -DUSE_HPTZIP
 !endif
 
-CC=     cl
-CFLAGS= -nologo -Zp1 -MD
-CINCL	= -I..\h -I..\..\fidoconf -I..\..\smapi -I..\..\huskylib $(HPTZIPI)
-CDEFS=  -D__NT__ -DNT -DWINNT -D_CONSOLE $(HPTZIPD)
-COPT=   -O2
-TLIB=   lib -nologo
+## programs ##
 
-LIBS	= ..\..\huskylib\make\huskymvc.lib \
-	  ..\..\fidoconf\fconfmvc.lib \
-	  $(HPTZIPL) \
-	  msvcrt.lib Kernel32.lib /link /opt:nowin98
+CC	= cl
+AR	= lib
+LINK	= link
+RANLIB	=
+RM	= del
 
-NLTOOLSL= nltoolsmvc.lib 
-SRC_DIR	= ..\src\
+## file suffixes ##
+_C	= .c
+_OBJ	= .obj
+_LIB	= .lib
+_EXE	= .exe
+_DLL	= .dll
+_EXP	= .exp
+_ILK	= .ilk
+_PDB	= .pdb
 
-OBJS    = ulcsort.obj ulcomp.obj crc16.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
+## program options ##
+CFLAGS=-nologo -MD -Zp1 -Ob2 -c
+CINCL= -I$(H_DIR) -I..\..\fidoconf -I..\..\smapi -I..\..\huskylib $(HPTZIPI)
+LFLAGS=
+CDEFS =-D__NT__ -D_CONSOLE -D_MAKE_DLL $(HPTZIPD)
+EXENAMEFLAG=-Fe
 
-{$(SRC_DIR)}.c.obj:
-	$(CC) $(CFLAGS) $(CINCL) $(CDEFS) $(COPT) -c $<
+# List of HUSKY libraries required to build binary file(s)
+LIBS	= ..\..\fidoconf\make\fconfmvc.lib ..\..\smapi\make\smapimvc.lib \
+	  ..\..\huskylib\make\huskymvc.lib $(HPTZIPL) \
+	  USER32.LIB msvcrt.lib Kernel32.lib \
+	  /link /nodefaultlib /opt:nowin98
+	  
 
-all: $(NLTOOLSL) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
+default: all
 
-$(NLTOOLSL): $(OBJS)
-	$(TLIB) /out:$@ $(OBJS)
+programs:  $(PROGRAMS)
+all: programs
 
-nldiff.exe:
-        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nldiff.c $(LIBS) $(NLTOOLSL)
+{$(_SRC_DIR)}.c$(_OBJ):
+	@$(CC) $(CFLAGS) $(CINCL) $(CDEFS) $<
 
-nlcrc.exe:
-        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlcrc.c $(LIBS) $(NLTOOLSL)
+$(NLDIFF): $(NLDIFFOBJS)
+	$(CC) $(LFLAGS) $(EXENAMEFLAG)$@ $** $(LIBS)
 
-ulc.exe:
-        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\ulc.c $(LIBS) $(NLTOOLSL)
+$(NLCRC): $(NLCRCOBJS)
+	$(CC) $(LFLAGS) $(EXENAMEFLAG)$@ $** $(LIBS)
 
-nlupdate.exe:
-        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlupdate.c $(LIBS) $(NLTOOLSL)
+$(ULC): $(ULCOBJS)
+	$(CC) $(LFLAGS) $(EXENAMEFLAG)$@ $** $(LIBS)
+
+$(NLUPDATE): $(NLUPDATEOBJS)
+	$(CC) $(LFLAGS) $(EXENAMEFLAG)$@ $** $(LIBS)
 
 clean:
-	-del *.obj
-	-del *.lib
+	-$(RM) $(RMOPT) *$(_OBJ)
 
 distclean: clean
-	-del *.exe
+	-$(RM) $(RMOPT) $(PROGRAMS)

@@ -5,7 +5,8 @@
 #include <ctype.h>
 #include <time.h>
 #include <errno.h>
-#include <sys/stat.h> /* S_I... constants */
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include <huskylib/compiler.h>
 
