@@ -1,0 +1,39 @@
+# Microsoft Visual C++ Makefile
+
+CC=     cl
+CFLAGS= -nologo -Zp1 -I..\.. -I..\h
+CDEFS=  -D__NT__ -DNT -DWINNT -D_CONSOLE
+COPT=   -O2
+TLIB=   lib -nologo
+
+FCONFL=	..\..\fidoconf\fconfmvc.lib
+SMAPIL=	..\..\smapi\smapimvc.lib
+NLTOOLSL=	nltoolsmvc.lib
+
+OBJS    = ulcsort.obj ulcomp.obj crc16.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
+
+.c.obj:
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+
+all: $(NLTOOLSL) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
+
+$(NLTOOLSL): $(OBJS)
+	$(TLIB) /out:$@ $(OBJS)
+
+nldiff.exe:
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nldiff.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
+
+nlcrc.exe:
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlcrc.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
+
+ulc.exe:
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ ulc.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
+
+nlupdate.exe:
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlupdate.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
+
+clean:
+	-del *.obj *.lib
+
+distclean: clean
+	-del *.exe
