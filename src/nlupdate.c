@@ -26,6 +26,11 @@
 /* store the nldiff command name */
 static char *differ = NULL;
 
+# if 0
+
+/* This is not needed now because I imported fexist.c from smapi, and the
+   routines in fexist.c are a little more intelligent than this one! */
+
 static int nl_fexist(char *filename)
 {
    FILE *f = fopen(filename, "rb");
@@ -34,6 +39,10 @@ static int nl_fexist(char *filename)
    fclose(f);
    return 1;
 }
+
+#else
+#define nl_fexist fexist
+#endif
    
 
 static char *mk_uncompressdir(char *nldir)
