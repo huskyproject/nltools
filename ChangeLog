@@ -1,3 +1,8 @@
+2003-10-17 Friday 08:11  andr_lukyanov
+
+	* make/: makefile.cyg (1.3), makefile.djg (1.6), makefile.emx
+	(1.3), makefile.inc (1.4): Fix compilation with huskymak.cfg.*
+
 2003-08-25 Monday 11:13  d_sergienko
 
 	* h/nlfind.h (1.3), src/nlfind.c (1.15), src/nlupdate.c (1.41):
