@@ -1,3 +1,8 @@
+2003-04-23 Wednesday 17:15  mche
+
+	* make/nldiff.vcproj (1.2), make/nlupdate.vcproj (1.2),
+	src/nlupdate.c (1.39): fix unpack
+
 2003-04-18 Friday 16:11  mche
 
 	* make/: nldiff.vcproj (1.1), nlupdate.vcproj (1.1): vcproj Project
