@@ -1,5 +1,9 @@
 Current Version
 --------------
+Tue 30 Nov 1999 22:10:01 CET
+sms:
+- fixed some misuses of ++ in ulcomp.c
+
 Sun 28 Nov 1999 03:00:00 CET
 tobi:
 - lots of last minute bug fixes, cleaned up everything, prepared for release
