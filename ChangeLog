@@ -59,45 +59,52 @@
 
 2002-10-08 Tuesday 08:54  sfpavel
 
-	* src/: nldiff.c (1.9, nltools-1_2-release), nldiff.h (1.3), nlu.h
-	(1.4), nlupdate.c (1.26), ulc.c (1.13), ulc.h (1.7,
-	nltools-1_2-release), version.h (1.1): Put version info into
-	version.h
+	* src/: nldiff.c (1.9, nltools-1_2_2-release, nltools-1_2-release),
+	nldiff.h (1.3), nlu.h (1.4), nlupdate.c (1.26), ulc.c (1.13), ulc.h
+	(1.7, nltools-1_2_2-release, nltools-1_2-release), version.h (1.1):
+	Put version info into version.h
 
 2002-10-04 Friday 12:28  sfpavel
 
-	* debian/: changelog (1.5), dirs (1.2, nltools-1_2-release), docs
-	(1.2, nltools-1_2-release), rules (1.4, nltools-1_2-release): New
-	debian package
+	* debian/: changelog (1.5), dirs (1.2, nltools-1_2_2-release,
+	nltools-1_2-release), docs (1.2, nltools-1_2_2-release,
+	nltools-1_2-release), rules (1.4, nltools-1_2_2-release,
+	nltools-1_2-release): New debian package
 
 2002-10-04 Friday 06:22  sfpavel
 
 	* src/: makefile.djg (1.5), makefile.emx (1.6) (utags:
-	nltools-1_2-release): Update makefiles for DJGPP and OS2/EMX
+	nltools-1_2_2-release, nltools-1_2-release): Update makefiles for
+	DJGPP and OS2/EMX
 
 2002-09-21 Saturday 14:31  pgul
 
 	* src/: makefile.wco (1.3), makefile.wcw (1.11) (utags:
-	nltools-1_2-release): Obsoleted modules fexist, patmat removed
+	nltools-1_2_2-release, nltools-1_2-release): Obsoleted modules
+	fexist, patmat removed
 
 2002-09-05 Thursday 09:05  mche
 
-	* src/makefile.mvc (1.9, nltools-1_2-release): fix static building
+	* src/makefile.mvc (1.9, nltools-1_2_2-release,
+	nltools-1_2-release): fix static building
 
 2002-08-30 Friday 12:14  mche
 
 	* src/: makefile.inc (1.3), makefile.mgw (1.7) (utags:
-	nltools-1_2-release): minGW makefiles corrected
+	nltools-1_2_2-release, nltools-1_2-release): minGW makefiles
+	corrected
 
 2002-08-26 Monday 11:17  sfpavel
 
 	* debian/: changelog (1.4), control (1.5), copyright (1.2,
-	nltools-1_2-release), rules (1.3): New debian package
+	nltools-1_2_2-release, nltools-1_2-release), rules (1.3): New
+	debian package
 
 2002-08-21 Wednesday 12:47  mche
 
-	* src/makefile.cyg (1.5, nltools-1_2-release): makefiles for cygwin
-	updated to suit current release of Cygwin
+	* src/makefile.cyg (1.5, nltools-1_2_2-release,
+	nltools-1_2-release): makefiles for cygwin updated to suit current
+	release of Cygwin
 
 2002-08-21 Wednesday 12:21  mche
 
@@ -112,12 +119,13 @@
 2002-08-02 Friday 07:16  mche
 
 	* src/: makefile.mvc (1.8), makefile.mvcdll (1.4,
-	nltools-1_2-release), nlupdate.c (1.24): makefiles corrected
+	nltools-1_2_2-release, nltools-1_2-release), nlupdate.c (1.24):
+	makefiles corrected
 
 2002-08-01 Thursday 08:15  d.sergienko
 
-	* Makefile (1.8, nltools-1_2-release): removed patmat.o from
-	Makefile
+	* Makefile (1.8, nltools-1_2_2-release, nltools-1_2-release):
+	removed patmat.o from Makefile
 
 2002-08-01 Thursday 08:13  d.sergienko
 
@@ -134,25 +142,30 @@
 
 2002-07-29 Monday 08:13  stas
 
-	* src/: makefile.bco (1.7, nltools-1_2-release), makefile.bcw (1.5,
-	nltools-1_2-release), makefile.be (1.4, nltools-1_2-release),
-	makefile.cyg (1.3), makefile.djg (1.4), makefile.emo (1.7,
-	nltools-1_2-release), makefile.emx (1.5), makefile.inc (1.2),
-	makefile.lnx (1.10, nltools-1_2-release), makefile.mgw (1.6),
-	makefile.sun (1.11, nltools-1_2-release), makefile.unx (1.6,
-	nltools-1_2-release), makefile.wco (1.2), makefile.wcw (1.10):
-	Update makefiles, fix compilation bug
+	* src/: makefile.bco (1.7, nltools-1_2_2-release,
+	nltools-1_2-release), makefile.bcw (1.5, nltools-1_2_2-release,
+	nltools-1_2-release), makefile.be (1.4, nltools-1_2_2-release,
+	nltools-1_2-release), makefile.cyg (1.3), makefile.djg (1.4),
+	makefile.emo (1.7, nltools-1_2_2-release, nltools-1_2-release),
+	makefile.emx (1.5), makefile.inc (1.2), makefile.lnx (1.10,
+	nltools-1_2_2-release, nltools-1_2-release), makefile.mgw (1.6),
+	makefile.sun (1.11, nltools-1_2_2-release, nltools-1_2-release),
+	makefile.unx (1.6, nltools-1_2_2-release, nltools-1_2-release),
+	makefile.wco (1.2), makefile.wcw (1.10): Update makefiles, fix
+	compilation bug
 
 2002-07-27 Saturday 08:51  mche
 
-	* src/: nldate.c (1.7, nltools-1_2-release), nlfind.c (1.9,
-	nltools-1_2-release), nlupdate.c (1.22), ulc.c (1.12), ulc.h (1.6),
-	ulcsort.c (1.4, nltools-1_2-release): fix problems with new log
-	system
+	* src/: nldate.c (1.7, nltools-1_2_2-release, nltools-1_2-release),
+	nlfind.c (1.9, nltools-1_2_2-release, nltools-1_2-release),
+	nlupdate.c (1.22), ulc.c (1.12), ulc.h (1.6), ulcsort.c (1.4,
+	nltools-1_2_2-release, nltools-1_2-release): fix problems with new
+	log system
 
 2002-07-24 Wednesday 13:00  mche
 
-	* src/.cvsignore (1.1, nltools-1_2-release): no message
+	* src/.cvsignore (1.1, nltools-1_2_2-release, nltools-1_2-release):
+	no message
 
 2002-07-24 Wednesday 12:59  mche
 
@@ -175,8 +188,8 @@
 
 2002-07-17 Wednesday 18:15  stas
 
-	* src/: crc16.c (1.5, nltools-1_2-release), fexist.c (1.5),
-	nldate.c (1.5): Fix warnings
+	* src/: crc16.c (1.5, nltools-1_2_2-release, nltools-1_2-release),
+	fexist.c (1.5), nldate.c (1.5): Fix warnings
 
 2002-07-17 Wednesday 17:59  stas
 
@@ -189,13 +202,14 @@
 
 2002-06-19 Wednesday 08:37  stas
 
-	* .cvs2cl (1.1, nltools-1_2-release): Use standard husky ChangeLog
-	generation feature. Old changelog backed up as ChangeLog.old
+	* .cvs2cl (1.1, nltools-1_2_2-release, nltools-1_2-release): Use
+	standard husky ChangeLog generation feature. Old changelog backed
+	up as ChangeLog.old
 
 2002-06-18 Tuesday 20:37  tobi
 
-	* src/ulcomp.c (1.10, nltools-1_2-release): fixes for russian point
-	list. now should work as 4d type.
+	* src/ulcomp.c (1.10, nltools-1_2_2-release, nltools-1_2-release):
+	fixes for russian point list. now should work as 4d type.
 
 2002-06-18 Tuesday 20:37  tobi
 
@@ -234,18 +248,20 @@
 2002-03-05 Tuesday 00:27  joerg.jaspert
 
 	* debian/: changelog (1.3), control (1.4), huskymak.cfg (1.4,
-	nltools-1_2-release): New Debian Package built
+	nltools-1_2_2-release, nltools-1_2-release): New Debian Package
+	built
 
 2001-07-08 Sunday 21:16  joerg.jaspert
 
-	* debian/: README.Debian (1.3, nltools-1_2-release), control (1.3),
-	huskymak.cfg (1.3): Rebuild Nltools
+	* debian/: README.Debian (1.3, nltools-1_2_2-release,
+	nltools-1_2-release), control (1.3), huskymak.cfg (1.3): Rebuild
+	Nltools
 
 2001-07-05 Thursday 21:22  joerg.jaspert
 
 	* debian/: README.Debian (1.2), changelog (1.2), control (1.2),
-	huskymak.cfg (1.2), manpages (1.2, nltools-1_2-release), rules
-	(1.2): Rebuild
+	huskymak.cfg (1.2), manpages (1.2, nltools-1_2_2-release,
+	nltools-1_2-release), rules (1.2): Rebuild
 
 2001-04-14 Saturday 15:03  joerg.jaspert
 
@@ -270,9 +286,10 @@
 
 2000-09-17 Sunday 15:53  tobi
 
-	* src/: julian.c (1.6, nltools-1_2-release), nllog.c (1.4), nllog.h
-	(1.5), nlupdate.c (1.18): - Fixed Julian day number calculation -
-	Introduced debug mode (set the NLDEBUG env var to 1 to activate)
+	* src/: julian.c (1.6, nltools-1_2_2-release, nltools-1_2-release),
+	nllog.c (1.4), nllog.h (1.5), nlupdate.c (1.18): - Fixed Julian day
+	number calculation - Introduced debug mode (set the NLDEBUG env var
+	to 1 to activate)
 
 2000-08-21 Monday 13:15  sms
 
@@ -285,7 +302,8 @@
 
 2000-08-14 Monday 12:07  sms
 
-	* src/: nlstring.h (1.2, nltools-1_2-release), string.c (1.3,
+	* src/: nlstring.h (1.2, nltools-1_2_2-release,
+	nltools-1_2-release), string.c (1.3, nltools-1_2_2-release,
 	nltools-1_2-release), ulcomp.c (1.9): added abstraction casecmp
 
 2000-08-10 Thursday 23:20  tobi
@@ -296,10 +314,10 @@
 2000-08-10 Thursday 12:24  tobi
 
 	* src/: julian.c (1.5), nldate.c (1.4), nlfind.c (1.5), nlfind.h
-	(1.5, nltools-1_2-release), nlupdate.c (1.16): - Relaxed the
-	checking of the nodelist header line to allow non-conforming  
-	nodelists (like the wipost pointlist, etc. pp.) to pass.  -
-	Bugfixes for the previous checkin.
+	(1.5, nltools-1_2_2-release, nltools-1_2-release), nlupdate.c
+	(1.16): - Relaxed the checking of the nodelist header line to allow
+	non-conforming	 nodelists (like the wipost pointlist, etc. pp.) to
+	pass.  - Bugfixes for the previous checkin.
 
 2000-08-10 Thursday 11:27  tobi
 
@@ -316,14 +334,15 @@
 
 2000-08-10 Thursday 09:21  tobi
 
-	* sample.lnx (1.3, nltools-1_2-release): re-added sample.lnx.
-	wonder why it has been removed.
+	* sample.lnx (1.3, nltools-1_2_2-release, nltools-1_2-release):
+	re-added sample.lnx. wonder why it has been removed.
 
 2000-08-06 Sunday 22:52  tobi
 
-	* README (1.8), sample.be (1.2, nltools-1_2-release), sample.cfg
-	(1.3, nltools-1_2-release), sample.lnx (1.2), src/nllog.c (1.3):
-	bugfixes and beos adaptions from -stable
+	* README (1.8), sample.be (1.2, nltools-1_2_2-release,
+	nltools-1_2-release), sample.cfg (1.3, nltools-1_2_2-release,
+	nltools-1_2-release), sample.lnx (1.2), src/nllog.c (1.3): bugfixes
+	and beos adaptions from -stable
 
 2000-08-06 Sunday 22:50  tobi
 
@@ -383,7 +402,8 @@
 	nltools-1_1a-release), src/makefile.unx (1.5,
 	nltools-1_1a-release), src/makefile.wcw (1.7), src/nlupdate.c
 	(1.14), src/patmat.c (1.2, nltools-1_1a-release), src/trail.c (1.1,
-	nltools-1_2-release, nltools-1_1a-release): makefile fixes etc.
+	nltools-1_2_2-release, nltools-1_2-release, nltools-1_1a-release):
+	makefile fixes etc.
 
 2000-06-09 Friday 10:04  tobi
 
@@ -585,12 +605,12 @@
 	nltools-1-0), makefile.bcw (1.1, nltools-1-0), makefile.emo (1.3,
 	nltools-1-0), makefile.emx (1.1, nltools-1-0), makefile.lnx (1.4,
 	nltools-1-0), makefile.mgw (1.1), makefile.sun (1.3, nltools-1-0),
-	makefile.unx (1.2, nltools-1-0), nlcrc.c (1.4, nltools-1_2-release,
-	nltools-1_1a-release, nltools-1-0), nldiff.c (1.3, nltools-1-0),
-	nllog.c (1.2, nltools-1-0), nlu.h (1.2, nltools-1-0), nlupdate.c
-	(1.4, nltools-1-0), ulc.c (1.4, nltools-1-0), ulc.h (1.3,
-	nltools-1-0): Last minute changes, cleaned up everyting, made it
-	ready for build.
+	makefile.unx (1.2, nltools-1-0), nlcrc.c (1.4,
+	nltools-1_2_2-release, nltools-1_2-release, nltools-1_1a-release,
+	nltools-1-0), nldiff.c (1.3, nltools-1-0), nllog.c (1.2,
+	nltools-1-0), nlu.h (1.2, nltools-1-0), nlupdate.c (1.4,
+	nltools-1-0), ulc.c (1.4, nltools-1-0), ulc.h (1.3, nltools-1-0):
+	Last minute changes, cleaned up everyting, made it ready for build.
 
 1999-11-16 Tuesday 22:20  tobi
 
@@ -619,12 +639,13 @@
 
 1999-10-11 Monday 21:20  tobi
 
-	* src/: julian.c (1.1), julian.h (1.1, nltools-1_2-release,
-	nltools-1_1a-release, nltools-1-0), makefile (1.3), makefile.bco
-	(1.2), makefile.emo (1.2), nldate.c (1.1), nldate.h (1.1,
-	nltools-1_2-release, nltools-1_1a-release, nltools-1-0), nlfind.c
-	(1.1), nlfind.h (1.1, nltools-1-0), nlu.h (1.1), nlupdate.c (1.1),
-	ulc.c (1.3): Implemented nlupdate (not complete yet)
+	* src/: julian.c (1.1), julian.h (1.1, nltools-1_2_2-release,
+	nltools-1_2-release, nltools-1_1a-release, nltools-1-0), makefile
+	(1.3), makefile.bco (1.2), makefile.emo (1.2), nldate.c (1.1),
+	nldate.h (1.1, nltools-1_2_2-release, nltools-1_2-release,
+	nltools-1_1a-release, nltools-1-0), nlfind.c (1.1), nlfind.h (1.1,
+	nltools-1-0), nlu.h (1.1), nlupdate.c (1.1), ulc.c (1.3):
+	Implemented nlupdate (not complete yet)
 
 1999-10-10 Sunday 22:41  tobi
 
