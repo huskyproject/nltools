@@ -1,48 +1,97 @@
 # $Id$
+#
 # Microsoft Visual C++ Makefile for build static program(s)
 # No support for the Husky build environment.
 #
 # Tested on MS Visual C 6.0
 #
+include makefile.inc
+
+DEBUG=0
+
+USE_HPTZIP=0
+
+!if $(USE_HPTZIP) == 1
+HPTZIPL = ..\..\hptzip\make\hptzip.lib
+HPTZIPI = -I..\..\hptzip
+HPTZIPD = -DUSE_HPTZIP
+!endif
+
+## programs ##
 
 CC	= cl
-CFLAGS	= -nologo -Zp1 
-CINCL	= -I..\h -I..\..\fidoconf -I..\..\smapi -I..\..\huskylib
-CDEFS	= -D__NT__ -DNT -DWINNT -D_CONSOLE
-COPT	= -O2
-TLIB	= lib -nologo
+AR	= lib
+LINK	= link
+RANLIB	=
+RM	= del
 
-LIBS	= ..\..\huskylib\make\huskymvc.lib \
-	  ..\..\fidoconf\fconfmvc.lib
+## file suffixes ##
+_C	= .c
+_OBJ	= .obj
+_LIB	= .lib
+_EXE	= .exe
+_DLL	= .dll
+_EXP	= .exp
+_ILK	= .ilk
+_PDB	= .pdb
 
-NLTOOLSL= nltoolsmvc.lib
-SRC_DIR	= ..\src\
+## program options ##
+CFLAGS	= -nologo -Zp1
+CINCL	= -I$(H_DIR) -I..\..\fidoconf -I..\..\smapi -I..\..\huskylib $(HPTZIPI)
+LFLAGS	=
+CDEFS	= -D__NT__ -D_CONSOLE $(HPTZIPD)
+COPT	= -Ob2
 
-OBJS    = ulcsort.obj ulcomp.obj crc16.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
+EXENAMEFLAG = -Fe
 
-{$(SRC_DIR)}.c.obj:
-	$(CC) $(CFLAGS) $(CINCL) $(CDEFS) $(COPT) -c $<
+# List of HUSKY libraries required to build binary file(s)
+LIBS	= ..\..\fidoconf\make\fconfmvc.lib ..\..\smapi\make\smapimvc.lib \
+	  ..\..\huskylib\make\huskymvc.lib $(HPTZIPL) \
 
-all: $(NLTOOLSL) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
+default:
+	@echo Run 'make programs' to build static version of programs
+	@echo ($(PROGRAMS))
+	@echo Run 'make all' to build all above
 
-$(NLTOOLSL): $(OBJS)
-	$(TLIB) /out:$@ $(OBJS)
+programs: $(PROGRAMS)
+all: programs
 
-nldiff.exe:
-        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nldiff.c $(LIBS) $(NLTOOLSL)
+{$(_SRC_DIR)}.c$(_OBJ):
+	@$(CC) $(CFLAGS) $(CINCL) $(CDEFS) $(COPT) -c $<
 
-nlcrc.exe:
-        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlcrc.c $(LIBS) $(NLTOOLSL)
+$(NLDIFF): $(NLDIFFOBJS)
+	@echo Create $(NLDIFF)...
+	@$(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) $(EXENAMEFLAG)$@ $** $(LIBS)
 
-ulc.exe:
-        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\ulc.c $(LIBS) $(NLTOOLSL)
+$(NLCRC): $(NLCRCOBJS)
+	@echo Create $(NLCRC)...
+	@$(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) $(EXENAMEFLAG)$@ $** $(LIBS)
 
-nlupdate.exe:
-        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlupdate.c $(LIBS) $(NLTOOLSL)
+$(ULC): $(ULCOBJS)
+	@echo Create $(ULC)...
+	@$(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) $(EXENAMEFLAG)$@ $** $(LIBS)
+
+$(NLUPDATE): $(NLUPDATEOBJS)
+	@echo Create $(NLUPDATE)...
+	@$(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) $(EXENAMEFLAG)$@ $** $(LIBS)
+
+man:
+
+doc: man
+	man2html$(_EXE) <..\$(LIBNAME).1 >$(LIBNAME).html
 
 clean:
-	-del *.obj
-	-del *.lib
+	-$(RM) $(RMOPT) *$(_OBJ)
 
 distclean: clean
-	-del *.exe
+	-$(RM) $(RMOPT) $(PROGRAMS)
+	-$(RM) $(RMOPT) $(LIBNAME).html
+
+install: programs doc
+	$(INSTALL) $(IBOPT) $(PROGRAMS) $(BINDIR)
+	$(INSTALL) $(IBOPT) ..\$(LIBNAME).1 $(DOCDIR)
+	$(INSTALL) $(IBOPT) $(LIBNAME).html $(DOCDIR)
+
+uninstall:
+	-$(RM) $(RMOPT) $(BINDIR)\$(PROGRAMS)
+	-$(RM) $(RMOPT) $(DOCDIR)\$(LIBNAME).html
