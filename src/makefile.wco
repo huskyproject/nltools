@@ -1,9 +1,11 @@
-# Legacy makefile: Watcom C for OS/2
+# $Id$
+# Legacy makefile: Watcom C, build OS/2 binaries
+#
 
 
 LINK=wlink
 CC=wcl386
-CFLAGS=-I..\.. -zq -wx -bt=os2v2 -l=os2v2 -DOS2
+CFLAGS=-I..\.. -zq -wx -bt=os2v2 -l=os2v2 -DOS2 -D__OS2__
 COPT = -oneatx -5
 LFLAGS=system os2v2
 LIBS= LIBRARY ..\..\fidoconf\fconfwco.lib LIBRARY ..\..\fidoconf\smapiwco.lib
@@ -21,11 +23,11 @@ nldiff.exe: nldiff.obj crc16.obj
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(LINK) $(LFLAGS) NAME nlcrc.exe FILE crc16.obj, nlcrc.obj
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj trail.obj
-	$(LINK) $(LFLAGS) NAME ulc.exe FILE ulcsort.obj, ulcomp.obj, ulc.obj, nllog.obj, string.obj, julian.obj, nldate.obj, nlfind.obj, trail.obj $(LIBS)
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj string.obj julian.obj nldate.obj nlfind.obj trail.obj
+	$(LINK) $(LFLAGS) NAME ulc.exe FILE ulcsort.obj, ulcomp.obj, ulc.obj, string.obj, julian.obj, nldate.obj, nlfind.obj, trail.obj $(LIBS)
 
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
-	$(LINK) $(LFLAGS) NAME nlupdate.exe FILE nlupdate.obj, nllog.obj, string.obj, nldate.obj, julian.obj, nlfind.obj, trail.obj $(LIBS)
+nlupdate.exe: nlupdate.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
+	$(LINK) $(LFLAGS) NAME nlupdate.exe FILE nlupdate.obj, string.obj, nldate.obj, julian.obj, nlfind.obj, trail.obj $(LIBS)
 
 .IGNORE
 
