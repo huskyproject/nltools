@@ -59,6 +59,8 @@ static char *mk_uncompressdir(char *nldir)
     /* try to create it */
     mymkdir(upath);
 
+    logentry( 'X', "Use temp dir: '%s'", upath );
+
     /* check if we can write to the directory */
     nfree(upath);
     xscatprintf(&upath, "%s%s%c%s",nldir,"nlupdate.tmp",PATH_DELIM,"nlupdate.flg");
@@ -104,7 +106,8 @@ int destroy_uncompressdir(char *upath)
             if (remove(upath))
             {
                 logentry(LOG_ERROR, "cannot erase %s", upath);
-            }
+            }else
+                logentry( 'X', "Temp dir '%s' removed", upath );
         }
     }
     closedir(hdir);
@@ -344,6 +347,8 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
     ufn = get_uncompressed_filename(config, fullbase, fulllist->matches[j],
                                     tmpdir, ndnr, &reason);
 
+    logentry( 'X', "Uncomressed filename: %s", ufn );
+
     if (!reason)
         fulllist->julians[j] = -1;
 
@@ -366,6 +371,8 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
                 strcpy(newfn, config->nodelistDir);
                 strcat(newfn, config->nodelists[nl].nodelistName);
                 sprintf(newfn + strlen(newfn), ".%03d", ndnr);
+
+                logentry( 'X', "Copy '%s' to '%s'", ufn, newfn );
                             
                 if (copy_file(ufn, newfn))
                 {
@@ -429,6 +436,8 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
     nlist *difflist = NULL, *fulllist = NULL;
     int hit;
     char *ufn;
+
+    logentry( 'X', "do_update()");
 
     if ((julian = parse_nodelist_date(rawnl)) == -1)
         return 0;
@@ -609,6 +618,8 @@ static int create_instance(s_fidoconfig *config, int nl, long today,
 
     /* build the list of candidate full update files */
 
+    logentry( 'X', "create_instance()");
+
     if (config->nodelists[nl].fullUpdateStem)
     {
         if ((fullbase = basedir(config->nodelists[nl].fullUpdateStem)) != NULL)
@@ -693,6 +704,7 @@ static int process(s_fidoconfig *config)
 
                 if (config->nodelists[i].fullUpdateStem != NULL)
                 {
+                    logentry( 'X', "Check fullupdate: %s", config->nodelists[i].fullUpdateStem );
                     if (!create_instance(config, i, today, tmpdir))
                     {
                         logentry(LOG_WARNING, "no full update for "
@@ -794,3 +806,4 @@ int main(int argc, char **argv)
         return 8;
     }
 }
+

@@ -59,6 +59,8 @@ static int add_match(nlist *pnl, char *match)
     char **newm;
     long *newj;
 
+/*    logentry( 'X', "add_match()" ); */
+
     if (cp == NULL)
     {
         logentry(LOG_ERROR, "Out of memory.");
@@ -92,6 +94,8 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
     DIR *hdir;
     nlist *pnl = make_nlist();
     size_t l, l2;
+
+    logentry( 'X', "find_nodelistfiles()" );
     
     if (pnl == NULL)
     {
@@ -106,6 +110,8 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
         free_nlist(pnl);
         return NULL;
     }
+
+    logentry( 'X', "Scan directory %s for %s", path, base);
 
     l = strlen(base);
 
@@ -124,7 +130,8 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
                 free_nlist(pnl);
                 closedir(hdir);
                 return NULL;
-            }
+            }else
+                logentry( 'X', "Found: %s", dp->d_name);
 
         }
     }
@@ -149,8 +156,12 @@ char *findNodelist(s_fidoconfig *config, int i)
     int lastmatch = -1;
     int l;
 
+    logentry( 'X', "findNodelist()" );
+
     pnl = find_nodelistfiles(config->nodelistDir,
                              config->nodelists[i].nodelistName, 0);
+
+    logentry( 'X', "Found: %s", pnl );
 
     if (pnl == NULL)
         return NULL;
