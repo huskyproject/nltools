@@ -1,3 +1,25 @@
+2003-02-11 Tuesday 11:25  sfpavel
+
+	* Makefile (1.10), h/ccitttab.h (1.1), h/crc16.h (1.1), h/julian.h
+	(1.1), h/nldate.h (1.1), h/nlfind.h (1.1), h/nlstring.h (1.1),
+	h/ulc.h (1.1), h/version.h (1.1), make/makefile.bco (1.1),
+	make/makefile.bcw (1.1), make/makefile.be (1.1), make/makefile.cyg
+	(1.1), make/makefile.djg (1.1), make/makefile.emo (1.1),
+	make/makefile.emx (1.1), make/makefile.inc (1.1), make/makefile.lnx
+	(1.1), make/makefile.mgw (1.1), make/makefile.mvc (1.1),
+	make/makefile.mvcdll (1.1), make/makefile.sun (1.1),
+	make/makefile.unx (1.1), make/makefile.wco (1.1), make/makefile.wcw
+	(1.1), src/ccitttab.h (1.2), src/crc16.h (1.2), src/julian.h (1.2),
+	src/makefile.bco (1.8), src/makefile.bcw (1.6), src/makefile.be
+	(1.5), src/makefile.cyg (1.8), src/makefile.djg (1.6),
+	src/makefile.emo (1.8), src/makefile.emx (1.7), src/makefile.inc
+	(1.5), src/makefile.lnx (1.11), src/makefile.mgw (1.9),
+	src/makefile.mvc (1.10), src/makefile.mvcdll (1.5),
+	src/makefile.sun (1.12), src/makefile.unx (1.7), src/makefile.wco
+	(1.5), src/makefile.wcw (1.13), src/nldate.h (1.2), src/nlfind.h
+	(1.7), src/nlstring.h (1.3), src/ulc.h (1.8), src/version.h (1.4):
+	Reorginize source tree: split headers and makefiles from 'src' dir
+
 2003-02-08 Saturday 07:50  mche
 
 	* src/nldiff.c (1.13): DELETE --> DEL
