@@ -1,3 +1,10 @@
+nltools (1.4.0+beta1-2) unstable; urgency=low
+
+  * Place nltools package to main. Now smapi has LGPL license and
+    nltools does not depends from non-free packages
+
+ -- Pavel Andreew <pavel@collage.etel.ru>  Wed, 19 Feb 2003 11:56:58 +0500
+
 nltools (1.4.0+beta1-1) unstable; urgency=low
 
   * New stable branch
