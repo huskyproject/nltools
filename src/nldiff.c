@@ -18,6 +18,7 @@
 
 unsigned short actualcrc;
 
+char *versionStr;
 
 /* A state machine to analyse the very first line of a nodelist for day
    number and an optional CRC value. */
@@ -322,7 +323,9 @@ int parse_args (int argc, char **argv, char **listname, char **diffname,
 
 void usage(void)
 {
-    fprintf (stderr, "nldiff - nodelist differ rev. %s\n", REV);
+    versionStr = GenVersionStr( "nldiff", VER_MAJOR, VER_MINOR, VER_PATCH,
+                               VER_BRANCH, cvs_date );
+    fprintf (stderr, "%s - nodelist differ\n", versionStr);
     fprintf (stderr, "Usage:\n"\
 "   nldiff [-n] [-d] LISTNAME.DNR DIFFNAME.DNR\n\n"\
 "   The -n option causes the original Nodelist to be deleted if the new\n"\

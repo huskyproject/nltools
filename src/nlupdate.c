@@ -867,6 +867,7 @@ int main(int argc, char **argv)
     s_fidoconfig *config = readConfig(NULL);
     int rv;
     int l = 0;
+    char *versionStr;
 
     /* construct the name of the nldiff command */
     if (argc)
@@ -884,12 +885,14 @@ int main(int argc, char **argv)
     if (l) memcpy(differ, argv[0], l);
     strcpy(differ + l, "nldiff");
 
+    versionStr = GenVersionStr( "nlupdate", VER_MAJOR, VER_MINOR, VER_PATCH,
+                               VER_BRANCH, cvs_date );
 
     /* run the main program */
     if (config != NULL)
     {
-        openLog(LOGNAME, "nlupdate " REV, config);
-        w_log(LL_START, "nlupdate - nodelist updater rev. %s", REV);
+        openLog(LOGNAME, versionStr, config);
+        w_log(LL_START, "%s - nodelist updater", versionStr);
 
         rv=process(config);
 

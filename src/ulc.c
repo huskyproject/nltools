@@ -128,12 +128,15 @@ int main(void)
 {
     s_fidoconfig *config = readConfig(NULL);
     int rv;
+    char *versionStr;
 
+    versionStr = GenVersionStr( "ulc", VER_MAJOR, VER_MINOR, VER_PATCH,
+                               VER_BRANCH, cvs_date );
     if (config != NULL)
     {
-        openLog(LOGNAME, "ulc " REV, config);
+        openLog(LOGNAME, versionStr, config);
 
-        w_log(LL_START, "ulc - userlist compiler rev. %s", REV);
+        w_log(LL_START, "%s - userlist compiler", versionStr);
 
         rv=process(config);
 
