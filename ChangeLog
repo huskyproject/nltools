@@ -1,3 +1,7 @@
+2003-06-17 Tuesday 04:24  lmike
+
+	* make/makefile.qnx (1.1): Added makefile for QNX6
+
 2003-05-27 Tuesday 09:46  d_sergienko
 
 	* src/makefile.bsd (1.1): file makefile.bsd was initially added on
