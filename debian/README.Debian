@@ -2,7 +2,7 @@ nltools for Debian
 ------------------
 
 This Package has a Sample Configuration in sample.lnx.
-But i link again fidoconf so you must made your config settings in the
+But i link against fidoconf so you must made your config settings in the
 central Fidoconfig (/etc/fido/config).
 
  -- Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>, Sat, 31 Mar 2001 18:13:49 +0200
