@@ -5,7 +5,7 @@
 2003-03-31 Monday 20:35  d_sergienko
 
 	* src/: nldiff.c (1.14), nlupdate.c (1.38), ulc.c (1.19): fix
-	compiling (thanx to Denis Pankov)
+	compiling (thanx to Dmitry Pankov)
 
 2003-03-21 Friday 06:34  stas_degteff
 
