@@ -13,7 +13,7 @@ endif
 
 all: default
 
-default: nldiff$(EXE) nlcrc$(EXE) ulc$(EXE) nlupdate$(EXE)
+default: nldiff$(_EXE) nlcrc$(_EXE) ulc$(_EXE) nlupdate$(_EXE)
 
 ifeq ($(DEBUG), 1)
   CFLAGS= -I$(INCDIR) -Ih $(DEBCFLAGS)
@@ -27,56 +27,56 @@ LIBS=-L$(LIBDIR) -lfidoconf -lsmapi -lhusky
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 
-%$(OBJ): src$(DIRSEP)%.c
+%$(_OBJ): src$(DIRSEP)%.c
 	$(CC) $(CFLAGS) $(CDEFS) -c $<
 
-nldiff$(EXE): nldiff$(OBJ) crc16$(OBJ)
-	$(CC) $(LFLAGS) -o nldiff$(EXE) nldiff$(OBJ) crc16$(OBJ) \
+nldiff$(_EXE): nldiff$(_OBJ) crc16$(_OBJ)
+	$(CC) $(LFLAGS) -o nldiff$(_EXE) nldiff$(_OBJ) crc16$(_OBJ) \
               $(LIBS)
 
-nlcrc$(EXE): crc16$(OBJ) nlcrc$(OBJ)
-	$(CC) $(LFLAGS) -o nlcrc$(EXE) crc16$(OBJ) nlcrc$(OBJ) \
+nlcrc$(_EXE): crc16$(_OBJ) nlcrc$(_OBJ)
+	$(CC) $(LFLAGS) -o nlcrc$(_EXE) crc16$(_OBJ) nlcrc$(_OBJ) \
               $(LIBS)
 
-ulc$(EXE): ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) string$(OBJ) \
-     nldate$(OBJ) julian$(OBJ) nlfind$(OBJ)
-	$(CC) $(LFLAGS) -o ulc$(EXE) ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) \
-          string$(OBJ) nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) \
+ulc$(_EXE): ulcsort$(_OBJ) ulcomp$(_OBJ) ulc$(_OBJ) string$(_OBJ) \
+     nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ)
+	$(CC) $(LFLAGS) -o ulc$(_EXE) ulcsort$(_OBJ) ulcomp$(_OBJ) ulc$(_OBJ) \
+          string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ) \
          $(LIBS)
 
-nlupdate$(EXE): nlupdate$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) \
-          nlfind$(OBJ)
-	$(CC) $(LFLAGS) -o nlupdate$(EXE) nlupdate$(OBJ) string$(OBJ) \
-          nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) $(LIBS)
+nlupdate$(_EXE): nlupdate$(_OBJ) string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) \
+          nlfind$(_OBJ)
+	$(CC) $(LFLAGS) -o nlupdate$(_EXE) nlupdate$(_OBJ) string$(_OBJ) \
+          nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ) $(LIBS)
 
 clean:
-	-$(RM) $(RMOPT) crc16$(OBJ)
-	-$(RM) $(RMOPT) nlcrc$(OBJ)
-	-$(RM) $(RMOPT) nldiff$(OBJ)
-	-$(RM) $(RMOPT) ulc$(OBJ)
-	-$(RM) $(RMOPT) ulcomp$(OBJ)
-	-$(RM) $(RMOPT) ulcsort$(OBJ)
-	-$(RM) $(RMOPT) julian$(OBJ)
-	-$(RM) $(RMOPT) nlfind$(OBJ)
-	-$(RM) $(RMOPT) nldate$(OBJ)
-	-$(RM) $(RMOPT) nlupdate$(OBJ)
-	-$(RM) $(RMOPT) string$(OBJ)
-	-$(RM) $(RMOPT) patmat$(OBJ)
+	-$(RM) $(RMOPT) crc16$(_OBJ)
+	-$(RM) $(RMOPT) nlcrc$(_OBJ)
+	-$(RM) $(RMOPT) nldiff$(_OBJ)
+	-$(RM) $(RMOPT) ulc$(_OBJ)
+	-$(RM) $(RMOPT) ulcomp$(_OBJ)
+	-$(RM) $(RMOPT) ulcsort$(_OBJ)
+	-$(RM) $(RMOPT) julian$(_OBJ)
+	-$(RM) $(RMOPT) nlfind$(_OBJ)
+	-$(RM) $(RMOPT) nldate$(_OBJ)
+	-$(RM) $(RMOPT) nlupdate$(_OBJ)
+	-$(RM) $(RMOPT) string$(_OBJ)
+	-$(RM) $(RMOPT) patmat$(_OBJ)
 
 distclean: clean
-	-$(RM) $(RMOPT) nlcrc$(EXE)
-	-$(RM) $(RMOPT) nldiff$(EXE)
-	-$(RM) $(RMOPT) ulc$(EXE)
-	-$(RM) $(RMOPT) nlupdate$(EXE)
+	-$(RM) $(RMOPT) nlcrc$(_EXE)
+	-$(RM) $(RMOPT) nldiff$(_EXE)
+	-$(RM) $(RMOPT) ulc$(_EXE)
+	-$(RM) $(RMOPT) nlupdate$(_EXE)
 
-install: ulc$(EXE) nldiff$(EXE) nlcrc$(EXE) nlupdate$(EXE)
-	$(INSTALL) $(IBOPT) ulc$(EXE) $(BINDIR)
-	$(INSTALL) $(IBOPT) nldiff$(EXE) $(BINDIR)
-	$(INSTALL) $(IBOPT) nlcrc$(EXE) $(BINDIR)
-	$(INSTALL) $(IBOPT) nlupdate$(EXE) $(BINDIR)
+install: ulc$(_EXE) nldiff$(_EXE) nlcrc$(_EXE) nlupdate$(_EXE)
+	$(INSTALL) $(IBOPT) ulc$(_EXE) $(BINDIR)
+	$(INSTALL) $(IBOPT) nldiff$(_EXE) $(BINDIR)
+	$(INSTALL) $(IBOPT) nlcrc$(_EXE) $(BINDIR)
+	$(INSTALL) $(IBOPT) nlupdate$(_EXE) $(BINDIR)
 
 uninstall:
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)ulc$(EXE)
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nldiff$(EXE)
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlcrc$(EXE)
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlupdate$(EXE)
+	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)ulc$(_EXE)
+	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nldiff$(_EXE)
+	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlcrc$(_EXE)
+	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlupdate$(_EXE)

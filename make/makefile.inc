@@ -1,31 +1,31 @@
 # include file for makefiles
 
-NLDIFFOBJS   = nldiff$(OBJ) crc16$(OBJ)
-NLCRCOBJS    = crc16$(OBJ) nlcrc$(OBJ)
-ULCOBJS      = ulcsort$(OBJ) trail$(OBJ) ulcomp$(OBJ) ulc$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) nlfind$(OBJ)
-NLUPDATEOBJS = nlupdate$(OBJ) trail$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) nlfind$(OBJ)
+NLDIFFOBJS   = nldiff$(_OBJ) crc16$(_OBJ)
+NLCRCOBJS    = crc16$(_OBJ) nlcrc$(_OBJ)
+ULCOBJS      = ulcsort$(_OBJ) trail$(_OBJ) ulcomp$(_OBJ) ulc$(_OBJ) string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ)
+NLUPDATEOBJS = nlupdate$(_OBJ) trail$(_OBJ) string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ)
 OBJS = $(NLDIFFOBJS) $(NLCRCOBJS) $(ULCOBJS) $(NLUPDATEOBJS)
 
 
-commonprogs: nldiff$(EXE) nlcrc$(EXE) ulc$(EXE) nlupdate$(EXE)
+commonprogs: nldiff$(_EXE) nlcrc$(_EXE) ulc$(_EXE) nlupdate$(_EXE)
 
-nldiff$(EXE): $(NLDIFFOBJS)
-	$(CC) $(LFLAGS) -o nldiff$(EXE) $(NLDIFFOBJS) $(LIBS)
+nldiff$(_EXE): $(NLDIFFOBJS)
+	$(CC) $(LFLAGS) -o nldiff$(_EXE) $(NLDIFFOBJS) $(LIBS)
 
-nlcrc$(EXE): $(NLCRCOBJS)
-	$(CC) $(LFLAGS) -o nlcrc$(EXE) $(NLCRCOBJS) $(LIBS)
+nlcrc$(_EXE): $(NLCRCOBJS)
+	$(CC) $(LFLAGS) -o nlcrc$(_EXE) $(NLCRCOBJS) $(LIBS)
 
-ulc$(EXE): $(ULCOBJS)
-	$(CC) $(LFLAGS) -o ulc$(EXE) $(ULCOBJS) $(LIBS)
+ulc$(_EXE): $(ULCOBJS)
+	$(CC) $(LFLAGS) -o ulc$(_EXE) $(ULCOBJS) $(LIBS)
 
-nlupdate$(EXE): $(NLUPDATEOBJS)
-	$(CC) $(LFLAGS) -o nlupdate$(EXE) $(NLUPDATEOBJS) $(LIBS)
+nlupdate$(_EXE): $(NLUPDATEOBJS)
+	$(CC) $(LFLAGS) -o nlupdate$(_EXE) $(NLUPDATEOBJS) $(LIBS)
 
 commonclean:
-	-$(RM) *$(OBJ)
+	-$(RM) *$(_OBJ)
 
 commondistclean: commonclean
-	-$(RM) nlcrc$(EXE)
-	-$(RM) nldiff$(EXE)
-	-$(RM) ulc$(EXE)
-	-$(RM) nlupdate$(EXE)
+	-$(RM) nlcrc$(_EXE)
+	-$(RM) nldiff$(_EXE)
+	-$(RM) ulc$(_EXE)
+	-$(RM) nlupdate$(_EXE)
