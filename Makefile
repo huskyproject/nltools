@@ -2,6 +2,8 @@ include ../huskymak.cfg
 
 .PHONY: default
 
+all: default
+
 default: nldiff$(EXE) nlcrc$(EXE) ulc$(EXE) nlupdate$(EXE)
 
 ifeq ($(DEBUG), 1)
