@@ -72,7 +72,7 @@ long get_julian_date( int dd, int mm, int yy)
     else
     {
         /* mm == 0: assume dd is day number in year as per fts */
-        julian += (dd - 1);
+        julian += dd;
     }
 
     /* adjust for the cut from oct 4 to oct 15, 1582 */

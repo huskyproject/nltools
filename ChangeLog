@@ -1,6 +1,11 @@
 Current Version
 ---------------
 
+So  17 Sep 2000 17:56:21 CEST
+tobi:
+- Fixed Julian day number calculation
+- Introduced debug mode (set the NLDEBUG env var to 1 to activate)
+
 Tue Aug 15 00:10:17 UTC 2000
 sms:
 - Fixed uninitialized variable in nlupdate.c (could cause nlupdate not to find 

@@ -8,11 +8,13 @@
 #include "nllog.h"
 
 static FILE *flog = NULL;
+static int debug = 0;
 
 void loginit(s_fidoconfig *config)
 {
     char *dir;
     char *logfile = NULL;
+    char *env;
     
     if (config->logFileDir != NULL)
     {
@@ -37,6 +39,10 @@ void loginit(s_fidoconfig *config)
         }
         free(logfile);
     }
+
+    env = getenv("NLDEBUG");
+    if (env != NULL && *env!='\0')
+      debug = 1;
 }
 
 void logdeinit(void)
@@ -59,6 +65,7 @@ int logentry(char level, char *format, ...)
     FILE *f;
     int rv = 0;
 
+    if (level == LOG_DBG && !debug) return 0;
 
     time(&t);
 

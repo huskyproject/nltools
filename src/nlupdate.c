@@ -90,8 +90,6 @@ int destroy_uncompressdir(char *upath)
     struct dirent *dp;
     DIR *hdir;
 
-    return 1;
-
     hdir = opendir(upath);
     if (hdir == NULL)
     {
@@ -118,6 +116,7 @@ int destroy_uncompressdir(char *upath)
     closedir(hdir);
 
     upath[l-1] = '\0';
+
     if (rmdir(upath))
     {
         logentry(LOG_ERROR, "cannot remove temporary directory %s", 
@@ -284,10 +283,14 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
         
     assert (l >= 4); /* a match should never happen w/o ".???" at the end */
 
+    logentry(LOG_DBG, "get_unc_fn for %s", filename);
+
     if ( isdigit(filename[l-3]) && expday == atoi(filename + l-3))
     {
         /* the file is not compressed and the day number in the file
            name matches the expected day number */
+
+        logentry(LOG_DBG, "file is not compressed");
 
         if ((rv = malloc(strlen(directory) + l + 1)) == NULL)
         {
@@ -302,8 +305,11 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
     {
         /* the file is compressed and its name looks like it could match */
 
+        logentry(LOG_DBG, "file is compressed");
+
         if (!uncompress(config, directory, filename, tempdir))
         {
+            logentry(LOG_DBG, "uncompress failed");
             return NULL;
         }
 
@@ -317,6 +323,7 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
         sprintf(rv + strlen(tempdir) + l - 3, "%03d", expday % 1000);
 
         adaptcase(rv);
+        logentry(LOG_DBG, "expected uncompressed fn after adaptcase: %s", rv);
         if (!nl_fexist(rv))
         {
             free(rv);
@@ -327,6 +334,10 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
     else
     {
         /* no match */
+
+        logentry(LOG_DBG, "file ext %d does not match exp day %d",
+                 atoi(filename + l - 2), expday);
+      
         if (reason)
         {
             *reason = 1; /* means: file extension simply doesn't match */
@@ -552,9 +563,15 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
         {
             for (j = 0; j < difflist->n && !hit; j++)
             {
+
+                logentry(LOG_DBG, "checking %s%s", diffbase, difflist->matches[j]);
+                
                 ufn = get_uncompressed_filename(config, diffbase,
                                                 difflist->matches[j],
                                                 tmpdir, ndnr, NULL);
+
+                logentry(LOG_DBG, "ufn is: %s", ufn!=NULL ? ufn : "(null)" );
+                
                 if (ufn != NULL)
                 {
 
@@ -585,6 +602,9 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
         {
             for (j = 0; j < fulllist->n && !hit; j++)
             {
+
+                logentry(LOG_DBG, "checking %s%s", fullbase, fulllist->matches[j]);
+
                 switch (try_full_update(config, rawnl, fullbase,
                                         fulllist, j, tmpdir, i, nl))
                 {

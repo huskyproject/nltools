@@ -14,7 +14,7 @@ void logdeinit(void);
 #define LOG_ERROR   '!'
 #define LOG_WARNING '?'
 #define LOG_MSG     '+'
-
+#define LOG_DBG     'D'
 
 int logentry(char level, char *format, ...);
 
