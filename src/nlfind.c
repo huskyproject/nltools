@@ -14,6 +14,7 @@ void free_nlist(nlist *pnl)
 {
     int i;
 
+  if(pnl){
     for (i = 0; i < pnl->n; i++)
     {
         free(pnl->matches[i]);
@@ -27,6 +28,7 @@ void free_nlist(nlist *pnl)
         free (pnl->julians);
     }
     free(pnl);
+  }
 }
 
 static nlist *make_nlist(void)
@@ -55,7 +57,7 @@ static nlist *make_nlist(void)
     return res;
 }
 
-static int add_match(nlist *pnl, char *match)
+int add_match(nlist *pnl, char *match)
 {
     char *cp = malloc(strlen(match) + 1);
     char **newm;
@@ -68,6 +70,9 @@ static int add_match(nlist *pnl, char *match)
         w_log(LL_CRIT, "Out of memory.");
         return 0;
     }
+    if ( !pnl && !(pnl = make_nlist()) )
+        return 0;
+
     if (pnl->n == pnl->nmax)
     {
         newm = realloc(pnl->matches, ((pnl->nmax + 1) * 2 )*sizeof(char *));
@@ -101,7 +106,8 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
 
     if (pnl == NULL)
     {
-        return pnl;
+        w_log( LL_FUNC, "find_nodelistfiles() failed " );
+        return NULL;
     }
 
     hdir = opendir(path);
@@ -110,6 +116,7 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
     {
         w_log(LL_ERROR, "Cannot read directory '%s': %s", path, strerror(errno));
         free_nlist(pnl);
+        w_log( LL_FUNC, "find_nodelistfiles() failed " );
         return NULL;
     }
 
@@ -131,6 +138,7 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
             {
                 free_nlist(pnl);
                 closedir(hdir);
+                w_log( LL_FUNC, "find_nodelistfiles() failed (not found)" );
                 return NULL;
             }else
                 w_log( LL_DEBUG, "Found: %s", dp->d_name);
@@ -143,9 +151,11 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
     if (!pnl->n)
     {
         free_nlist(pnl);
+        w_log( LL_FUNC, "find_nodelistfiles() failed" );
         return NULL;
     }
 
+    w_log( LL_FUNC, "find_nodelistfiles() OK" );
     return pnl;
 }
 
@@ -164,8 +174,9 @@ char *findNodelist(s_fidoconfig *config, int i)
                              config->nodelists[i].nodelistName, 0);
 
     if (pnl == NULL)
+    {   w_log( LL_FUNC, "findNodelist() failed (not found)" );
         return NULL;
-
+    }
     nl = malloc((l = strlen(config->nodelistDir)) +
                 strlen(config->nodelists[i].nodelistName) + 5);
 
@@ -173,6 +184,7 @@ char *findNodelist(s_fidoconfig *config, int i)
     {
         w_log(LL_CRIT, "Out of memory.");
         free_nlist(pnl);
+        w_log( LL_FUNC, "findNodelist() failed" );
         return NULL;
     }
 
@@ -195,11 +207,13 @@ char *findNodelist(s_fidoconfig *config, int i)
     {
         free_nlist(pnl);
         free(nl);
+        w_log( LL_FUNC, "findNodelist() failed (don't match)" );
         return NULL;
     }
 
     strcpy(nl + l, pnl->matches[lastmatch]);
 
     free_nlist(pnl);
+    w_log( LL_FUNC, "findNodelist() OK" );
     return nl;
 }

@@ -210,14 +210,14 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
     size_t l = strlen(filename);
     char *rv;
 
+    w_log( LL_FUNC, "get_uncompressed_filename()" );
+
     if (reason)
     {
         *reason = 0;  /* means: all sorts of errors */
     }
 
     assert (l >= 4); /* a match should never happen w/o ".???" at the end */
-
-    w_log(LL_DEBUG, "get_unc_fn for %s", filename);
 
     if ( isdigit(filename[l-3]) && expday == atoi(filename + l-3))
     {
@@ -229,10 +229,12 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
         if ((rv = malloc(strlen(directory) + l + 1)) == NULL)
         {
             w_log(LL_ERROR, "Out of memory");
+            w_log( LL_FUNC, "get_uncompressed_filename() failed" );
             return NULL;
         }
         strcpy(rv, directory);
         strcat(rv, filename);
+        w_log( LL_FUNC, "get_uncompressed_filename() OK" );
         return rv;
     }
     else if (expday % 100 == atoi(filename + l-2))
@@ -250,6 +252,7 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
         if ((rv = malloc(strlen(tempdir) + l + 1)) == NULL)
         {
             w_log(LL_ERROR, "Out of memory");
+            w_log( LL_FUNC, "get_uncompressed_filename() failed" );
             return NULL;
         }
         strcpy(rv, tempdir);
@@ -262,8 +265,10 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
         {
             w_log(LL_WARN, "Uncompressed file '%s' does not exist", rv);
             free(rv);
+            w_log( LL_FUNC, "get_uncompressed_filename() failed" );
             return NULL;
         }
+        w_log( LL_FUNC, "get_uncompressed_filename() OK" );
         return rv;
     }
     else
@@ -278,6 +283,7 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
             *reason = 1; /* means: file extension simply doesn't match */
         }
 
+        w_log( LL_FUNC, "get_uncompressed_filename() failed" );
         return NULL;
     }
 }
@@ -346,11 +352,13 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
     char *newfn;
     int ndnr;
     int rv = 0;
-//    long parsed_julian;
     int reason;
+
+    w_log( LL_FUNC, "try_full_update()");
 
     if (fulllist->julians[j] == -1)
     {
+        w_log( LL_FUNC, "try_full_update() failed (fulllist->julians[j]==-1)");
         return 0;  /* this full update has an unknown date number */
     }
 
@@ -376,6 +384,7 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
             if (newfn == NULL)
             {
                 w_log(LL_ERROR, "Out of memory");
+                w_log( LL_FUNC, "try_full_update() failed");
                 return 1;
             }
             else
@@ -389,6 +398,7 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
                 if (copy_file(ufn, newfn, 1))
                 {
                     w_log(LL_ERROR, "Error copying '%s' to '%s'", ufn, newfn);
+                    w_log( LL_FUNC, "try_full_update() failed");
                     return 1;
                 }
                 else
@@ -417,8 +427,10 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
         {
             w_log(LL_ALERT, "%s does not contain nodelist for day %03d", ufn, ndnr);
         }
+
         free(ufn);
     }
+    w_log( LL_FUNC, "try_full_update() OK");
     return rv;
 }
 
@@ -438,12 +450,12 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
     long julian, i;
     int ndnr;
     int checkdiff = 1;
-    int j;
+    int j=0;
     int rv = 1;
     char  *diffbase = NULL, *fullbase = NULL;
     nlist *difflist = NULL, *fulllist = NULL;
     int hit;
-    char *ufn;
+    char *ufn=NULL;
 
     w_log( LL_FUNC, "do_update()");
 
@@ -482,6 +494,32 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
             fullbase = NULL;
     }
 
+    if (!fulllist && !difflist) {
+      if (config->nodelists[nl].fullUpdateStem) {
+            if ( !access(config->nodelists[nl].fullUpdateStem,F_OK)) {
+              w_log(LL_INFO, "Full update '%s' not an FTS5000 compatible", config->nodelists[nl].fullUpdateStem);
+              xstrscat(&ufn, config->nodelistDir, config->nodelists[nl].nodelistName, NULL);
+
+              w_log( LL_FILE, "Copy '%s' to '%s'", config->nodelists[nl].fullUpdateStem, ufn );
+
+              if (copy_file(config->nodelists[nl].fullUpdateStem, ufn, 1))
+              {
+                  w_log(LL_ERROR, "Error copying '%s' to '%s'", config->nodelists[nl].fullUpdateStem, ufn);
+                  w_log( LL_FUNC, "do_update() failed");
+                  nfree(ufn);
+                  return 0;
+              } else {
+                  w_log( LL_FUNC, "do_update() OK");
+                  nfree(ufn);
+                  return 1;
+              }
+            }else{
+              w_log(LL_INFO, "Full update '%s' not found", config->nodelists[nl].fullUpdateStem);
+              w_log( LL_FUNC, "do_update() failed");
+              return 0;
+            }
+       }
+    }
 
     /* search for diffs or full updates */
 
@@ -528,8 +566,32 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
             }
         }
 
-        if (fulllist != NULL && !hit)       /* search for fulls */
-        {
+        if (!hit){
+          if ((fulllist == NULL) && config->nodelists[nl].fullUpdateStem) {
+                /* non-standard full update nodelist file */
+
+#if 0
+             if(add_match(fulllist,config->nodelists[nl].fullUpdateStem)) {
+                switch (try_full_update(config, rawnl, fullbase,
+                                        fulllist, j, tmpdir, i, nl))
+                {
+                case 0:        /* no hit, no error */
+                    break;
+                case 1:
+                    i = today; /* fatal error; stop searching! */
+                    rv = 0;
+                    break;
+                case 2:
+                    rv = 0;    /* hit, minor error, but don't exit loop! */
+                    hit = 1;
+                    break;
+                case 3:
+                    hit = 1;   /* hit, no errors; */
+                    break;
+                }
+             }
+#endif
+          }else if (fulllist != NULL){                /* search for fulls */
             for (j = 0; j < fulllist->n && !hit; j++)
             {
 
@@ -553,6 +615,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                     break;
                 }
             }
+          }
         }
 
         if (hit)                            /* analyse the new nodelist */
@@ -591,6 +654,8 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
 
     if (fullbase != NULL) free(fullbase);
     if (diffbase != NULL) free(diffbase);
+    free_nlist(fulllist);
+    fulllist=NULL;
 
     /* check if nodelist is extraordinarily old, just for information */
     if (today - julian > 14)
@@ -637,17 +702,43 @@ static int create_instance(s_fidoconfig *config, int nl, long today,
         }
         else
             fullbase = NULL;
+    } else {
+        w_log(LL_ERR, "fullupdate not present");
+        w_log( LL_FUNC, "create_instance() failed");
+        return 0;
     }
 
-    if (fulllist == NULL)
-        return 0;
+    if (fulllist == NULL) {  /* non-standard full update nodelist file */
+       if ( !access(config->nodelists[nl].fullUpdateStem,F_OK)) {
+         w_log(LL_INFO, "Full update '%s' not an FTS5000 compatible", config->nodelists[nl].fullUpdateStem);
+         nfree(fullbase);
+         xstrscat(&fullbase, config->nodelistDir, config->nodelists[nl].nodelistName, NULL);
+
+         w_log( LL_FILE, "Copy '%s' to '%s'", config->nodelists[nl].fullUpdateStem, fullbase );
+
+         if (copy_file(config->nodelists[nl].fullUpdateStem, fullbase, 1))
+         {
+             w_log(LL_ERROR, "Error copying '%s' to '%s'", config->nodelists[nl].fullUpdateStem, fullbase);
+             w_log( LL_FUNC, "create_instance() failed");
+             nfree(fullbase);
+             return 0;
+         }
+
+         nfree(fullbase);
+         w_log( LL_FUNC, "create_instance() OK");
+         return 1;
+       }else{
+         w_log(LL_INFO, "Full update '%s' not found", config->nodelists[nl].fullUpdateStem);
+         w_log( LL_FUNC, "create_instance() failed");
+         return 0;
+       }
+    }
 
     /* search for diffs or full updates */
     hit = 0;
     for (i = today; i > today - 10*366 && !rv; i--)
     {
-        if (fulllist != NULL && !hit)       /* search for fulls */
-        {
+        if((fulllist != NULL)&&(!hit)){       /* search for fulls */
             for (j = 0; j < fulllist->n && !hit; j++)
             {
                 switch (try_full_update(config, NULL, fullbase,
@@ -670,6 +761,7 @@ static int create_instance(s_fidoconfig *config, int nl, long today,
 
     if (fullbase != NULL) free(fullbase);
 
+    w_log( LL_FUNC, "create_instance() rc=%d", rv);
     return rv;
 }
 
