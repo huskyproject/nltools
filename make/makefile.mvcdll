@@ -22,7 +22,7 @@ SRC_DIR	= ..\src\
 OBJS    = ulcsort.obj ulcomp.obj crc16.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
 
 {$(SRC_DIR)}.c.obj:
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+	$(CC) $(CFLAGS) $(CINCL) $(CDEFS) $(COPT) -c $<
 
 all: $(NLTOOLSL) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
 
