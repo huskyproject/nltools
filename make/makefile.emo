@@ -6,14 +6,15 @@ CC=gcc
 OBJ=.obj
 RM=del
 EXE=.exe
-CFLAGS=-Zomf -O3 -I../h -DUNIX
+CFLAGS=-Zomf -O3 -I../h -I../.. -DUNIX
 LFLAGS=-Zomf -O3 -L../../fidoconf -L../../smapi
 LIBS= -lfconfemo -lsmapiemo
+SRC_DIR=../src/
 
 .SUFFIXES:
 .SUFFIXES: .c .obj .exe
 
-.c.obj:
+%$(OBJ): $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -c $<
 
 include makefile.inc

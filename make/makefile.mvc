@@ -9,10 +9,11 @@ TLIB=   lib -nologo
 FCONFL=	..\..\fidoconf\fconfmvc.lib 
 SMAPIL=	..\..\smapi\smapimvc.lib
 NLTOOLSL=	nltoolsmvc.lib
+SRC_DIR=..\src\
 
 OBJS    = ulcsort.obj ulcomp.obj crc16.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
 
-.c.obj:
+{$(SRC_DIR)}.c.obj:
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
 all: $(NLTOOLSL) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
@@ -21,16 +22,16 @@ $(NLTOOLSL): $(OBJS)
 	$(TLIB) /out:$@ $(OBJS)
 
 nldiff.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nldiff.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nldiff.c $(FCONFL) $(NLTOOLSL)
 
 nlcrc.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlcrc.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlcrc.c $(FCONFL) $(NLTOOLSL)
 
 ulc.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ ulc.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\ulc.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
 
 nlupdate.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlupdate.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlupdate.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
 
 clean:
 	-del *.obj

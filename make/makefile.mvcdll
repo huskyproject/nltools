@@ -8,10 +8,11 @@ TLIB=   lib -nologo
 
 FCONFL=	..\..\fidoconf\fconfmvc.lib msvcrt.lib Kernel32.lib /link /opt:nowin98
 NLTOOLSL=	nltoolsmvc.lib 
+SRC_DIR=..\src\
 
 OBJS    = ulcsort.obj ulcomp.obj crc16.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
 
-.c.obj:
+{$(SRC_DIR)}.c.obj:
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
 all: $(NLTOOLSL) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
@@ -20,16 +21,16 @@ $(NLTOOLSL): $(OBJS)
 	$(TLIB) /out:$@ $(OBJS)
 
 nldiff.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nldiff.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nldiff.c $(FCONFL) $(NLTOOLSL)
 
 nlcrc.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlcrc.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlcrc.c $(FCONFL) $(NLTOOLSL)
 
 ulc.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ ulc.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\ulc.c $(FCONFL) $(NLTOOLSL)
 
 nlupdate.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlupdate.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlupdate.c $(FCONFL) $(NLTOOLSL)
 
 clean:
 	-del *.obj

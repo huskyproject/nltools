@@ -1,6 +1,7 @@
 # BORLAND C 2.0 FOR OS/2
 # legacy makefile
 
+SRC_DIR=..\src\
 CC=bcc -v
 OBJ=.obj
 RM=del
@@ -14,7 +15,7 @@ include makefile.inc
 .SUFFIXES:
 .SUFFIXES: .c .obj .exe
 
-.c.obj:
+{$(SRC_DIR)}.c$(OBJ):
 	$(CC) $(CFLAGS) -c $<
 
 all: commonprogs
