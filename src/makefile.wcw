@@ -1,0 +1,28 @@
+LINK=wlink
+CC=wcl386
+CFLAGS=-I..\..\smapi -I..\..\fidoconfig -zq -wx -bt=nt -l=nt
+COPT = -oneatx -5
+LFLAGS=
+
+OBJS = ulcsort.obj ulcomp.obj crc16.obj nlcrc.obj nldiff.obj ulc.obj nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj
+
+.c.obj: 
+	$(CC) $(CFLAGS) $(COPT) -c $<
+
+all: $(OBJS) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
+
+nldiff.exe: nldiff.obj crc16.obj
+  $(LINK) $(LFLAGS) FILE nldiff.obj, crc16.obj NAME nldiff.exe 
+
+nlcrc.exe: crc16.obj nlcrc.obj
+	$(LINK) $(LFLAGS) NAME nlcrc.exe FILE crc16.obj, nlcrc.obj
+
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj
+	$(LINK) $(LFLAGS) NAME ulc.exe FILE ulcsort.obj, ulcomp.obj, ulc.obj, nllog.obj, string.obj, julian.obj, nldate.obj, nlfind.obj, patmat.obj LIBRARY ..\..\fidoconfig\fidoconfig.lib
+
+nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj
+	$(LINK) $(LFLAGS) NAME nlupdate.exe FILE nlupdate.obj, nllog.obj, string.obj, nldate.obj, julian.obj, nlfind.obj, patmat.obj LIBRARY ..\..\fidoconfig\fidoconfig.lib
+
+clean:
+	del *.obj
+	del *.exe
