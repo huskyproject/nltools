@@ -535,12 +535,12 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                          "instance of nodelist %s vanished during update!?",
                          config->nodelists[nl].nodelistName);
             }
-            if ((i = parse_nodelist_date(rawnl)) == -1)
+            else if ((i = parse_nodelist_date(rawnl)) == -1)
             {
                 free(rawnl);
                 rawnl = NULL;
             }
-            if (i <= julian)
+            else if (i <= julian)
             {
                 logentry(LOG_ERROR,
                          "nodelist %s still as old as before!?", rawnl);
