@@ -10,6 +10,8 @@ export DH_COMPAT=3
 export DEBIAN=1
 export PACKAGE=nltools
 export VERSION=1.2
+# Next Line to build debug-versions !
+export DEB_BUILD_OPTIONS=nostrip
 
 configure: configure-stamp
 configure-stamp:

@@ -1,11 +1,8 @@
 nltools for Debian
 ------------------
 
-English Readers: Try babelfish.altavista.com or wait until someone translates
-this Text. :)
-
-Dieses Paket liefert eine Beispielkonfiguration in sample.lnx mit.
-Nichtsdestotrotz, es wird fidoconf benutzt, also alle Konfiguration hat in
-/etc/fido/config zu erfolgen.
+This Package has a Sample Configuration in sample.lnx.
+But i link again fidoconf so you must made your config settings in the
+central Fidoconfig (/etc/fido/config).
 
  -- Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>, Sat, 31 Mar 2001 18:13:49 +0200
