@@ -4,6 +4,7 @@
 #include <errno.h>
 
 #include <fidoconf/fidoconf.h>
+#include <huskylib/huskylib.h>
 #include <huskylib/log.h>
 
 #include "ulc.h"

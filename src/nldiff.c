@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <huskylib/huskylib.h>
 #include "crc16.h"
 #include "version.h"
 

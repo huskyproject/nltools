@@ -21,7 +21,6 @@
 
 #include <fidoconf/fidoconf.h>
 #include <huskylib/xstr.h>
-#include <huskylib/adcase.h>
 #include <fidoconf/common.h>
 #include <huskylib/log.h>
 
