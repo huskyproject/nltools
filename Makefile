@@ -65,9 +65,15 @@ distclean: clean
 	-$(RM) ulc$(EXE)
 	-$(RM) nlupdate$(EXE)
 
-install:
+install: ulc$(EXE) nldiff$(EXE) nlcrc$(EXE) nlupdate$(EXE)
 	$(INSTALL) $(IBOPT) ulc$(EXE) $(BINDIR)
 	$(INSTALL) $(IBOPT) nldiff$(EXE) $(BINDIR)
 	$(INSTALL) $(IBOPT) nlcrc$(EXE) $(BINDIR)
 	$(INSTALL) $(IBOPT) nlupdate$(EXE) $(BINDIR)
+
+uninstall:
+	-$(RM) $(BINDIR)$(DIRSEP)ulc$(EXE)
+	-$(RM) $(BINDIR)$(DIRSEP)nldiff$(EXE)
+	-$(RM) $(BINDIR)$(DIRSEP)nlcrc$(EXE)
+	-$(RM) $(BINDIR)$(DIRSEP)nlupdate$(EXE)
 
