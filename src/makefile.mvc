@@ -6,7 +6,8 @@ CDEFS=  -D__NT__ -DNT -DWINNT -D_CONSOLE
 COPT=   -O2
 TLIB=   lib -nologo
 
-FCONFL=	..\..\fidoconf\fconfmvc.lib ..\..\smapi\fexist.obj
+FCONFL=	..\..\fidoconf\fconfmvc.lib 
+SMAPIL=	..\..\smapi\smapimvc.lib
 NLTOOLSL=	nltoolsmvc.lib
 
 OBJS    = ulcsort.obj ulcomp.obj crc16.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
@@ -26,10 +27,10 @@ nlcrc.exe:
         $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlcrc.c $(FCONFL) $(NLTOOLSL)
 
 ulc.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ ulc.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ ulc.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
 
 nlupdate.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlupdate.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlupdate.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
 
 clean:
 	-del *.obj
