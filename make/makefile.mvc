@@ -1,20 +1,27 @@
-# Microsoft Visual C++ Makefile
+# $Id$
+# Microsoft Visual C++ Makefile for build static program(s)
+# No support for the Husky build environment.
+#
+# Tested on MS Visual C 6.0
+#
 
-CC=     cl
-CFLAGS= -nologo -Zp1 -I..\.. -I..\h
-CDEFS=  -D__NT__ -DNT -DWINNT -D_CONSOLE
-COPT=   -O2
-TLIB=   lib -nologo
+CC	= cl
+CFLAGS	= -nologo -Zp1 
+CINCL	= -I..\h -I..\..\fidoconf -I..\..\smapi -I..\..\huskylib
+CDEFS	= -D__NT__ -DNT -DWINNT -D_CONSOLE
+COPT	= -O2
+TLIB	= lib -nologo
 
-FCONFL=	..\..\fidoconf\fconfmvc.lib 
-SMAPIL=	..\..\smapi\smapimvc.lib
-NLTOOLSL=	nltoolsmvc.lib
-SRC_DIR=..\src\
+LIBS	= ..\..\huskylib\make\huskymvc.lib \
+	  ..\..\fidoconf\fconfmvc.lib
+
+NLTOOLSL= nltoolsmvc.lib
+SRC_DIR	= ..\src\
 
 OBJS    = ulcsort.obj ulcomp.obj crc16.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
 
 {$(SRC_DIR)}.c.obj:
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+	$(CC) $(CFLAGS) $(CINCL) $(CDEFS) $(COPT) -c $<
 
 all: $(NLTOOLSL) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
 
@@ -22,16 +29,16 @@ $(NLTOOLSL): $(OBJS)
 	$(TLIB) /out:$@ $(OBJS)
 
 nldiff.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nldiff.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nldiff.c $(LIBS) $(NLTOOLSL)
 
 nlcrc.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlcrc.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlcrc.c $(LIBS) $(NLTOOLSL)
 
 ulc.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\ulc.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\ulc.c $(LIBS) $(NLTOOLSL)
 
 nlupdate.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlupdate.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(CINCL) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlupdate.c $(LIBS) $(NLTOOLSL)
 
 clean:
 	-del *.obj

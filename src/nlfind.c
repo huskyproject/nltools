@@ -141,7 +141,7 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
             if (!add_match(pnl, dfile))
             {
                 free_nlist(pnl);
-                closedir(hdir);
+                husky_closedir(hdir);
                 w_log( LL_FUNC, "find_nodelistfiles() failed (not found)" );
                 return NULL;
             }else

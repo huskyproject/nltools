@@ -26,7 +26,7 @@
 #endif
 
 
-char * smapilinkage Strip_Trailing(char *str, char strip)
+/* char * smapilinkage Strip_Trailing(char *str, char strip)
 {
     int x;
     if (str && *str && str[x = strlen(str) - 1] == strip)
@@ -45,4 +45,4 @@ char * smapilinkage Add_Trailing(char *str, char add)
         str[x + 2] = '\0';
     }
     return str;
-}
+} */

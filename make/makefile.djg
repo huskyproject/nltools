@@ -1,4 +1,6 @@
-# This builds a DOS DPMI executable with DJGPP
+# $Id$
+# Makefile to build DOS DPMI program(s) with DJGPP
+# No support for the Husky build environment.
 
 .PHONY: default
 
@@ -6,16 +8,17 @@ CC=gcc
 OBJ=.o
 EXE=.exe
 RM=del
-CFLAGS=-O3 -I../h -I../.. -DDOS -DMSDOS -D__FLAT__ -DFLAT -DNOSEMAPHORES
+CFLAGS=-O3 -DDOS -DMSDOS -D__FLAT__ -DFLAT
+CINCL=-I../h -I../../fidoconf -I../../smapi -I../../huskylib
 LFLAGS=-s -O3 -mcpu=i486
-LIBS=../../fidoconf/fconfdjg.a ../../smapi/smapidjg.a
+LIBS=../../fidoconf/fconfdjg.a ../../huskylib/make/huskydjg.a
 SRC_DIR=../src/
 
 .SUFFIXES:
 .SUFFIXES: .c .o .exe
 
 %$(OBJ): $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(CINCL) -c $<
 
 include makefile.inc
 
