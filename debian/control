@@ -1,0 +1,27 @@
+Source: nltools
+Section: mail
+Priority: extra
+Maintainer: Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>
+Build-Depends: debhelper (>> 3.0.0), smapi (>= 1.6.4-14), fidoconf (>= 0.11-1)
+Standards-Version: 3.5.2
+
+Package: nltools
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Nodelist Management Tools (unstable)
+ This archive contains a set of nodelist management utilities.
+ The following functionality is provided:
+ .
+ - Compiling raw nodelists into a FIDOUSER.LST file, that can be used for
+   nodelist lookup by sysop name, as supported by Msged and others.
+ .
+ - Keeping your raw nodelists up to date, i.E. logic is provided to find the
+   nodediff files that apply to your current nodelist files, and a tool to 
+   apply nodediffs to nodelists.
+ .
+ This package does NOT presently include something like a V7 nodelist
+ compiler.  Therefore, this package is enough if you are running an IP node,
+ but you need additional software if you are running Binkley or some other
+ software that requires an V7 nodelist index.
+ .
+ This is the UNSTABLE Release.

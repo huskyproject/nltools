@@ -1,0 +1,15 @@
+nltools (1.2-2) unstable; urgency=low
+
+  * Some small changes, Debian-Specific
+
+ -- Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>  Sat, 14 Apr 2001 16:45:11 +0200
+
+nltools (1.2-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>  Wed, 11 Apr 2001 22:56:02 +0200
+
+Local variables:
+mode: debian-changelog
+End:
