@@ -327,7 +327,15 @@ existing fidoconfig file.
 
 VII) COMPILING
 
-- Download and compile SMAPI and FIDOCONFIG:
+You can compile nltools as part of the Husky project using the top level
+Makefile and a proper huskymak.cfg. This works particularly well and easy on
+Linux and other Unixes. Instructions on how to do this can be found in the
+"huskybse" package (version 0.1-stable), in the file INSTALL.
+
+The following instructions are for users that cannot use the huskymak.cfg
+way, but must use legacy makefiles.
+
+- Download and compile SMAPI 1.6.4-stable and FIDOCONFIG 0.10-stable.
 - Extract nltools on the same level as fidoconfig, e.g. you could have:
     ~/fido/smapi
     ~/fido/fidoconfig
