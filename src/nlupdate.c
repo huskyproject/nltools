@@ -19,6 +19,9 @@
 #include "dir.h"
 #include "ulc.h" /* for REV */
 
+/* store the nldiff command name */
+static char *differ = NULL;
+
 static char *mk_uncompressdir(char *nldir)
 {
     char *upath;
@@ -318,6 +321,30 @@ static char *basedir(const char *stemname)
     return rv;
 }
 
+static int call_differ(char *nodelist, char *nodediff)
+{
+    char *cmd;
+    int rv;
+
+    cmd = malloc(strlen(differ) + strlen(nodelist) + strlen(nodediff) + 6);
+    if (cmd == NULL)
+    {
+        logentry(LOG_ERROR, "out of memory");
+        return 0;
+    }
+    
+    sprintf(cmd,"%s -n %s %s", differ, nodelist, nodediff);
+    logentry(LOG_MSG, "executing %s", cmd);
+    rv = system(cmd);
+    if (rv != 0)
+    {
+        logentry(LOG_ERROR, "diff processor returned %d", rv);
+        return 0;
+    }
+    return 1;
+}
+
+
 /* today is passed as argument, because we only want to call julian_today()
    once. Imagine nlupdate being started at 23:59:59 .... */
 
@@ -397,8 +424,11 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                     if (julian == parse_nodelist_date(ufn))
                     {
                         logentry(LOG_MSG, "found diff update: %s", ufn);
-                        
-                        /* execute the differ - not implemented yet */
+
+                        if (call_differ(rawnl, ufn))
+                        {
+                            hit = 1;
+                        }
                     }
                     else
                     {
@@ -514,7 +544,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
     if (today - julian > 14)
     {
         logentry(LOG_WARNING,
-                 "%s is more than two weeks, but still no way to update it",
+                 "%s is more than two weeks old, but still no way to update it",
                  rawnl);
     }
 
@@ -581,11 +611,30 @@ static int process(s_fidoconfig *config)
     return rv;
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     s_fidoconfig *config = readConfig();
     int rv;
+    int l = 0;
 
+    /* construct the name of the nldiff command */
+    if (argc)
+    {
+        l = strlen(argv[0]);
+        if (l)
+        {
+            for (l--; l >= 0 && argv[0][l] != '/' && argv[0][l] != '\\' &&
+                 argv[0][l] != ':'; l--);
+
+            l++;
+        }
+    }
+    differ = malloc(l + 7);
+    if (l) memcpy(differ, argv[0], l);
+    strcpy(differ + l, "nldiff");
+
+
+    /* run the main program */
     if (config != NULL)
     {
         loginit(config);
@@ -595,12 +644,25 @@ int main(void)
 
         logdeinit();
         disposeConfig(config);
+        free(differ);
         return rv;
         
     }
     else
     {
         fprintf (stderr, "Fatal: Cannot open fidoconfig.\n");
+        free(differ);
         return 8;
     }
 }
+
+
+
+
+
+
+
+
+
+
+

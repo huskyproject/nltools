@@ -266,7 +266,7 @@ int parse_args (int argc, char **argv, char **listname, char **diffname,
                 int *pflags)
 {
     char *args[2];
-    int i,j;
+    int i,j = 0;
     int flags;
     
     flags = 0;

@@ -58,7 +58,7 @@ static int add_match(nlist *pnl, char *match)
     }
     if (pnl->n == pnl->nmax)
     {
-        if ((new = realloc(pnl->matches, pnl->nmax + 5)) == NULL)
+        if ((new = realloc(pnl->matches, (pnl->nmax + 5)*sizeof(char *))) == NULL)
         {
             logentry(LOG_ERROR, "Out of memory.");
             return 0;
