@@ -5,8 +5,8 @@
 .PHONY: default
 
 CC=gcc
-OBJ=.o
-EXE=.exe
+_OBJ=.o
+_EXE=.exe
 RM=del
 CFLAGS=-O3 -DDOS -DMSDOS -D__FLAT__ -DFLAT
 CINCL=-I../h -I../../fidoconf -I../../smapi -I../../huskylib
@@ -17,7 +17,7 @@ SRC_DIR=../src/
 .SUFFIXES:
 .SUFFIXES: .c .o .exe
 
-%$(OBJ): $(SRC_DIR)%.c
+%$(_OBJ): $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(CINCL) -c $<
 
 include makefile.inc
