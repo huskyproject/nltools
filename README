@@ -3,7 +3,7 @@ Windows Users: If this file is not displayed correctly, use Wordpad to view it!
 Husky Nodelist Utilities Documentation
 ======================================
 
-Written 1999 by Tobias Ernst and released to the Public Domain.
+Written 2000 by Tobias Ernst and released to the Public Domain.
 
 I) Abstract
 
@@ -43,7 +43,8 @@ binaries have the fidoconfig linked in statically.
 But if you want to compile the tools, you do need the fidoconfig library. 
 If you do not know what Fidoconfig is, visit
 http://husky.physcip.uni-stuttgart.de. This release of the nltools is
-designed to be built against fidoconfig version "0.10-stable".
+designed to be built against fidoconfig. You will also require the smapi
+library because of some header files only found therein.
 
 If you only want to use the precompiled binaries, you must set the
 environment variable FIDOCONFIG to point to a fidoconfig-style configuration
@@ -325,7 +326,15 @@ existing fidoconfig file.
 
 VII) COMPILING
 
-- Download and compile SMAPI and FIDOCONFIG:
+You can compile nltools as part of the Husky project using the top level
+Makefile and a proper huskymak.cfg. This works particularly well and easy on
+Linux and other Unixes. Instructions on how to do this can be found in the
+"huskybse" package, in the file INSTALL.
+
+The following instructions are for users that cannot use the huskymak.cfg
+way, but must use legacy makefiles.
+
+- Download and compile SMAPI and FIDOCONFIG.
 - Extract nltools on the same level as fidoconfig, e.g. you could have:
     ~/fido/smapi
     ~/fido/fidoconfig
@@ -376,5 +385,3 @@ You can also visit my private projects site at
 http://www.physcip.uni-stuttgart.de/tobi/projects.html
 
 [EOF]
-
-
