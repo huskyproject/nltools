@@ -1,3 +1,7 @@
+2003-03-09 Sunday 04:57  nssoft
+
+	* Makefile (1.11), src/nlupdate.c (1.32): link with huskylib
+
 2003-02-20 Thursday 09:23  sfpavel
 
 	* HISTORY (1.1): Add HISTORY file
