@@ -1,29 +1,26 @@
-# Legacy makefile for MinGW compiler
-#
-# This builds a Win32 executable the requires CRTDLL.DLL
 
+CC=gcc
+RM=del
 
-CC=i386-mingw32-gcc
+CDEFS=-D__NT__ -D__MINGW__ -c -I../..
+CFLAGS=-Wall
+COPT=-O3
+
+LFLAGS=-L../../smapi -L../../fidoconf
+LIBS=-lfidoconfigmgw -lsmapimgw
+
 OBJ=.o
 EXE=.exe
-RM=del
-CFLAGS=-O3 -I../.. -DNT -DWINNT
-LFLAGS=-O3 -L../../fidoconf
-LIBS=../../fidoconf/libfidoconfigmgw.a ../../smapi/libsmapimgw.a
-
-.SUFFIXES:
-.SUFFIXES: .c .o .exe
-
-.c.o:
-	$(CC) $(CFLAGS) -c $<
 
 include makefile.inc
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) $*.c
 
 all: commonprogs
 
 default: all
 
-clean:
-	-$(RM) *$(OBJ)
+clean: commonclean
 
-distclean: clean commondistclean
+distclean: commondistclean
