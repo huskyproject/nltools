@@ -1,0 +1,27 @@
+# Legacy makefile for FreeBSD
+#
+# No support for husky build enviroment (huskymak.cfg)
+# Use GNU version of make
+
+.PHONY: default
+
+CC    = gcc
+RM    = rm
+EXE   =
+OBJ   = .o
+CFLAGS= -I../.. -DUNIX
+LFLAGS= -s -L../../fidoconf -L../../smapi
+LIBS  = -lfidoconfigbsd -lsmapibsd
+
+.c.o: 
+	$(CC) $(CFLAGS) -c $<
+
+include makefile.inc
+
+all: commonprogs
+
+default: all
+
+clean: commonclean
+
+commondistclean: commonclean commondistclean
