@@ -23,7 +23,7 @@
  */
 
 
-#if defined(UNIX) || defined(__MINGW32__) || defined(EMX) || defined(RSXNT) || defined(__DJGPP__)
+#if defined(UNIX) || defined(__MINGW32__) || defined(EMX) || defined(RSXNT) || defined(__DJGPP__) || defined(__WATCOMC__)
 /* These are compilers that have both a working stat() and (important!) the
    S_ISREG and S_ISDIR macros. The problem is that while stat() is POSIX, those
    macros are not. For compilers that do not provide these macros, we revert to
@@ -312,13 +312,13 @@ int _fast direxist(char *directory)
 
 int main(void)
 {
-    printf("asdfe=%d\n", direxist("c:\\asdfe"));
-    printf("blank=%d\n", direxist("c:\\blank"));
-    printf("tc=%d\n", direxist("c:\\tc"));
-    printf("c:\\=%d\n", direxist("c:\\"));
-    printf("d:\\=%d\n", direxist("d:\\"));
-    printf("e:\\=%d\n", direxist("e:\\"));
-    printf("f:\\=%d\n", direxist("f:\\"));
+    printf("directory c:\\asdfe=%d\n", direxist("c:\\asdfe"));
+    printf("file c:\\blank=%d\n", fexist("c:\\blank"));
+    printf("directory c:\\tc=%d\n", direxist("c:\\tc"));
+    printf("directory c:\\=%d\n", direxist("c:\\"));
+    printf("directory d:\\=%d\n", direxist("d:\\"));
+    printf("directory e:\\=%d\n", direxist("e:\\"));
+    printf("directory j:\\test=%d\n", direxist("j:\\test"));
     return 0;
 }
 
