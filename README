@@ -204,7 +204,9 @@ existing fidoconfig file if you have one.
    for Fidonet node diffs especially; you can get it by f'requesting
    ARC521_2.ZIP at 2:2476/418. This file contains a family mode executable 
    (DOS + OS/2, also runs on Windows 95 and NT), as well as source code that 
-   can be compiled on Unix without major problems.
+   can be compiled on Unix without major problems. BeOS users can get a BeOS
+   version of ARC 5.2.1 in the file ARC521BE.ZIP from 2:2476/418 or from
+   http://www.physcip.uni-stuttgart.de/tobi/bin/arc521be.zip.
 
    On Unix/Linux, use the follwing (adapt the path if necessary):
 
