@@ -1,30 +1,49 @@
-# Legacy makefile for Cygwin/mingw
-#
-# Don't use Husky build enviroment
+# $Id$
+# Makefile to build NLTOOLS/win32 with Mingw32 from Cygwin.
+# No support for the Husky build environment.
 
-.PHONY: default
-
-SRC_DIR=../src/
-CC=gcc
-OBJ=.o
-RM=rm
-EXE=.exe
-CFLAGS=-O3 -D__NT__ -I../h -I../.. -Wall -pedantic -Wno-char-subscripts -mno-cygwin
-LFLAGS=-mno-cygwin
-LIBS=../../fidoconf/libfidoconfigcyg.a ../../smapi/libsmapicyg.a  -lmingwex
-
-.SUFFIXES:
-.SUFFIXES: .c .o .exe
-
-%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $<
+# include Husky-Makefile-Config,
+# copy this file from ../../huskybse/huskymak.cfg.cyg
+include ../../huskymak.cfg
 
 include makefile.inc
 
-all: commonprogs
+# includes directories
+CINCL	= -I$(H_DIR) -I../../fidoconf -I../../smapi/ -I../../huskylib/
 
-default: all
+# libraries need to build binary file
+LIBS	= ../../fidoconf/make/$(LIBPREFIX)fidoconfig$(LIBSUFFIX)$(_LIB) \
+	  ../../huskylib/make/$(LIBPREFIX)husky$(LIBSUFFIX)$(_LIB)
 
-clean:  commonclean
+READMEFILES=../ChangeLog.old ../ChangeLog ../HISTORY ../README \
+	    ../sample.be ../sample.cfg ../sample.lnx
 
-distclean: clean commondistclean
+default:
+	@echo
+	@echo Run \'make programs\' to build static version of programs \($(PROGRAMS)\)
+	@echo
+	@echo Run \'make all\' to build all above
+
+all:	programs
+
+programs: $(PROGRAMS)
+
+%$(_OBJ): $(_SRC_DIR)%$(_C)
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(OPTCFLAGS) $<
+
+$(NLDIFF): $(NLDIFFOBJS)
+	@echo Create $(NLDIFF)
+	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
+$(NLCRC): $(NLCRCOBJS)
+	@echo Create $(NLCRC)
+	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
+$(ULC): $(ULCOBJS)
+	@echo Create $(ULC)
+	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
+$(NLUPDATE): $(NLUPDATEOBJS)
+	@echo Create $(NLUPDATE)
+	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)

@@ -1,33 +1,47 @@
 # $Id$
-#
-# Legacy makefile for IBM OS/2 + EMX Runtime library
-# Do not support husky build enviroment
+# Makefile to build NLTOOLS/OS2 with gcc 3.x.x from EMX v0.9d.
+# No support for the Husky build environment.
 
-.PHONY: default
-
-CC=gcc
-OBJ=.o
-RM=del
-EXE=.exe
-
-CFLAGS = -DOS2 -I. -I../h -I../.. -c -O3
-LFLAGS = -Zcrtdll
-LIBS   =../../fidoconf/fconfemx.a ../../smapi/smapiemx.a
-SRC_DIR=../src
-
-.SUFFIXES:
-.SUFFIXES: .c .o .exe
-
-%$(OBJ): $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $<
+# include Husky-Makefile-Config,
+# copy this file from ../../huskybse/huskymak.cfg.emx
+include ../../huskymak.cfg
 
 include makefile.inc
 
-all: commonprogs
+# includes directories
+CINCL	= -I$(H_DIR) -I../../fidoconf -I../../smapi/ -I../../huskylib/
 
-default: all
+# libraries need to build binary file
+LIBS	= ../../fidoconf/make/$(LIBPREFIX)fidoconfig$(LIBSUFFIX)$(_LIB) \
+	  ../../huskylib/make/$(LIBPREFIX)husky$(LIBSUFFIX)$(_LIB)
 
-clean:  commonclean
-	-$(RM) $(OBJS)
+READMEFILES=../ChangeLog.old ../ChangeLog ../HISTORY ../README \
+	    ../sample.be ../sample.cfg ../sample.lnx
 
-distclean: clean commondistclean
+default:
+	@echo Run 'make programs' to build static version of programs ($(PROGRAMS))
+	@echo Run 'make all' to build all above
+
+all:	programs
+
+programs: $(PROGRAMS)
+
+%$(_OBJ): $(_SRC_DIR)%$(_C)
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(OPTCFLAGS) $<
+
+$(NLDIFF): $(NLDIFFOBJS)
+	@echo Create $(NLDIFF)
+	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
+$(NLCRC): $(NLCRCOBJS)
+	@echo Create $(NLCRC)
+	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
+$(ULC): $(ULCOBJS)
+	@echo Create $(ULC)
+	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
+$(NLUPDATE): $(NLUPDATEOBJS)
+	@echo Create $(NLUPDATE)
+	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
