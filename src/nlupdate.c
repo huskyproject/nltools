@@ -433,7 +433,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                        they apply as the first line, so we need to compare the
                        parsed date with julian, not with i */
                     
-                    if ((julian == parse_nodelist_date(ufn)) != -1)
+                    if (julian == parse_nodelist_date(ufn))
                     {
                         logentry(LOG_MSG, "found diff update: %s", ufn);
 
@@ -461,7 +461,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                                                 tmpdir, ndnr);
                 if (ufn != NULL)
                 {
-                    if ((i == parse_nodelist_date(ufn)) != -1)
+                    if (i == parse_nodelist_date(ufn))
                     {
                         char *newfn;
 
