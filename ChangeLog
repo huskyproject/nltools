@@ -1,3 +1,8 @@
+2002-11-10 Sunday 09:45  sfpavel
+
+	* debian/changelog, src/version.h (nltools-1_2-stable.[2,1]):
+	nltools 1.2 release
+
 2002-10-22 Tuesday 10:59  sfpavel
 
 	* debian/: changelog, control (nltools-1_2-stable.[1,1]): New
