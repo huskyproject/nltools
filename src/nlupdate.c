@@ -10,7 +10,7 @@
 #   include <unistd.h>
 #else
 #   include <io.h>
-#   if (defined(_MSC_VER) && (_MSC_VER >= 1200) || (__EMX__))
+#   if (defined(_MSC_VER) && (_MSC_VER >= 1200)) || defined(__EMX__)
 #       define F_OK 00
 #       define R_OK 04
 #   endif
