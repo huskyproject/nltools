@@ -173,7 +173,7 @@ static int ulc_line(FILE *fin, FILE *fout, unsigned format,
                     {
                         type = T_HOST;
                     }
-                    else if (!*ptr)
+                    else if ((!*ptr) || (!casecmp(ptr, "POINT")))
                     {
                         type = T_NODE;
                     }
@@ -199,7 +199,7 @@ static int ulc_line(FILE *fin, FILE *fout, unsigned format,
 
                 case 3:
                     break;
-                    
+
                 case 4:
                     if (type == T_NODE)
                     {
