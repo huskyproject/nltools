@@ -4,8 +4,9 @@ nltools (1.2-6) unstable; urgency=low
   * Install sample config into /etc/husky
   * Clean up debian/rules
   * Add ChangeLog.old to distribution
+  * Fix depends
 
- -- Pavel Andreew <pavel@collage.etel.ru>  Fri,  4 Oct 2002 18:20:22 +0600
+ -- Pavel Andreew <pavel@collage.etel.ru>  Fri, 18 Oct 2002 11:40:08 +0600
 
 nltools (1.2-5) unstable; urgency=low
 
