@@ -1,3 +1,7 @@
+2003-03-11 Tuesday 22:01  d_sergienko
+
+	* Makefile (1.12): fix linking
+
 2003-03-09 Sunday 04:57  nssoft
 
 	* Makefile (1.11), src/nlupdate.c (1.32): link with huskylib
