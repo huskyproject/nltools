@@ -16,10 +16,10 @@ all: default
 default: nldiff$(EXE) nlcrc$(EXE) ulc$(EXE) nlupdate$(EXE)
 
 ifeq ($(DEBUG), 1)
-  CFLAGS= -I$(INCDIR) $(DEBCFLAGS)
+  CFLAGS= -I$(INCDIR) -Ih $(DEBCFLAGS)
   LFLAGS=$(DEBLFLAGS)
 else
-  CFLAGS= -I$(INCDIR) $(OPTCFLAGS)
+  CFLAGS= -I$(INCDIR) -Ih $(OPTCFLAGS)
   LFLAGS=$(OPTLFLAGS)
 endif
 
