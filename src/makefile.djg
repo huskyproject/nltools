@@ -6,8 +6,8 @@ CC=gcc
 OBJ=.o
 EXE=.exe
 RM=del
-CFLAGS=-O3 -I../.. -DDOS -DMSDOS -D__FLAT__ -DFLAT
-LFLAGS=-s -O3
+CFLAGS=-O3 -I../.. -DDOS -DMSDOS -D__FLAT__ -DFLAT -DNOSEMAPHORES
+LFLAGS=-s -O3 -mcpu=i486
 LIBS=../../fidoconf/fconfdjg.a ../../smapi/smapidjg.a
 
 .SUFFIXES:

@@ -1,12 +1,18 @@
-# This builds a OS/2 executable the requires EMX RT-I
+# $Id$
+#
+# Legacy makefile for IBM OS/2 + EMX Runtime library
+# Do not support husky build enviroment
+
+.PHONY: default
 
 CC=gcc
 OBJ=.o
 RM=del
 EXE=.exe
-CFLAGS=-Zcrtdll -O3 -I../.. -DOS2
-LFLAGS=-s -Zcrtdll -O3 -L../../fidoconf -L../../smapi
-LIBS= -lfconfemx -lsmapiemx
+
+CFLAGS = -DOS2 -I. -I../.. -c -O3
+LFLAGS = -Zcrtdll
+LIBS   =../../fidoconf/fconfemx.a ../../smapi/smapiemx.a
 
 .SUFFIXES:
 .SUFFIXES: .c .o .exe
@@ -20,7 +26,7 @@ all: commonprogs
 
 default: all
 
-clean:
-	-$(RM) *$(OBJ)
+clean:  commonclean
+	-$(RM) $(OBJS)
 
 distclean: clean commondistclean
