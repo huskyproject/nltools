@@ -9,7 +9,7 @@ CC    = gcc
 RM    = rm
 EXE   =
 OBJ   = .o
-CFLAGS= -I../.. -DUNIX
+CFLAGS= -I../h -DUNIX
 LFLAGS= -s -L../../fidoconf -L../../smapi
 LIBS  = -lfidoconfigsun -lsmapisun
 

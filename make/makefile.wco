@@ -5,7 +5,7 @@
 
 LINK=wlink
 CC=wcl386
-CFLAGS=-I..\.. -zq -wx -bt=os2v2 -l=os2v2 -DOS2 -D__OS2__
+CFLAGS=-I..\h -zq -wx -bt=os2v2 -l=os2v2 -DOS2 -D__OS2__
 COPT = -oneatx -5
 LFLAGS=system os2v2
 LIBS= LIBRARY ..\..\fidoconf\fconfwco.lib LIBRARY ..\..\fidoconf\smapiwco.lib

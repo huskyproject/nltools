@@ -5,7 +5,7 @@ CC=bcc -v
 OBJ=.obj
 RM=del
 EXE=.exe
-CFLAGS=-I..\.. -I..\..\smapi -I..\..\fidoconf -DOS2
+CFLAGS=-I..\h -I..\..\smapi -I..\..\fidoconf -DOS2
 LFLAGS=
 LIBS=..\..\fidoconf\fconfbco.lib ..\..\smapi\smapibco.lib
 

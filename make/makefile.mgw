@@ -2,7 +2,7 @@
 CC=gcc
 RM=del
 
-CDEFS=-D__NT__  -c -I../..
+CDEFS=-D__NT__  -c -I../h
 CFLAGS=-Wall
 COPT=-O3
 

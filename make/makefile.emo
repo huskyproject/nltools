@@ -6,7 +6,7 @@ CC=gcc
 OBJ=.obj
 RM=del
 EXE=.exe
-CFLAGS=-Zomf -O3 -I../.. -I../.. -DUNIX
+CFLAGS=-Zomf -O3 -I../h -DUNIX
 LFLAGS=-Zomf -O3 -L../../fidoconf -L../../smapi
 LIBS= -lfconfemo -lsmapiemo
 

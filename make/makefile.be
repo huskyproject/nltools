@@ -8,7 +8,7 @@ OBJ=.o
 CC=gcc
 RM=rm
 EXE=
-CFLAGS=-O3 -I../.. -DUNIX
+CFLAGS=-O3 -I../h -DUNIX
 LFLAGS=-s -L../../fidoconf -L../../smapi
 LIBS= -lfidoconfigbe -lsmapibe
 

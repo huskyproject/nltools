@@ -5,7 +5,7 @@ CC=bcc32 -O1 -WC
 OBJ=.obj
 RM=del
 TLIB=tlib
-CFLAGS=-I..\.. -I..\..\smapi -I..\..\fidoconf -DNT -DWINNT -D__NT__
+CFLAGS=-I..\h -I..\..\smapi -I..\..\fidoconf -DNT -DWINNT -D__NT__
 LFLAGS=
 LIBS=  bcwtmp.lib ..\..\fidoconf\fconfbcw.lib  ..\..\smapi\smapibcw.lib
 

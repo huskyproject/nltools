@@ -10,7 +10,7 @@ OBJ=.o
 RM=del
 EXE=.exe
 
-CFLAGS = -DOS2 -I. -I../.. -c -O3
+CFLAGS = -DOS2 -I. -I../h -c -O3
 LFLAGS = -Zcrtdll
 LIBS   =../../fidoconf/fconfemx.a ../../smapi/smapiemx.a
 

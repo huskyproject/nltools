@@ -8,7 +8,7 @@ CC    = cc
 RM    = rm
 OBJ   = .o
 EXE   =
-CFLAGS= -I../.. -DUNIX
+CFLAGS= -I../h -DUNIX
 LFLAGS= -L../../fidoconf
 LIBS  = -lfidoconfigunix -lsmapiunix
 
