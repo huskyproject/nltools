@@ -370,7 +370,101 @@ static int call_differ(char *nodelist, char *nodediff)
 }
 
 
-/* today is passed as argument, because we only want to call julian_today()
+
+/* Purpose of try_full_update:
+
+   fullbase + match might contain a full update for rawnl, with julian
+   being the julian day number that we expect to find in fullbase + match.
+   try to unpack the update and see if it really contains this day number, and
+   if so, use it.
+
+   Return values: 0: no hit, no error
+                  1: fatal error
+                  2: hit, but non-fatal error
+                  3: hit
+
+*/
+
+static int try_full_update(s_fidoconfig *config, char *rawnl, char *fullbase,
+                            char *match, char *tmpdir, long julian, int nl)
+{
+    char *ufn;
+    char *newfn;
+    int ndnr;
+    int rv = 0;
+
+    decode_julian_date(julian, NULL, NULL, NULL, &ndnr);
+    
+    ufn = get_uncompressed_filename(config, fullbase, match, tmpdir, ndnr);
+
+    if (ufn != NULL)
+    {
+        if (julian == parse_nodelist_date(ufn))
+        {
+            logentry(LOG_MSG, "found full update: %s", ufn);
+
+            newfn = malloc(strlen(config->nodelistDir) +
+                           strlen(config->nodelists[nl].nodelistName) + 5);
+
+            if (newfn == NULL)
+            {
+                logentry(LOG_ERROR, "out of memory");
+                return 1;
+            }
+            else
+            {
+                strcpy(newfn, config->nodelistDir);
+                strcat(newfn, config->nodelists[nl].nodelistName);
+                sprintf(newfn + strlen(newfn), ".%03d", ndnr);
+                            
+                if (copy_file(ufn, newfn))
+                {
+                    logentry(LOG_ERROR, "error copying %s to %s",
+                             ufn, newfn);
+                    return 1;
+                }
+                else
+                {
+                    rv = 3;
+                    if (rawnl != NULL)
+                    {
+                        logentry(LOG_MSG, "replacing %s with %s",
+                                 rawnl, newfn);
+
+                        if (remove(rawnl))
+                        {
+                            logentry(LOG_ERROR, "cannot remove %s",
+                                     rawnl);
+                            rv = 2; /* error, but still proceed */
+                        }
+                    }
+                    else
+                    {
+                        logentry(LOG_MSG, "creating %s", newfn);
+                    }
+
+                }
+                free(newfn);
+            }
+        }
+        else
+        {
+            logentry(LOG_MSG,
+                     "%s does not contain nodelist for day %03d", ufn, ndnr);
+        }
+        free(ufn);
+    }
+    return rv;
+}
+
+
+
+/* Do_update finds an update for a already existing unpacked nodelist. it first
+   parses the day number of the existing nodelist instance, then increases it
+   by steps of 7, and looks for matching diff or full updates. If there is no
+   existing instance of the nodelst, you must use create_instance instead.
+
+   today is passed as argument, because we only want to call julian_today()
    once. Imagine nlupdate being started at 23:59:59 .... */
 
 static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
@@ -396,7 +490,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
     }
 
     /* build the list of candidate nodediff files */
-    if (config->nodelists[nl].diffUpdateStem)
+    if (config->nodelists[nl].diffUpdateStem != NULL)
     {
         if ((diffbase = basedir(config->nodelists[nl].diffUpdateStem)) != NULL)
         {
@@ -466,68 +560,29 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
         {
             for (j = 0; j < fulllist->n && !hit; j++)
             {
-                ufn = get_uncompressed_filename(config, fullbase,
-                                                fulllist->matches[j],
-                                                tmpdir, ndnr);
-                if (ufn != NULL)
+                switch (try_full_update(config, rawnl, fullbase,
+                                        fulllist->matches[j], tmpdir, i, nl))
                 {
-                    if (i == parse_nodelist_date(ufn))
-                    {
-                        char *newfn;
-
-                        logentry(LOG_MSG, "found full update: %s", ufn);
-
-                        newfn = malloc(strlen(config->nodelistDir) +
-                                       strlen(config->nodelists[nl].
-                                              nodelistName) + 5);
-                        if (newfn == NULL)
-                        {
-                            logentry(LOG_ERROR, "out of memory");
-                            rv = 0;
-                            i = today; /* exit loop */
-                        }
-                        else
-                        {
-                            strcpy(newfn, config->nodelistDir);
-                            strcat(newfn, config->nodelists[nl].nodelistName);
-                            sprintf(newfn + strlen(newfn), ".%03d", ndnr);
-                            
-                            if (copy_file(ufn, newfn))
-                            {
-                                logentry(LOG_ERROR, "error copying %s to %s",
-                                         ufn, newfn);
-                                rv = 0;
-                                i = today; /* exit loop */
-                            }
-                            else
-                            {
-                                logentry(LOG_MSG, "replacing %s with %s",
-                                         rawnl, newfn);
-                                hit = 1;
-                                if (remove(rawnl))
-                                {
-                                    logentry(LOG_ERROR, "cannot remove %s",
-                                             rawnl);
-                                    rv = 0; /* but still proceed */
-                                }
-                            }
-                            free(newfn);
-                        }
-                    }
-                    else
-                    {
-                        logentry(LOG_MSG,
-                                 "%s does not contain nodelist for day %03d",
-                                 ndnr);
-                    }
-                    free(ufn);
+                case 0:        /* no hit, no error */
+                    break;
+                case 1:
+                    i = today; /* fatal error; stop searching! */
+                    rv = 0;
+                    break;
+                case 2:       
+                    rv = 0;    /* hit, minor error, but don't exit loop! */
+                    hit = 1;
+                    break;
+                case 3:
+                    hit = 1;   /* hit, no errors; */
+                    break;
                 }
             }
         }
 
         if (hit)                            /* analyse the new nodelist */
         {
-            free(rawnl);
+            if (rawnl != NULL) free(rawnl);
             rawnl = findNodelist(config, nl);
             if (rawnl == NULL)
             {
@@ -535,12 +590,12 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                          "instance of nodelist %s vanished during update!?",
                          config->nodelists[nl].nodelistName);
             }
-            if ((i = parse_nodelist_date(rawnl)) == -1)
+            else if ((i = parse_nodelist_date(rawnl)) == -1)
             {
                 free(rawnl);
                 rawnl = NULL;
             }
-            if (i <= julian)
+            else if (i <= julian)
             {
                 logentry(LOG_ERROR,
                          "nodelist %s still as old as before!?", rawnl);
@@ -574,6 +629,74 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
     return rv;
 }
 
+/* Create_instance is used instead of do_instance if there is not yet any
+   unpacked instance of the nodelist in the nodelist directory. In this case,
+   of course, diff updates are useless, and we only search for full
+   updates. Create_instance will start at the current day number, and then
+   decrease it in steps of 1 until it finds a matching full update.
+
+   today is passed as argument, because we only want to call julian_today()
+   once. Imagine nlupdate being started at 23:59:59 .... */
+
+static int create_instance(s_fidoconfig *config, int nl, long today,
+                           char *tmpdir)
+{
+    long i;
+    int j;
+    int rv = 0;
+    char  *fullbase = NULL;
+    nlist *fulllist = NULL;
+    int hit;
+
+    /* build the list of candidate full update files */
+
+    if (config->nodelists[nl].fullUpdateStem)
+    {
+        if ((fullbase = basedir(config->nodelists[nl].fullUpdateStem)) != NULL)
+        {
+            fulllist = find_nodelistfiles(fullbase,
+                                          config->nodelists[nl].fullUpdateStem 
+                                          + strlen(fullbase), 1);
+        }
+        else
+            fullbase = NULL;
+    }
+
+    if (fulllist == NULL)
+        return 0;
+
+    /* search for diffs or full updates */
+
+    for (i = today; i > today - 10*366 && !rv; i--)
+    {
+        if (fulllist != NULL && !hit)       /* search for fulls */
+        {
+            for (j = 0; j < fulllist->n && !hit; j++)
+            {
+                switch (try_full_update(config, NULL, fullbase,
+                                        fulllist->matches[j], tmpdir, i, nl))
+                {
+                case 0:        /* no hit, no error */
+                    break;
+                case 1:
+                    i = today - 10*366; /* fatal error; stop searching! */
+                    rv = 0;
+                    break;
+                case 2:
+                case 3:
+                    rv = 1;   /* hit */
+                    break;
+                }
+            }
+        }
+    }
+
+    if (fullbase != NULL) free(fullbase);
+
+    return rv;
+}
+
+
 static int process(s_fidoconfig *config)
 {
     int i, rv=0;
@@ -605,23 +728,58 @@ static int process(s_fidoconfig *config)
             {
                 logentry(LOG_WARNING, "no instance of nodelist %s found.\n",
                          config->nodelists[i].nodelistName);
-                if (rv < 4) rv = 4;
-            }
-            else if (config->nodelists[i].diffUpdateStem == NULL &&
-                     config->nodelists[i].fullUpdateStem == NULL)
-            {
-                logentry(LOG_WARNING, "don't know how to update nodelist %s",
-                         config->nodelists[i].nodelistName);
-                if (rv < 4) rv = 4;
-                free(nodelist);
-            }
-            else
-            {
-                logentry(LOG_MSG, "trying to update %s", nodelist);
-                
-                if (!do_update(config, i, nodelist, today, tmpdir))
+
+                /* New: If there is no instance, we can still try
+                   to find a full update! */
+
+                if (config->nodelists[i].fullUpdateStem != NULL)
                 {
-                    if (rv < 8) rv = 8;
+                    if (!create_instance(config, i, today, tmpdir))
+                    {
+                        logentry(LOG_WARNING, "no full update for "
+                                 "nodelist %s found.",
+                                 config->nodelists[i].nodelistName);
+                        if (rv < 4) rv = 4;
+                    }
+                    else
+                    {
+                        nodelist = findNodelist(config, i);
+                        if (nodelist == NULL)
+                        {
+                            logentry (LOG_ERROR, "unpacked full update, but "
+                                      "still no instance of nodelist %s !?",
+                                      config->nodelists[i].nodelistName);
+                            if (rv < 8) rv = 8;
+                        }
+                    }
+                }
+                else
+                {
+                    logentry(LOG_WARNING, "don't know how to create instance"
+                             " of nodelist %s (no full update configured)",
+                             config->nodelists[i].nodelistName);
+                    if (rv < 4) rv = 4;
+                }
+            }
+
+            if (nodelist != NULL)
+            {
+                if (config->nodelists[i].diffUpdateStem == NULL &&
+                    config->nodelists[i].fullUpdateStem == NULL)
+                {
+                    logentry(LOG_WARNING, "don't know how to update "
+                             "nodelist %s", config->nodelists[i].nodelistName);
+                    if (rv < 4) rv = 4;
+                    free(nodelist);
+                }
+                else
+                {
+                    logentry(LOG_MSG, "trying to update %s", nodelist);
+                    
+                    if (!do_update(config, i, nodelist, today, tmpdir))
+                    {
+                        if (rv < 8) rv = 8;
+                    }
                 }
             }
         }
