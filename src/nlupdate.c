@@ -518,7 +518,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                     {
                         logentry(LOG_MSG,
                                  "%s does not contain nodelist for day %03d",
-                                 ndnr);
+                                 ufn, ndnr);
                     }
                     free(ufn);
                 }

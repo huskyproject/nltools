@@ -2,6 +2,10 @@ NLTOOLS 1.1a-stable
 -------------------
 (not yet released)
 
+Thu Aug 10 12:33:31 MEZ 2000
+tobi:
+* fixed logfile entry for failed fullupdate attempt
+
 Mon Aug  7 00:55:28 GMT 2000
 tobi:
 * fixed superfluous empty lines in log file
