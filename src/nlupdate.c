@@ -24,6 +24,10 @@
 #include <fidoconf/common.h>
 #include <huskylib/log.h>
 
+#ifdef USE_HPTZIP
+#   include <hptzip/hptzip.h>
+#endif
+
 #include "nlstring.h"
 #include "nlfind.h"
 #include "nldate.h"
@@ -186,7 +190,19 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
 
     /* execute the unpacker */
     w_log(LL_EXEC, "Executing '%s'", cmd);
-    exitcode=system(cmd);
+
+    if( fc_stristr(config->unpack[i].call, ZIPINTERNAL) )
+    {
+        exitcode = 1;
+#ifdef USE_HPTZIP
+        exitcode = UnPackWithZlib(tmpfilename, NULL, tempdir);
+#endif
+    }
+    else
+    {
+        exitcode = cmdcall(cmd);
+    }
+
     if (exitcode != 0)
     {
         w_log(LL_EXEC, "Unpacker returned exit code '%d'", exitcode);
