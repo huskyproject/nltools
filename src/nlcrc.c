@@ -16,7 +16,7 @@ unsigned short analyze_first_line(FILE *f)
 {
     char c=0;
     int state = SCANCOLON;
-    unsigned short crc;
+    unsigned short crc = 0;
     
     while (state != FINISH)
     {

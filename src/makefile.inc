@@ -22,9 +22,9 @@ nlupdate$(EXE): $(NLUPDATEOBJS)
 	$(CC) $(LFLAGS) -o nlupdate$(EXE) $(NLUPDATEOBJS) $(LIBS)
 
 commonclean:
-	-$(RM) $(OBJS)
+	-$(RM) *$(OBJ)
 
-commondistclean:
+commondistclean: commonclean
 	-$(RM) nlcrc$(EXE)
 	-$(RM) nldiff$(EXE)
 	-$(RM) ulc$(EXE)

@@ -25,6 +25,5 @@ all: commonprogs
 default: all
 
 clean:  commonclean
-	-$(RM) $(OBJS)
 
 distclean: clean commondistclean

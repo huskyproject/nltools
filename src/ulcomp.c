@@ -127,12 +127,12 @@ static void parse3d(char *ptr, unsigned int *zone, unsigned int *net,
 static int ulc_line(FILE *fin, FILE *fout, unsigned format,
                     unsigned *zone, unsigned *net, unsigned *node)
 {
-    char linebuf[128], *ptr, *sptr;
+    char linebuf[128], *ptr=NULL, *sptr=NULL;
     size_t l; int incomplete;
     int k, rv=1;
-    char *username;
-    unsigned point;
-    int type;
+    char *username=NULL;
+    unsigned point=0;
+    int type=0;
 
     if (fgets(linebuf, sizeof(linebuf), fin) != NULL)
     {
@@ -144,7 +144,6 @@ static int ulc_line(FILE *fin, FILE *fout, unsigned format,
         switch (*linebuf)
         {
         case ';':
-            ptr = NULL;
             break; /* ignore the comment */
 
         case ',':
@@ -154,7 +153,6 @@ static int ulc_line(FILE *fin, FILE *fout, unsigned format,
 
         default:
             ptr = strtok(linebuf, ",\r\n");
-            sptr = NULL;
             break;
 
         }

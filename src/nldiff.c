@@ -30,6 +30,7 @@ int  analyze_first_line(FILE *f, unsigned short *crcnum, int *has_crc,
     char c=0;
     int state = SCANDASH;
     unsigned short crc, day, hcrc, result = 1;
+    crc = day = hcrc = 0;
 
     while (state != FINISH)
     {
