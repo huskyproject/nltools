@@ -251,7 +251,7 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
         free(tmp);
         return 0;
     }
-    /*adaptcase_refresh_dir(tempdir);*/
+    adaptcase_refresh_dir(tempdir);
     
     free(tmp);
     return 1;
@@ -429,7 +429,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                 if (ufn != NULL)
                 {
 
-                    /* nodediff contain the header of the nodelist to which
+                    /* nodediffs contain the header of the nodelist to which
                        they apply as the first line, so we need to compare the
                        parsed date with julian, not with i */
                     

@@ -1,6 +1,13 @@
 Current Version
 ---------------
 
+Tue Dec 28 21:39:50 MET 1999
+tobi:
+- Fixed bug on Unix that could, in the situation that a nodelist and two 
+  consequent nodediffs were found, lead to the situation that only the
+  first nodediff was applied, but not the second one. (On a consecutive
+  run, though, of course the second one was also applied).
+
 Tue Dec 28 19:25:59 MET 1999
 ml:
 - Removed some unnecessary variables

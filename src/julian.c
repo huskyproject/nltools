@@ -65,7 +65,7 @@ long get_julian_date( int dd, int mm, int yy)
     /* days in current month */
     julian += dd;
 
-    /* adjust for the cut from oct 4 to cot 15, 1582 */
+    /* adjust for the cut from oct 4 to oct 15, 1582 */
     if (julian > 577737L)
     {
         julian -= 10L;
