@@ -31,7 +31,8 @@
 #include "nlfind.h"
 #include "nldate.h"
 #include "julian.h"
-#include "ulc.h" /* for REV */
+#include "ulc.h"
+#include "version.h"
 
 /* store the nldiff command name */
 static char *differ = NULL;

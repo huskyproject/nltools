@@ -9,7 +9,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "crc16.h"
-#include "nldiff.h"
+#include "version.h"
 
 /* It is no problem if a line grows larger than BUFSZ. This code is
    intelligent. :-)

@@ -1,7 +1,6 @@
 #ifndef ULC_H
 #define ULC_H
 
-#define REV "1.2"
 #define LOGNAME "nltools.log"
 
 enum { F_NODELIST, F_POINTS24, F_POINTS4D };

@@ -12,6 +12,7 @@
 #endif
 #include "nlstring.h"
 #include "nlfind.h"
+#include "version.h"
 
 int process(s_fidoconfig *config)
 {
