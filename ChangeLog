@@ -1,3 +1,8 @@
+2004-03-09 Tuesday 09:42  sfpavel
+
+	* make/: makefile.inc, makefile.sun, makefile.wcw
+	(nltools-1_4-stable.[3,3,3]): Fix makefiles (patch from sir)
+
 2004-01-23 Friday 04:43  andr_lukyanov
 
 	* src/: nlcrc.c, nldiff.c, nlupdate.c, ulc.c
