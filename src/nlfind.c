@@ -97,8 +97,8 @@ int add_match(nlist *pnl, char *match)
 
 nlist *find_nodelistfiles(char *path, char *base, int allowarc)
 {
-    struct dirent *dp;
-    DIR *hdir;
+    char *dfile;
+    husky_DIR *hdir;
     nlist *pnl = make_nlist();
     size_t l, l2;
 
@@ -110,7 +110,7 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
         return NULL;
     }
 
-    hdir = opendir(path);
+    hdir = husky_opendir(path);
 
     if (hdir == NULL)
     {
@@ -124,29 +124,29 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
 
     l = strlen(base);
 
-    while ((dp = readdir(hdir)) != NULL)
+    while ((dfile = husky_readdir(hdir)) != NULL)
     {
-        l2 = strlen(dp->d_name);
+        l2 = strlen(dfile);
         if (l2 == l + 4 &&
-            !ncasecmp(base, dp->d_name, l) &&
-            dp->d_name[l] == '.' &&
-            (allowarc || isdigit(dp->d_name[l+1])) &&
-            isdigit(dp->d_name[l+2]) &&
-            isdigit(dp->d_name[l+3]))
+            !ncasecmp(base, dfile, l) &&
+            dfile[l] == '.' &&
+            (allowarc || isdigit(dfile[l+1])) &&
+            isdigit(dfile[l+2]) &&
+            isdigit(dfile[l+3]))
         {
-            if (!add_match(pnl, dp->d_name))
+            if (!add_match(pnl, dfile))
             {
                 free_nlist(pnl);
                 closedir(hdir);
                 w_log( LL_FUNC, "find_nodelistfiles() failed (not found)" );
                 return NULL;
             }else
-                w_log( LL_DEBUG, "Found: %s", dp->d_name);
+                w_log( LL_DEBUG, "Found: %s", dfile);
 
         }
     }
 
-    closedir(hdir);
+    husky_closedir(hdir);
 
     if (!pnl->n)
     {

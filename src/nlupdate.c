@@ -93,10 +93,10 @@ static char *mk_uncompressdir(char *nldir)
 int destroy_uncompressdir(char *upath)
 {
     size_t l = strlen(upath);
-    struct dirent *dp;
-    DIR *hdir;
+    char *dfile;
+    husky_DIR *hdir;
 
-    hdir = opendir(upath);
+    hdir = husky_opendir(upath);
     if (hdir == NULL)
     {
         w_log(LL_ERROR, "Cannot read temporary directory (%s): %s", upath, strerror(errno));
@@ -104,12 +104,12 @@ int destroy_uncompressdir(char *upath)
         return 0;
     }
 
-    while ((dp = readdir(hdir)) != NULL)
+    while ((dfile = husky_readdir(hdir)) != NULL)
     {
-        if ((strcmp(dp->d_name, ".")) &&
-            (strcmp(dp->d_name, "..")))
+        if ((strcmp(dfile, ".")) &&
+            (strcmp(dfile, "..")))
         {
-            strcpy(upath + l, dp->d_name);
+            strcpy(upath + l, dfile);
             /* there is room for this because of the
                addition of FILENAME_MAX in mk_uncompressdir */
 
@@ -120,7 +120,7 @@ int destroy_uncompressdir(char *upath)
                 w_log( LL_DEL, "File '%s' removed", upath );
         }
     }
-    closedir(hdir);
+    husky_closedir(hdir);
 
     upath[l-1] = '\0';
 
