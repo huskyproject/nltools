@@ -1,0 +1,41 @@
+# This builds a Win32 executable the requires CRTDLL.DLL
+
+.PHONY: default
+
+default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
+
+CC=gcc
+CFLAGS=	-DNT -D__NT__ -DWINNT -D__CYG__ -I. -I../.. -Wall -pedantic -c -Wno-char-subscripts -mno-cygwin
+LFLAGS=-mno-cygwin -O3 
+LIBS=../../fidoconf/libfidoconfigcyg.a ../../smapi/libsmapicyg.a
+
+.SUFFIXES:
+.SUFFIXES: .c .o .exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+nldiff.exe: nldiff.o crc16.o
+	$(CC) $(LFLAGS) -o nldiff.exe nldiff.o crc16.o
+
+nlcrc.exe: crc16.o nlcrc.o
+	$(CC) $(LFLAGS) -o nlcrc.exe crc16.o nlcrc.o
+
+ulc.exe: ulcsort.o trail.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o
+	$(CC) $(LFLAGS) -o ulc.exe ulcsort.o trail.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o  $(LIBS)
+
+nlupdate.exe: nlupdate.o nllog.o trail.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o
+	$(CC) $(LFLAGS) -o nlupdate.exe nlupdate.o trail.o nllog.o string.o nldate.o julian.o nlfind.o $(LIBS)
+
+clean:
+	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.obj nldate.o julian.o nlfind.o nlupdate.o nllog.o patmat.o ffind.o fexist.o string.o
+
+diestclean: clean
+	-rm nlcrc.exe
+	-rm nldiff.exe
+	-rm ulc.exe
+	-rm nlupdate.exe
+
+
+
+
