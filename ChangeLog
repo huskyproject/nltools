@@ -1,3 +1,8 @@
+2003-04-18 Friday 16:11  mche
+
+	* make/: nldiff.vcproj (1.1), nlupdate.vcproj (1.1): vcproj Project
+	File added for building nltools in Microsoft Visual Studio .NET
+
 2003-04-15 Tuesday 00:23  andr_lukyanov
 
 	* make/makefile.mvcdll (1.4): Fixed MSVC compilation
