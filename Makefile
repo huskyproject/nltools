@@ -13,9 +13,9 @@ else
 endif
 
 ifeq ($(SHORTNAME), 1)
-  LIBS=-L$(LIBDIR) -lfidoconf
+  LIBS=-L$(LIBDIR) -lfidoconf -lsmapi
 else
-  LIBS=-L$(LIBDIR) -lfidoconfig
+  LIBS=-L$(LIBDIR) -lfidoconfig -lsmapi
 endif
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS)
