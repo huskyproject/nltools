@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "crc16.h"
+#include "version.h"
 
 enum {SCANCOLON, SCANDIGIT, CRCVAL, AFTERCRCVAL, FINISH};
 
@@ -106,18 +107,22 @@ int main(int argc, char **argv)
 {
     FILE *f;
     unsigned short should, is;
+    char *versionStr = NULL;
+
+    versionStr = GenVersionStr( "nlcrc", VER_MAJOR, VER_MINOR, VER_PATCH,
+                               VER_BRANCH, cvs_date );
+
+    fprintf (stderr, "%s\n\n", versionStr);
 
     if (argc != 2)
     {
-        fprintf (stderr, "Usage: nlcrc <FILENAME>\n");
-        fprintf (stderr, "If nothing is printed, the CRC was OK. If the CRC is not OK, an\n");
-        fprintf (stderr, "error message and a return code>0 is given.\n");
+        fprintf (stderr, "Usage: nlcrc <nodelist>\n");
         return 8;
     }
 
     if ((f = fopen(argv[1], "rb")) == NULL)
     {
-        fprintf (stderr, "Cannot open %s.\n", argv[1]);
+        fprintf (stderr, "Cannot open %s\n", argv[1]);
         return 8;
     }
 
@@ -133,5 +138,6 @@ int main(int argc, char **argv)
         return 16;
     }
 
+    fprintf (stderr, "Nodelist %s the CRC was OK\n", argv[1]);
     return 0;
 }

@@ -18,8 +18,6 @@
 
 unsigned short actualcrc;
 
-char *versionStr;
-
 /* A state machine to analyse the very first line of a nodelist for day
    number and an optional CRC value. */
 
@@ -323,21 +321,18 @@ int parse_args (int argc, char **argv, char **listname, char **diffname,
 
 void usage(void)
 {
+    char *versionStr = NULL;
+
     versionStr = GenVersionStr( "nldiff", VER_MAJOR, VER_MINOR, VER_PATCH,
                                VER_BRANCH, cvs_date );
-    fprintf (stderr, "%s - nodelist differ\n", versionStr);
-    fprintf (stderr, "Usage:\n"\
-"   nldiff [-n] [-d] LISTNAME.DNR DIFFNAME.DNR\n\n"\
-"   The -n option causes the original Nodelist to be deleted if the new\n"\
-"   nodelist could be successfully generated.\n"\
-"   The -d option causes the Nodediff file to be deleted if the new\n"\
-"   nodelist could be successfully generated.\n\n"\
-"Example:\n"\
-"   nldiff -n NODELIST.253 NODEDIFF.260\n\n"\
-"Remarks:\n"\
-"   If you want a tool that automatically updates your nodelist\n"\
-"   without you having to manually specify the day number file\n"\
-"   extensions, use \"nlupdate\". It will call nldiff internally.\n");
+
+    fprintf (stderr, "%s\n\n", versionStr);
+
+    fprintf (stderr,
+    "Usage: nldiff [options] nodelist.<day> nodediff.<day>\n"
+    "Options:  -n\t- original Nodelist deleted if the new successfully generated\n"
+    "\t  -d\t- Nodediff file deleted if the new successfully generated\n"
+    "\t  <day>\t- days of the year\n");
 }
 
 /* Main program */
