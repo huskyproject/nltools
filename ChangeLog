@@ -1,3 +1,14 @@
+2003-02-07 Friday 11:04  sfpavel
+
+	* Makefile (1.9), debian/changelog (1.8), debian/control (1.6),
+	debian/copyright (1.3), debian/huskymak.cfg (1.5), debian/rules
+	(1.5): New debian version
+
+2003-02-07 Friday 11:03  sfpavel
+
+	* src/: nldiff.c (1.11), nlupdate.c (1.31), ulc.c (1.15), version.h
+	(1.3): Implement husky-standart version string generation
+
 2002-12-20 Friday 13:09  stas_degteff
 
 	* src/: nlfind.c (1.10), nlfind.h (1.6), nlupdate.c (1.30): Try to
