@@ -4,7 +4,7 @@
 #include "fidoconfig.h"
 #include "ulc.h"
 #include "nllog.h"
-#include "dir.h"
+#include "dirlayer.h"
 #include "nlstring.h"
 #include "nlfind.h"
 

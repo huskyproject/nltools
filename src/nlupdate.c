@@ -19,7 +19,7 @@
 #include "nldate.h"
 #include "julian.h"
 #include "adcase.h"
-#include "dir.h"
+#include "dirlayer.h"
 #include "ulc.h" /* for REV */
 
 /* store the nldiff command name */

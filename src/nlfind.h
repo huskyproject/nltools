@@ -2,7 +2,7 @@
 #define NLFIND_H
 
 #include "fidoconfig.h"
-#include "dir.h"
+#include "dirlayer.h"
 
 typedef struct s_nlist
 {
