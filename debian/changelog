@@ -1,3 +1,11 @@
+nltools (1.2.4-1) stable; urgency=low
+
+  * nltools 1.2.4 release
+  * New maintainer's E-mail
+  * Debhelper V4
+
+ -- Pavel Andreew <sfpavel@users.sourceforge.net>  Fri, 30 May 2003 14:32:05 +0600
+
 nltools (1.2.2-1) stable; urgency=low
 
   * nltools 1.2.2 release
