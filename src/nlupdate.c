@@ -386,7 +386,7 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
 
                 w_log( LL_FILE, "Copy '%s' to '%s'", ufn, newfn );
 
-                if (copy_file(ufn, newfn))
+                if (copy_file(ufn, newfn, 1))
                 {
                     w_log(LL_ERROR, "Error copying '%s' to '%s'", ufn, newfn);
                     return 1;
