@@ -1,6 +1,11 @@
 Current Version
 ---------------
 
+----- cvs ci ------
+Mon Mar 20 08:56:28 MSK 2000
+max (patch from Serguei Revtov):
+- change legacy SUN makefile to compile with new includes, simplifying
+
 Mo   7 Feb 2000 00:07:24 CET
 tobi:
 - Nodediff and -list update files were not rejected if they contained an

@@ -1,13 +1,8 @@
-.PHONY: default
-
-INSTDIR = /usr/local/bin
-INCDIR = /usr/local/include
-
-default: nldiff nlcrc ulc nlupdate
-
 CC=gcc
-CFLAGS=-g -I$(INCDIR) -DUNIX
-LFLAGS=-g -L../../fidoconfig 
+CFLAGS=-I../.. -DUNIX
+LFLAGS=-s -L../../fidoconfig 
+
+all: nldiff nlcrc ulc nlupdate
 
 .c.o: 
 	$(CC) $(CFLAGS) -c $<
@@ -25,19 +20,9 @@ nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
 	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfig
 
 clean:
-	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o julian.o nlfind.o nldate.o nlupdate.o string.o
+	-rm *.o
 	-rm nlcrc
 	-rm nldiff
 	-rm ulc
 	-rm nlupdate
-
-
-
-install:
-	cp ulc $(INSTDIR)/ulc
-	cp nldiff $(INSTDIR)/nldiff
-	cp nlcrc $(INSTDIR)/nlcrc
-	cp nlupdate $(INSTDIR)/nlcrc
-
-
 
