@@ -1,3 +1,13 @@
+2002-08-21 Wednesday 12:47  mche
+
+	* src/makefile.cyg (1.5): makefiles for cygwin updated to suit
+	current release of Cygwin
+
+2002-08-21 Wednesday 12:21  mche
+
+	* src/makefile.cyg (1.4): makefiles for cygwin updated to suit
+	current release of Cygwin
+
 2002-08-02 Friday 07:28  mche
 
 	* src/nlupdate.c (1.25): restored portability for msvc compiler
