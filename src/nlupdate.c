@@ -691,7 +691,7 @@ static int create_instance(s_fidoconfig *config, int nl, long today,
         return 0;
 
     /* search for diffs or full updates */
-
+    hit = 0;
     for (i = today; i > today - 10*366 && !rv; i--)
     {
         if (fulllist != NULL && !hit)       /* search for fulls */

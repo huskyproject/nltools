@@ -1,6 +1,11 @@
 Current Version
 ---------------
 
+Tue Aug 15 00:10:17 UTC 2000
+sms:
+- Fixed uninitialized variable in nlupdate.c (could cause nlupdate not to find 
+  any full update)
+
 Fr  11 Aug 2000 01:20:41 CEST
 tobi:
 - New nodelist format: Points4D. For 4D pointlists (with "Boss" entries etc.)
