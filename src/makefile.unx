@@ -1,13 +1,11 @@
 .PHONY: default
 
-INSTDIR = /home/fido/sbin
-INCDIR = /usr/local/include
 
 default: nldiff nlcrc ulc nlupdate
 
 CC=cc
-CFLAGS=-g -I$(INCDIR) -DUNIX
-LFLAGS=-g -L../../fidoconfig
+CFLAGS=-g -I../.. -DUNIX
+LFLAGS=-g -L../../fidoconf
 
 .c.o: 
 	$(CC) $(CFLAGS) -c $<
@@ -18,14 +16,17 @@ nldiff: nldiff.o crc16.o
 nlcrc: crc16.o nlcrc.o
 	$(CC) $(LFLAGS) -o nlcrc crc16.o nlcrc.o
 
-ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
-	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o  -lfidoconfig
+ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o
+	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o  ffind.o fexist.o -lfidoconfigunix
 
-nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o
-	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfig
+nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o ffind.o fexist.o
+	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o -lfidoconfigunix
 
 clean:
-	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o julian.o nlfind.o nldate.o nlupdate.o string.o patmat.o
+	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o julian.o nlfind.o nldate.o nlupdate.o string.o patmat.o ffind.o fexist.o
+
+
+distclean: clean
 	-rm nlcrc
 	-rm nldiff
 	-rm ulc

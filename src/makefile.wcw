@@ -25,4 +25,6 @@ nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
 
 clean:
 	del *.obj
+
+distclean: clean
 	del *.exe
