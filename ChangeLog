@@ -1,3 +1,7 @@
+2002-10-22 Tuesday 10:54  sfpavel
+
+	* debian/changelog (1.7): New debian package
+
 2002-10-20 Sunday 10:02  mche
 
 	* src/makefile.cyg (1.6): Remove useless defines
