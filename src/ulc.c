@@ -7,7 +7,6 @@
 #include <fidoconf/log.h>
 
 #include "ulc.h"
-#include "nllog.h"
 #if !(defined(_MSC_VER) && (_MSC_VER >= 1200))
 #include <fidoconf/dirlayer.h>
 #endif

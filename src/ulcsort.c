@@ -15,7 +15,6 @@
 
 #include <fidoconf/log.h>
 #include "nlstring.h"
-#include "nllog.h"
 #include "ulc.h"
 
 #define CACHESIZE 400

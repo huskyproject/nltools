@@ -6,7 +6,6 @@
 #include <fidoconf/log.h>
 #include "julian.h"
 #include "nldate.h"
-#include "nllog.h"
 #include "nlstring.h"
 
 /* not used

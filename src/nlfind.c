@@ -8,7 +8,6 @@
 #include "nlstring.h"
 #include "julian.h"
 #include "nlfind.h"
-#include "nllog.h"
 #include "nldate.h"
 
 void free_nlist(nlist *pnl)
