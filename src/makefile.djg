@@ -5,7 +5,7 @@
 default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
 
 CC=gcc
-CFLAGS=-O3 -I../../smapi -I../../fidoconf -DDOS -DMSDOS -D__FLAT__ -DFLAT
+CFLAGS=-O3 -I../.. -DDOS -DMSDOS -D__FLAT__ -DFLAT
 LFLAGS=-s -O3
 
 .SUFFIXES:
@@ -20,14 +20,14 @@ nldiff.exe: nldiff.o crc16.o
 nlcrc.exe: crc16.o nlcrc.o
 	$(CC) $(LFLAGS) -o nlcrc.exe crc16.o nlcrc.o
 
-ulc.exe: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
-	$(CC) $(LFLAGS) -o ulc.exe ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ../../fidoconf/fidoconf.a
+ulc.exe: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o
+	$(CC) $(LFLAGS) -o ulc.exe ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o ../../fidoconf/fconfdjg.a
 
-nlupdate.exe: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
-	$(CC) $(LFLAGS) -o nlupdate.exe nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ../../fidoconf/fidoconf.a
+nlupdate.exe: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o
+	$(CC) $(LFLAGS) -o nlupdate.exe nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o ../../fidoconf/fconfdjg.a
 
 clean:
-	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.obk nldate.o julian.o nlfind.o nlupdate.o nllog.o
+	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.obk nldate.o julian.o nlfind.o nlupdate.o nllog.o ffind.o fexist.o
 	-del nlcrc.exe
 	-del nldiff.exe
 	-del ulc.exe

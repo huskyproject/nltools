@@ -3,7 +3,7 @@ default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
 
 CC=bcc32 -O1 -WC
 TLIB=tlib
-CFLAGS=-I..\..\smapi -I..\..\fidoconfig -DNT -DWINNT
+CFLAGS=-I..\.. -I..\..\smapi -I..\..\fidoconf -DNT -DWINNT
 LFLAGS=
 
 .SUFFIXES:
@@ -29,11 +29,11 @@ nldiff.exe: nldiff.obj crc16.obj
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(CC) $(LFLAGS) -enlcrc.exe crc16.obj nlcrc.obj
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj
-	$(CC) $(LFLAGS) -eulc.exe ulc.obj bcwtmp.lib ..\..\fidoconfig\fidoconfig.lib ..\..\smapi\smapibcw.lib
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj ffind.obj fexist.obj
+	$(CC) $(LFLAGS) -eulc.exe ulc.obj bcwtmp.lib ..\..\fidoconf\fconfbc2.lib
 
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
-	$(CC) $(LFLAGS) -enlupdate.exe nlupdate.obj bcwtmp.lib ..\..\fidoconfig\fidoconfig.lib ..\..\smapi\smapibcw.lib
+nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj ffind.obj fexist.obj
+	$(CC) $(LFLAGS) -enlupdate.exe nlupdate.obj bcwtmp.lib ..\..\fidoconf\fconfbcw.lib
 
 clean:
 	-del crc16.obj 
@@ -48,12 +48,17 @@ clean:
 	-del nlfind.obj 
 	-del nlupdate.obj 
 	-del string.obj
+	-del ffind.obj
+	-del fexist.obj
+	-del patmat.obj
+	-del bcwtmp.lib
+	-del bcwtmp.bak
+
+distclean: clean
 	-del nlcrc.exe
 	-del nldiff.exe
 	-del ulc.exe
 	-del nlupdate.exe
-	-del bcwtmp.lib
-	-del bcwtmp.bak
 
 
 

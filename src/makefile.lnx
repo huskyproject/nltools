@@ -1,12 +1,10 @@
 .PHONY: default
 
-INSTDIR = /usr/local/bin
-INCDIR = /usr/local/lib
 
 default: nldiff nlcrc ulc nlupdate
 
 CC=gcc
-CFLAGS=-O3 -I$(INCDIR) -DUNIX
+CFLAGS=-O3 -I../.. -DUNIX
 LFLAGS=-s
 
 .c.o: 
@@ -19,20 +17,17 @@ nlcrc: crc16.o nlcrc.o
 	$(CC) $(LFLAGS) -o nlcrc crc16.o nlcrc.o
 
 ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o  patmat.o
-	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfig
+	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o -lfidoconfig
 
 nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
-	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfig 
+	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ffind.o fexist.o -lfidoconfig 
 
 clean:
-	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o julian.o nlfind.o nldate.o nlupdate.o string.o patmat.o
+	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o julian.o nlfind.o nldate.o nlupdate.o string.o patmat.o ffind.o fexist.o
+
+distclean: clean
 	-rm nlcrc
 	-rm nldiff
 	-rm ulc
 	-rm nlupdate
 
-install:
-	cp ulc $(INSTDIR)/ulc
-	cp nldiff $(INSTDIR)/nldiff
-	cp nlcrc $(INSTDIR)/nlcrc
-	cp nlupdate $(INSTDIR)/nlupdate
