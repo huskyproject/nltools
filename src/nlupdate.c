@@ -10,6 +10,7 @@
 
 #include <smapi/compiler.h>
 #include <fidoconf/fidoconf.h>
+#include <fidoconf/xstr.h>
 #include <fidoconf/adcase.h>
 #include <smapi/progprot.h>
 #include <fidoconf/common.h>
@@ -47,27 +48,20 @@ static int nl_fexist(char *filename)
 
 static char *mk_uncompressdir(char *nldir)
 {
-    char *upath;
+    char *upath = NULL;
     size_t l;
     FILE *f;
-
+    l = strlen(nldir) + 12;
     /* construct a temporary directory name below nodelist dir */
-    upath = malloc((l = strlen(nldir) + 12) + 1 + FILENAME_MAX);
-    if (upath == NULL)
-    {
-        logentry(LOG_ERROR, "out of memory");
-        return NULL;
-    }
-    strcpy(upath, nldir);
-    strcat(upath, "nlupdate.tmp");
+    xstrscat(&upath,nldir,"nlupdate.tmp",NULL);
     adaptcase(upath);
 
     /* try to create it */
     mymkdir(upath);
-    strcat(upath, "/");
 
     /* check if we can write to the directory */
-    strcpy(upath + l + 1, "nlupdate.flg");
+    nfree(upath);
+    xscatprintf(&upath, "%s%s%c%s",nldir,"nlupdate.tmp",PATH_DELIM,"nlupdate.flg");
     f=fopen(upath, "w");
     if (f == NULL)
     {
@@ -129,91 +123,21 @@ int destroy_uncompressdir(char *upath)
     return 1;
 }
 
-static char *unpack_command(const char *template, const char *srcdir,
-                     const char *srcfn, const char *dstdir)
-{
-    const char *start, *tmp, *add1, *add2;
-    char *cmd;
-    int anr = 0; int pnr = 0;
-
-    cmd = malloc(strlen(srcdir) + strlen(srcfn) + strlen(dstdir) +
-                 strlen(template) + 1);
-
-    if (cmd == NULL)
-    {
-        logentry(LOG_ERROR, "out of memory");
-        return NULL;
-    }
-
-    *cmd = '\0';  start = NULL;
-    for (tmp = template; (start = strchr(tmp, '$')) != NULL; tmp = start + 2)
-    {
-        switch(*(start + 1))
-        {
-        case 'a':
-            if (!anr)  /* only add 1 copy of $a to avoid buffer overrun */
-            {
-                add1 = srcdir; add2 = srcfn;
-                anr = 1;
-                break;
-            }
-            else
-                anr = 2;
-        case 'p':
-            if (*(start + 1) == 'p')
-            {
-                if (!pnr)
-                {
-                    add1 = dstdir; add2 = NULL;
-                    pnr = 1;
-                    break;
-                }
-                else
-                    pnr = 2;
-            }
-        default:
-            strncat(cmd, tmp, (size_t) (start - tmp + 1));
-            start--;
-            continue;
-        }
-        strncat(cmd, tmp, (size_t) (start - tmp));
-        strcat(cmd, add1);
-        if (add2 != NULL)
-            strcat(cmd, add2);
-    }
-    strcat(cmd, tmp);
-
-    if (anr == 2 || pnr == 2)
-    {
-        logentry(LOG_ERROR, "error in unpacker definition (only one occurence of $a and only one occurence of $p are supported)");
-        free(cmd);
-        return NULL;
-    }
-    return cmd;
-}
-
 static int uncompress(s_fidoconfig *config, char *directory, char *filename,
                       char *tempdir)
 {
-    char *tmp = malloc(strlen(directory) + strlen(filename) + 1);
-    char *cmd;
+    char *tmpfilename = NULL;
+    char cmd[256];
     FILE *f;
     int i, j, found, exitcode;
 
-    /* construct the complete filename */
-    if (tmp == NULL)
-    {
-        logentry(LOG_ERROR, "out of memory");
-        return 0;
-    }
-    strcpy(tmp, directory);
-    strcat(tmp, filename);
+    xstrscat(&tmpfilename, directory, filename, NULL);
 
     /* open the packet so we can see what archiver has been used */
-    f = fopen(tmp, "rb");
+    f = fopen(tmpfilename, "rb");
     if (f == NULL)
     {
-        logentry(LOG_ERROR, "cannot access %s", tmp);
+        logentry(LOG_ERROR, "cannot access %s", tmpfilename);
         return 0;
     }
         
@@ -224,7 +148,7 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
               config->unpack[i].offset >= 0 ? SEEK_SET : SEEK_END);
         if (ferror(f))
         { 
-            logentry(LOG_ERROR, "seek error on %s", tmp);
+            logentry(LOG_ERROR, "seek error on %s", tmpfilename);
             break;
         }
         for (found = 1, j = 0; j < config->unpack[i].codeSize; j++)
@@ -240,18 +164,14 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
 
     if (!found)
     {
-        logentry(LOG_ERROR,"did not find an appropriate unpacker for %s", tmp);
-        free(tmp);
+        logentry(LOG_ERROR,"did not find an appropriate unpacker for %s", tmpfilename);
+        nfree(tmpfilename);
         return 0;
     }
 
     /* create the unpack command */
-    cmd = unpack_command(config->unpack[i].call, directory, filename, tempdir);
-    if (!cmd)
-    {
-        free(tmp);
-        return 0;
-    }
+    // unpack_command(cmd,config->unpack[i].call, directory, filename, tempdir);
+    fillCmdStatement(cmd,config->unpack[i].call,tmpfilename,"",tempdir);
 
     /* execute the unpacker */
     logentry(LOG_MSG, "executing %s", cmd);
@@ -259,12 +179,12 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
     if (exitcode != 0)
     {
         logentry(LOG_MSG, "unpacker returned %d", exitcode);
-        free(tmp);
+        nfree(tmpfilename);
         return 0;
     }
     adaptcase_refresh_dir(tempdir);
     
-    free(tmp);
+    nfree(tmpfilename);
     return 1;
 }
 
@@ -372,19 +292,13 @@ static char *basedir(const char *stemname)
 
 static int call_differ(char *nodelist, char *nodediff)
 {
-    char *cmd;
+    char *cmd = NULL;
     int rv;
 
-    cmd = malloc(strlen(differ) + strlen(nodelist) + strlen(nodediff) + 6);
-    if (cmd == NULL)
-    {
-        logentry(LOG_ERROR, "out of memory");
-        return 0;
-    }
-
-    sprintf(cmd,"%s -n %s %s", differ, nodelist, nodediff);
+    xscatprintf(&cmd,"%s -n %s %s", differ, nodelist, nodediff);
     logentry(LOG_MSG, "executing %s", cmd);
     rv = system(cmd);
+    nfree(cmd);
     if (rv != 0)
     {
         logentry(LOG_ERROR, "diff processor returned %d", rv);
@@ -417,7 +331,7 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
     char *newfn;
     int ndnr;
     int rv = 0;
-    long parsed_julian;
+//    long parsed_julian;
     int reason;
 
     if (fulllist->julians[j] == -1)
