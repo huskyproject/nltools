@@ -3,6 +3,10 @@
 #include <string.h>
 #include <errno.h>
 
+#include <huskylib/compiler.h>
+
+#include <huskylib/dirlayer.h>
+
 #include <fidoconf/fidoconf.h>
 #include <huskylib/log.h>
 #include "nlstring.h"

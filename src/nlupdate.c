@@ -5,27 +5,26 @@
 #include <ctype.h>
 #include <time.h>
 #include <errno.h>
-#ifdef UNIX
-#   include <sys/stat.h> /* S_I... constants */
-#   include <unistd.h>
-#else
-#   include <io.h>
-#   if (defined(_MSC_VER) && (_MSC_VER >= 1200)) || defined(__EMX__)
-#       define F_OK 00
-#       define R_OK 04
-#   endif
-#endif
+#include <sys/stat.h> /* S_I... constants */
 
 #include <huskylib/compiler.h>
+
+#ifdef HAS_IO_H
+#  include <io.h>
+#endif
+
+#ifdef HAS_UNISTD_H
+#   include <unistd.h>
+#endif
+
+#include <huskylib/dirlayer.h>
+
 #include <fidoconf/fidoconf.h>
 #include <huskylib/xstr.h>
 #include <huskylib/adcase.h>
 #include <fidoconf/common.h>
 #include <huskylib/log.h>
 
-#if !(defined(_MSC_VER) && (_MSC_VER >= 1200))
-#include <huskylib/dirlayer.h>
-#endif
 #include "nlstring.h"
 #include "nlfind.h"
 #include "nldate.h"
