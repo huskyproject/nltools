@@ -1,4 +1,4 @@
-include ../../huskymak.cfg
+include ../huskymak.cfg
 
 .PHONY: default
 
@@ -20,7 +20,7 @@ endif
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 
-.c$(OBJ): 
+%$(OBJ): src$(DIRSEP)%.c
 	$(CC) $(CFLAGS) $(CDEFS) -c $<
 
 nldiff$(EXE): nldiff$(OBJ) crc16$(OBJ) patmat$(OBJ)
