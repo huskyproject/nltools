@@ -1,3 +1,12 @@
+2003-02-20 Thursday 09:23  sfpavel
+
+	* HISTORY (1.1): Add HISTORY file
+
+2003-02-20 Thursday 07:20  sfpavel
+
+	* FILE_ID.DIZ (1.6), VERSION (1.4), h/version.h (1.2): Update
+	version info
+
 2003-02-12 Wednesday 10:21  sfpavel
 
 	* make/: makefile.bco (1.2), makefile.bcw (1.2), makefile.be (1.2),
