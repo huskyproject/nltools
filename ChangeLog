@@ -1,3 +1,13 @@
+2004-06-07 Monday 11:46  sfpavel
+
+	* debian/compat (1.1): file compat was initially added on branch
+	nltools-1_4-stable.
+
+2004-06-07 Monday 11:46  sfpavel
+
+	* debian/: changelog, compat, control, rules
+	(nltools-1_4-stable.[7,1,4,1]): New debian version
+
 2004-03-09 Tuesday 09:42  sfpavel
 
 	* make/: makefile.inc, makefile.sun, makefile.wcw
