@@ -1,3 +1,11 @@
+2003-06-19 Thursday 14:38  lmike
+
+	* make/makefile.qnx (1.2): Fixed include and library search pathes
+
+2003-06-19 Thursday 04:41  lmike
+
+	* nltools.qpg (1.1): Added file fot automative packaging for QNX6.
+
 2003-06-17 Tuesday 04:24  lmike
 
 	* make/makefile.qnx (1.1): Added makefile for QNX6
