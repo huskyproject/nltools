@@ -1,3 +1,7 @@
+2003-04-16 Wednesday 01:57  andr_lukyanov
+
+	* make/makefile.emx (nltools-1_4-stable.3): Fixed EMX compilation
+
 2003-04-15 Tuesday 07:12  andr_lukyanov
 
 	* make/: makefile.djg, makefile.inc (nltools-1_4-stable.[3,2]):
