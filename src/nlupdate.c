@@ -626,7 +626,7 @@ static int process(s_fidoconfig *config)
 
 int main(int argc, char **argv)
 {
-    s_fidoconfig *config = readConfig();
+    s_fidoconfig *config = readConfig(NULL);
     int rv;
     int l = 0;
 
