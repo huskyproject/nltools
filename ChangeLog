@@ -1,3 +1,12 @@
+2003-02-12 Wednesday 10:21  sfpavel
+
+	* make/: makefile.bco (1.2), makefile.bcw (1.2), makefile.be (1.2),
+	makefile.cyg (1.2), makefile.djg (1.2), makefile.emo (1.2),
+	makefile.emx (1.2), makefile.lnx (1.2), makefile.mgw (1.2),
+	makefile.mvc (1.2), makefile.mvcdll (1.2), makefile.sun (1.2),
+	makefile.unx (1.2), makefile.wco (1.2), makefile.wcw (1.2): Fix
+	makefiles (use SRC_DIR)
+
 2003-02-11 Tuesday 11:25  sfpavel
 
 	* Makefile (1.10), h/ccitttab.h (1.1), h/crc16.h (1.1), h/julian.h
