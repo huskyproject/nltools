@@ -1,3 +1,8 @@
+2002-07-22 Monday 13:56  mche
+
+	* src/: makefile.mvc (1.6), makefile.mvcdll (1.2): corrected file
+	cleaning
+
 2002-07-20 Saturday 00:10  stas
 
 	* Makefile (1.7), src/makefile.bco (1.6), src/makefile.bcw (1.4),
