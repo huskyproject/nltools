@@ -1,3 +1,12 @@
+2003-09-18 Thursday 10:43  sfpavel
+
+	* Makefile (nltools-1_4-stable.3): Fix static building
+
+2003-09-18 Thursday 06:31  sfpavel
+
+	* debian/changelog (nltools-1_4-stable.6): New stable version:
+	1.4-RC2
+
 2003-05-21 Wednesday 09:02  sfpavel
 
 	* debian/: changelog, control (nltools-1_4-stable.[5,3]): New
