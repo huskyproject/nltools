@@ -1,6 +1,7 @@
 NLTOOLS 1.1a-stable
--------------------
-(not yet released)
+===================
+(released on Sun Sep 17 18:58:45 MEST 2000)
+
 
 Thu Aug 10 13:01:49 MEST 2000
 tobi:
@@ -17,7 +18,7 @@ tobi:
 
 
 NLTOOLS 1.1-stable
-------------------
+==================
 (released on Fri Jul 14 18:42:48 CEST 2000)
 
 Fr  14 Jul 2000 01:00:27 CEST
@@ -27,7 +28,7 @@ tobi:
 Wed May 17 22:14:00 UTC 2000
 sms:
 * added smapi to Makefile
- 
+
 Mon May  8 17:40:14 NOVST 2000
 max (patch from Alex Bronin):
 * MS Visual C porting
@@ -53,7 +54,7 @@ tobi:
 
 Tue Dec 28 21:39:50 MET 1999
 tobi:
-- Fixed bug on Unix that could, in the situation that a nodelist and two 
+- Fixed bug on Unix that could, in the situation that a nodelist and two
   consequent nodediffs were found, lead to the situation that only the
   first nodediff was applied, but not the second one. (On a consecutive
   run, though, of course the second one was also applied).
@@ -79,8 +80,8 @@ tobi:
 Di  16 Nov 1999 23:19:07 CET
 tobi:
 - fixed problem that only occured with IBM C compilers.
-	
-Wed Oct 13 10:49:05 MET DST 1999 
+
+Wed Oct 13 10:49:05 MET DST 1999
 mtt:
 - fixed makefile.sun
 - added include of stddef.h (where size_t is defined) to string.c
@@ -104,4 +105,4 @@ Fri Oct  8 19:31:06 MET DST 1999 (tobi)
 - ulc is still very slow due to broken sort routine
 - nlupdate still missing
 
-	 
+
