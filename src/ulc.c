@@ -134,6 +134,7 @@ int main(void)
                                VER_BRANCH, cvs_date );
     if (config != NULL)
     {
+        initLog(config->logFileDir, config->logEchoToScreen, config->loglevels, config->screenloglevels);
         openLog(LOGNAME, versionStr, config);
 
         w_log(LL_START, "%s - userlist compiler", versionStr);
