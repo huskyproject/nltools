@@ -32,7 +32,8 @@ nlupdate.exe:
         $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ nlupdate.c $(FCONFL) $(NLTOOLSL)
 
 clean:
-	-del *.obj *.lib
+	-del *.obj
+	-del *.lib
 
 distclean: clean
 	-del *.exe
