@@ -9,11 +9,11 @@
 #endif
 
 #include <smapi/compiler.h>
-#include <fidoconfig/fidoconfig.h>
-#include <fidoconfig/adcase.h>
+#include <fidoconf/fidoconf.h>
+#include <fidoconf/adcase.h>
 #include <smapi/progprot.h>
-#include <fidoconfig/common.h>
-#include <fidoconfig/dirlayer.h>
+#include <fidoconf/common.h>
+#include <fidoconf/dirlayer.h>
 #include "nllog.h"
 #include "nlstring.h"
 #include "nlfind.h"

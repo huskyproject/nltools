@@ -5,7 +5,7 @@
 #ifdef MSDOS
 #include <fidoconf/fidoconf.h>
 #else
-#include <fidoconfig/fidoconfig.h>
+#include <fidoconf/fidoconf.h>
 #endif
 
 void loginit(s_fidoconfig *config);
