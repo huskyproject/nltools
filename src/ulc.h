@@ -1,7 +1,7 @@
 #ifndef ULC_H
 #define ULC_H
 
-#define REV "0.1"
+#define REV "1.0"
 
 enum { F_NODELIST, F_POINTS24 };
 

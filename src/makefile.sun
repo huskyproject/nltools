@@ -6,7 +6,7 @@ default: nldiff nlcrc ulc nlupdate
 
 CC=gcc
 CFLAGS=-g -I../../smapi -I../../fidoconfig -DUNIX
-LFLAGS=-g -L../../smapi -L../../fidoconfig 
+LFLAGS=-g -L../../fidoconfig 
 
 .c.o: 
 	$(CC) $(CFLAGS) -c $<
@@ -17,11 +17,11 @@ nldiff: nldiff.o crc16.o
 nlcrc: crc16.o nlcrc.o
 	$(CC) $(LFLAGS) -o nlcrc crc16.o nlcrc.o
 
-ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o
-	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o  -lfidoconfig -lsmapisun
+ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
+	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfig 
 
-nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o
-	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o -lfidoconfig -lsmapisun
+nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
+	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfig
 
 clean:
 	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o julian.o nlfind.o nldate.o nlupdate.o string.o

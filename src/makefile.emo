@@ -1,6 +1,8 @@
+# This builds a standalone OS/2 executable
+
 .PHONY: default
 
-default: nldiff.exe nlcrc.exe ulc.exe
+default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
 
 CC=gcc
 CFLAGS=-Zomf -g -I../../smapi -I../../fidoconfig -DUNIX
@@ -9,7 +11,7 @@ LFLAGS=-Zomf -g -L../../fidoconfig -L../../smapi
 .SUFFIXES:
 .SUFFIXES: .c .obj .exe
 
-.c.obj: 
+.c.obj:
 	$(CC) $(CFLAGS) -c $<
 
 nldiff.exe: nldiff.obj crc16.obj
@@ -18,14 +20,14 @@ nldiff.exe: nldiff.obj crc16.obj
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(CC) $(LFLAGS) -o nlcrc.exe crc16.obj nlcrc.obj
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
-	$(CC) $(LFLAGS) -o ulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj -lfidoconfig -lsmapiemo
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj
+	$(CC) $(LFLAGS) -o ulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj -lfidoconfig 
 
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
-	$(CC) $(LFLAGS) -o nlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj -lfidoconfig -lsmapiemx
+nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj
+	$(CC) $(LFLAGS) -o nlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj -lfidoconfig
 
 clean:
-	-del crc16.obj nlcrc.obj nldiff.obj ulc.obj ulcomp.obj ulcsort.obj nllog.obk nldate.obj julian.obj nlfind.obj nlupdate.obj nllog.obj
+	-rm crc16.obj nlcrc.obj nldiff.obj ulc.obj ulcomp.obj ulcsort.obj nllog.obk nldate.obj julian.obj nlfind.obj nlupdate.obj nllog.obj patmat.obj
 	-del nlcrc.exe
 	-del nldiff.exe
 	-del ulc.exe

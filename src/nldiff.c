@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "crc16.h"
+#include "nldiff.h"
 
 /* It is no problem if a line grows larger than BUFSZ. This code is
    intelligent. :-)
@@ -313,6 +314,7 @@ int parse_args (int argc, char **argv, char **listname, char **diffname,
 
 void usage(void)
 {
+    fprintf (stderr, "nldiff - nodelist differ rev. %s\n", REV);
     fprintf (stderr, "Usage:\n"\
 "   nldiff [-n] [-d] LISTNAME.DNR DIFFNAME.DNR\n\n"\
 "   The -n option causes the original Nodelist to be deleted if the new\n"\
@@ -320,7 +322,11 @@ void usage(void)
 "   The -d option causes the Nodediff file to be deleted if the new\n"\
 "   nodelist could be successfully generated.\n\n"\
 "Example:\n"\
-"   nldiff -n NODELIST.253 NODEDIFF.260\n\n");
+"   nldiff -n NODELIST.253 NODEDIFF.260\n\n"\
+"Remarks:\n"\
+"   If you want a tool that automatically updates your nodelist\n"\
+"   without you having to manually specify the day number file\n"\
+"   extensions, use \"nlupdate\". It will call nldiff internally.\n");
 }
     
 /* Main program */

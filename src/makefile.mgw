@@ -1,0 +1,38 @@
+# This builds a Win32 executable the requires CRTDLL.DLL
+
+.PHONY: default
+
+default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
+
+CC=i386--mingw32-gcc
+CFLAGS=-O3 -I../../smapi -I../../fidoconfig -DUNIX
+LFLAGS=-static -s -O3 -L../../fidoconfig -L../../smapi
+
+.SUFFIXES:
+.SUFFIXES: .c .o .exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+nldiff.exe: nldiff.o crc16.o
+	$(CC) $(LFLAGS) -o nldiff.exe nldiff.o crc16.o
+
+nlcrc.exe: crc16.o nlcrc.o
+	$(CC) $(LFLAGS) -o nlcrc.exe crc16.o nlcrc.o
+
+ulc.exe: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
+	$(CC) $(LFLAGS) -o ulc.exe ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ../../fidoconfig/fidoconfig.a
+
+nlupdate.exe: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
+	$(CC) $(LFLAGS) -o nlupdate.exe nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o ../../fidoconfig/fidoconfig.a
+
+clean:
+	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.obk nldate.o julian.o nlfind.o nlupdate.o nllog.o
+	-rm nlcrc.exe
+	-rm nldiff.exe
+	-rm ulc.exe
+	-rm nlupdate.exe
+
+
+
+

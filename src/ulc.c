@@ -103,6 +103,7 @@ int process(s_fidoconfig *config)
 
     fclose(fin);
     fclose(fout);
+    return rv;
 }
 
 int main(void)

@@ -3,11 +3,14 @@
 #include <string.h>
 #include <assert.h>
 #include <ctype.h>
+#include <time.h>
 #ifdef UNIX
 #include <sys/stat.h> /* S_I... constants */
 #endif
 
+#include "compiler.h"
 #include "fidoconfig.h"
+#include "adcase.h"
 #include "progprot.h"
 #include "common.h"
 #include "nllog.h"
@@ -21,6 +24,16 @@
 
 /* store the nldiff command name */
 static char *differ = NULL;
+
+static int nl_fexist(char *filename)
+{
+   FILE *f = fopen(filename, "rb");
+   if (f == NULL)
+      return 0;
+   fclose(f);
+   return 1;
+}
+   
 
 static char *mk_uncompressdir(char *nldir)
 {
@@ -90,11 +103,13 @@ int destroy_uncompressdir(char *upath)
             }
         }
     }
+    closedir(hdir);
 
     upath[l-1] = '\0';
     if (rmdir(upath))
     {
-        logentry(LOG_ERROR, "cannot remove temporary directory %s", upath);
+        logentry(LOG_ERROR, "cannot remove temporary directory %s", 
+                 upath);
         free(upath);
         return 0;
     }
@@ -236,7 +251,7 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
         free(tmp);
         return 0;
     }
-    adaptcase_refresh_dir(tempdir);
+    /*adaptcase_refresh_dir(tempdir);*/
     
     free(tmp);
     return 1;
@@ -284,7 +299,7 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
         sprintf(rv + strlen(tempdir) + l - 3, "%03d", expday % 1000);
 
         adaptcase(rv);
-        if (!fexist(rv))
+        if (!nl_fexist(rv))
         {
             free(rv);
             return NULL;
@@ -332,7 +347,7 @@ static int call_differ(char *nodelist, char *nodediff)
         logentry(LOG_ERROR, "out of memory");
         return 0;
     }
-    
+
     sprintf(cmd,"%s -n %s %s", differ, nodelist, nodediff);
     logentry(LOG_MSG, "executing %s", cmd);
     rv = system(cmd);
@@ -360,9 +375,6 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
     nlist *difflist = NULL, *fulllist = NULL;
     int hit;
     char *ufn;
-
-    /* REMOVETHIS */
-    today += 7;
 
     if ((julian = parse_nodelist_date(rawnl)) == -1)
         return 0;
@@ -655,14 +667,3 @@ int main(int argc, char **argv)
         return 8;
     }
 }
-
-
-
-
-
-
-
-
-
-
-

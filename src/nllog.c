@@ -57,6 +57,7 @@ int logentry(char level, char *format, ...)
     char timestr[30];
     time_t t;
     FILE *f;
+    int rv = 0;
 
 
     time(&t);
@@ -78,10 +79,11 @@ int logentry(char level, char *format, ...)
         
         fprintf (f, "%c %s NLTOOL ", level, timestr);
         va_start(args, format);
-        vfprintf (f, format, args);
+        rv+=vfprintf (f, format, args);
         va_end(args);
         fprintf (f, "\n");
     }
+    return rv;
 }        
 
 

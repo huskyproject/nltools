@@ -1,9 +1,10 @@
+# BORLAND C 2.0 FOR OS/2
 
-default: nldiff.exe nlcrc.exe ulc.exe
+default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
 
 CC=bcc -v
-CFLAGS=-I..\..\smapi -I..\..\fidoconfig -DUNIX
-LFLAGS=-L..\..\fidoconfig -L..\..\smapi
+CFLAGS=-I..\..\smapi -I..\..\fidoconfig -DOS2
+LFLAGS=-L..\..\fidoconfig
 
 .SUFFIXES:
 .SUFFIXES: .c .obj .exe
@@ -17,17 +18,30 @@ nldiff.exe: nldiff.obj crc16.obj
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(CC) $(LFLAGS) -enlcrc.exe crc16.obj nlcrc.obj
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj
-	$(CC) $(LFLAGS) -eulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj ..\..\fidoconfig\fidoconfig.lib ..\..\smapi\smapibco.lib
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj
+	$(CC) $(LFLAGS) -eulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj ..\..\fidoconfig\fidoconfig.lib
 
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
-	$(CC) $(LFLAGS) -enlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj ..\..\fidoconfig\fidoconfig.lib ..\..\smapi\smapibco.lib
+nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj
+	$(CC) $(LFLAGS) -enlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj ..\..\fidoconfig\fidoconfig.lib
 
 clean:
-	-del crc16.obj nlcrc.obj nldiff.obj ulc.obj ulcomp.obj ulcsort.obj nllog.obj julian.obj nldate.obj nlfind.obj nlupdate.obj
+	-del crc16.obj
+	-del nlcrc.obj
+	-del nldiff.obj
+	-del ulc.obj
+	-del ulcomp.obj
+	-del ulcsort.obj
+	-del nllog.obj
+	-del julian.obj
+	-del nldate.obj
+	-del nlfind.obj
+	-del nlupdate.obj
+	-del string.obj
 	-del nlcrc.exe
 	-del nldiff.exe
 	-del ulc.exe
+	-del patmat.obj
+
 
 
 

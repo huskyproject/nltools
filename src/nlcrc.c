@@ -1,5 +1,5 @@
 /* Tool to check the CRC value in a Fidonet Nodelist
-   Written 1999 by Tobias Ernst and release do the Public Domain.
+   Written 1999 by Tobias Ernst and released do the Public Domain.
    References: FTS-0005
 */
 
@@ -110,6 +110,8 @@ int main(int argc, char **argv)
     if (argc != 2)
     {
         fprintf (stderr, "Usage: nlcrc <FILENAME>\n");
+        fprintf (stderr, "If nothing is printed, the CRC was OK. If the CRC is not OK, an\n");
+        fprintf (stderr, "error message and a return code>0 is given.\n");
         return 8;
     }
 
@@ -133,8 +135,3 @@ int main(int argc, char **argv)
 
     return 0;
 }
-
-    
-
-
-        
