@@ -1,3 +1,8 @@
+2003-09-22 Monday 05:50  andr_lukyanov
+
+	* make/makefile.wco (nltools-1_4-stable.3): Fixed OS/2 WatcomC
+	compilation
+
 2003-09-18 Thursday 10:43  sfpavel
 
 	* Makefile (nltools-1_4-stable.3): Fix static building
