@@ -10,10 +10,10 @@ OBJS = $(NLDIFFOBJS) $(NLCRCOBJS) $(ULCOBJS) $(NLUPDATEOBJS)
 commonprogs: nldiff$(EXE) nlcrc$(EXE) ulc$(EXE) nlupdate$(EXE)
 
 nldiff$(EXE): $(NLDIFFOBJS)
-	$(CC) $(LFLAGS) -o nldiff$(EXE) $(NLDIFFOBJS)
+	$(CC) $(LFLAGS) -o nldiff$(EXE) $(NLDIFFOBJS) $(LIBS)
 
 nlcrc$(EXE): $(NLCRCOBJS)
-	$(CC) $(LFLAGS) -o nlcrc$(EXE) $(NLCRCOBJS)
+	$(CC) $(LFLAGS) -o nlcrc$(EXE) $(NLCRCOBJS) $(LIBS)
 
 ulc$(EXE): $(ULCOBJS)
 	$(CC) $(LFLAGS) -o ulc$(EXE) $(ULCOBJS) $(LIBS)

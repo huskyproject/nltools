@@ -11,7 +11,7 @@ RM=del
 CFLAGS=-O3 -DDOS -DMSDOS -D__FLAT__ -DFLAT
 CINCL=-I../h -I../../fidoconf -I../../smapi -I../../huskylib
 LFLAGS=-s -O3 -mcpu=i486
-LIBS=../../fidoconf/fconfdjg.a ../../huskylib/make/huskydjg.a
+LIBS=../../fidoconf/make/fconfdjg.a ../../huskylib/make/huskydjg.a
 SRC_DIR=../src/
 
 .SUFFIXES:
