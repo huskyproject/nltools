@@ -1,3 +1,13 @@
+2002-12-20 Friday 13:09  stas_degteff
+
+	* src/: nlfind.c (1.10), nlfind.h (1.6), nlupdate.c (1.30): Try to
+	use not an FTS-5 or FTS-5000 full nodelist updates
+
+2002-12-20 Friday 06:11  stas_degteff
+
+	* src/nldate.c (1.8): Spell check (Thanks to Pavel Scvortsov
+	2:5055/80.333)
+
 2002-11-29 Friday 09:46  stas_degteff
 
 	* src/: makefile.wco (1.4), makefile.wcw (1.12): Fix: remove
