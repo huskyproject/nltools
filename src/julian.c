@@ -56,14 +56,24 @@ long get_julian_date( int dd, int mm, int yy)
                           1000, 1100, 1300, */
     }
 
-    /* add the days of the current year */
-    while (--mm)
+    if (mm)
     {
-        julian += s_days_in_month[is_leap_year(yy)][mm-1];
-    }
+        /* mm > 0: assume dd is day number in month */
 
-    /* days in current month */
-    julian += dd;
+        /* add the days of the current year */
+        while (--mm)
+        {
+            julian += s_days_in_month[is_leap_year(yy)][mm-1];
+        }
+        
+        /* days in current month */
+        julian += dd;
+    }
+    else
+    {
+        /* mm == 0: assume dd is day number in year as per fts */
+        julian += (dd - 1);
+    }
 
     /* adjust for the cut from oct 4 to oct 15, 1582 */
     if (julian > 577737L)

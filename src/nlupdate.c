@@ -90,6 +90,8 @@ int destroy_uncompressdir(char *upath)
     struct dirent *dp;
     DIR *hdir;
 
+    return 1;
+
     hdir = opendir(upath);
     if (hdir == NULL)
     {
@@ -269,11 +271,17 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
 
 static char *get_uncompressed_filename(s_fidoconfig *config,
                                 char *directory, char *filename,
-                                char *tempdir, int expday)
+                                char *tempdir, int expday,
+                                int *reason)
 {
     size_t l = strlen(filename);
     char *rv;
 
+    if (reason)
+    {
+        *reason = 0;  /* means: all sorts of errors */
+    }
+        
     assert (l >= 4); /* a match should never happen w/o ".???" at the end */
 
     if ( isdigit(filename[l-3]) && expday == atoi(filename + l-3))
@@ -319,6 +327,11 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
     else
     {
         /* no match */
+        if (reason)
+        {
+            *reason = 1; /* means: file extension simply doesn't match */
+        }            
+        
         return NULL;
     }
 }
@@ -385,21 +398,33 @@ static int call_differ(char *nodelist, char *nodediff)
 
 */
 
-static int try_full_update(s_fidoconfig *config, char *rawnl, char *fullbase,
-                            char *match, char *tmpdir, long julian, int nl)
+static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
+                           nlist *fulllist, int j, char *tmpdir,
+                           long julian, int nl)
 {
     char *ufn;
     char *newfn;
     int ndnr;
     int rv = 0;
+    long parsed_julian;
+    int reason;
+
+    if (fulllist->julians[j] == -1)
+    {
+        return 0;  /* this full update has an unknown date number */
+    }
 
     decode_julian_date(julian, NULL, NULL, NULL, &ndnr);
-    
-    ufn = get_uncompressed_filename(config, fullbase, match, tmpdir, ndnr);
+
+    ufn = get_uncompressed_filename(config, fullbase, fulllist->matches[j],
+                                    tmpdir, ndnr, &reason);
+
+    if (!reason)
+        fulllist->julians[j] = -1;
 
     if (ufn != NULL)
     {
-        if (julian == parse_nodelist_date(ufn))
+        if (julian == (fulllist->julians[j] = parse_nodelist_date(ufn)))
         {
             logentry(LOG_MSG, "found full update: %s", ufn);
 
@@ -529,7 +554,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
             {
                 ufn = get_uncompressed_filename(config, diffbase,
                                                 difflist->matches[j],
-                                                tmpdir, ndnr);
+                                                tmpdir, ndnr, NULL);
                 if (ufn != NULL)
                 {
 
@@ -561,7 +586,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
             for (j = 0; j < fulllist->n && !hit; j++)
             {
                 switch (try_full_update(config, rawnl, fullbase,
-                                        fulllist->matches[j], tmpdir, i, nl))
+                                        fulllist, j, tmpdir, i, nl))
                 {
                 case 0:        /* no hit, no error */
                     break;
@@ -674,7 +699,7 @@ static int create_instance(s_fidoconfig *config, int nl, long today,
             for (j = 0; j < fulllist->n && !hit; j++)
             {
                 switch (try_full_update(config, NULL, fullbase,
-                                        fulllist->matches[j], tmpdir, i, nl))
+                                        fulllist, j, tmpdir, i, nl))
                 {
                 case 0:        /* no hit, no error */
                     break;

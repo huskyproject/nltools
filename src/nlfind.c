@@ -20,6 +20,10 @@ void free_nlist(nlist *pnl)
     {
         free (pnl->matches);
     }
+    if (pnl->julians != NULL)
+    {
+        free (pnl->julians);
+    }
     free(pnl);
 }
 
@@ -35,10 +39,13 @@ static nlist *make_nlist(void)
 
     res->n = 0; res->nmax = 5;
     res->matches = malloc(res->nmax*sizeof(char *));
+    res->julians = malloc(res->nmax*sizeof(long));
 
-    if (res->matches == NULL)
+    if (res->matches == NULL || res->julians == NULL)
     {
         logentry(LOG_ERROR, "Out of memory.");
+        if (res->julians) free(res->julians);
+        if (res->matches) free(res->matches);
         free(res);
         return NULL;
     }
@@ -49,7 +56,8 @@ static nlist *make_nlist(void)
 static int add_match(nlist *pnl, char *match)
 {
     char *cp = malloc(strlen(match) + 1);
-    char **new;
+    char **newm;
+    long *newj;
 
     if (cp == NULL)
     {
@@ -58,17 +66,23 @@ static int add_match(nlist *pnl, char *match)
     }
     if (pnl->n == pnl->nmax)
     {
-        if ((new = realloc(pnl->matches, (pnl->nmax + 5)*sizeof(char *))) == NULL)
+        newm = realloc(pnl->matches, ((pnl->nmax + 1) * 2 )*sizeof(char *));
+        newj = realloc(pnl->julians, ((pnl->nmax + 1) * 2 )*sizeof(long));
+            
+        if (newm == NULL || newj == NULL)
         {
             logentry(LOG_ERROR, "Out of memory.");
             return 0;
         }
-        pnl->matches = new;
-        pnl->nmax += 5;
+        pnl->matches = newm;
+        pnl->julians = newj;
+        pnl->nmax = ((pnl->nmax + 1) * 2);
     }
 
     strcpy(cp, match);
-    pnl->matches[(pnl->n)++] = cp;
+    pnl->matches[pnl->n] = cp;
+    pnl->julians[pnl->n] = 0;   /* 0 means: not yet known */
+    pnl->n++;
     return 1;
 }
 

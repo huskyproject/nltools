@@ -7,6 +7,7 @@
 typedef struct s_nlist
 {
     char **matches;
+    long *julians;
     int n, nmax;
 } nlist;
 

@@ -1,6 +1,12 @@
 Current Version
 ---------------
 
+Thu Aug 10 14:25:40 MEZ 2000
+tobi:
+- Relaxed the checking of the nodelist header line to allow non-conforming
+  nodelists (like the wipost pointlist, etc. pp.) to pass.
+- Bugfixes for the previous checkin.
+
 Thu Aug 10 13:24:07 MEZ 2000
 tobi:
 - New feature: previously, you needed to unpack the first instance of a
