@@ -9,7 +9,6 @@
 export DH_COMPAT=4
 export DEBIAN=1
 export PACKAGE=nltools
-export VERSION=1.2
 # Next Line to build debug-versions !
 #export DEB_BUILD_OPTIONS=nostrip
 
