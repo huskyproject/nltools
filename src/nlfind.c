@@ -70,7 +70,7 @@ static int add_match(nlist *pnl, char *match)
     {
         newm = realloc(pnl->matches, ((pnl->nmax + 1) * 2 )*sizeof(char *));
         newj = realloc(pnl->julians, ((pnl->nmax + 1) * 2 )*sizeof(long));
-            
+
         if (newm == NULL || newj == NULL)
         {
             logentry(LOG_ERROR, "Out of memory.");
@@ -96,12 +96,12 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
     size_t l, l2;
 
     logentry( 'X', "find_nodelistfiles()" );
-    
+
     if (pnl == NULL)
     {
         return pnl;
     }
-        
+
     hdir = opendir(path);
 
     if (hdir == NULL)
@@ -160,8 +160,6 @@ char *findNodelist(s_fidoconfig *config, int i)
 
     pnl = find_nodelistfiles(config->nodelistDir,
                              config->nodelists[i].nodelistName, 0);
-
-    logentry( 'X', "Found: %s", pnl );
 
     if (pnl == NULL)
         return NULL;
