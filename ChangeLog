@@ -1,6 +1,10 @@
 Current Version
 ---------------
 
+Fr  11 Aug 2000 01:20:41 CEST
+tobi:
+- New nodelist format: Points4D. For 4D pointlists (with "Boss" entries etc.)
+
 Thu Aug 10 14:25:40 MEZ 2000
 tobi:
 - Relaxed the checking of the nodelist header line to allow non-conforming

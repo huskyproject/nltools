@@ -81,9 +81,22 @@ int process(s_fidoconfig *config)
             }
             else
             {
-                if (!ul_compile(fin, fout,
-                                config->nodelists[i].format == fts5000 ?
-                                F_NODELIST: F_POINTS24,
+                int format;
+
+                switch (config->nodelists[i].format)
+                {
+                case points4d:
+                    format = F_POINTS4D;
+                    break;
+                case points24:
+                    format = F_POINTS24;
+                    break;
+                case fts5000:
+                default:
+                    format = F_NODELIST;
+                }
+                
+                if (!ul_compile(fin, fout, format,
                                 config->nodelists[i].defaultZone))
                 {
                     logentry(LOG_ERROR, "error during compile");

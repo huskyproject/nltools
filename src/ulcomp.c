@@ -103,6 +103,25 @@ static void parse2d(char *ptr, unsigned int *net, unsigned int *node)
     }
 }
 
+static void parse3d(char *ptr, unsigned int *zone, unsigned int *net,
+                    unsigned int *node)
+{
+    *zone = 0;
+    while (isdigit(*ptr))
+    {
+        *zone = 10 * (*zone) + (*ptr)-'0';
+        ptr++;
+    }
+    if ((*(ptr)) != ':')
+    {
+        *zone = *net = *node = 0;
+    }
+    else
+    {
+        ptr++;
+        parse2d(ptr, net, node);
+    }
+}
 
 static int ulc_line(FILE *fin, FILE *fout, unsigned format,
                     unsigned *zone, unsigned *net, unsigned *node)
@@ -144,6 +163,53 @@ static int ulc_line(FILE *fin, FILE *fout, unsigned format,
 
             switch (format)
             {
+
+            case F_POINTS4D:
+                switch (k)
+                {
+                case 0:
+                    if (!stricmp(ptr, "BOSS"))
+                    {
+                        type = T_HOST;
+                    }
+                    else if (!*ptr)
+                    {
+                        type = T_NODE;
+                    }
+                    else
+                    {
+                        k = 4;  /* ignore this one */
+                    }
+                    break;
+
+                case 1:
+                    if (type == T_HOST)
+                    {
+                        parse3d(ptr, zone, net, node);
+                    }
+                    else
+                    {
+                        point = atoi(ptr);
+                    }
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    break;
+                    
+                case 4:
+                    if (type == T_NODE)
+                    {
+                        username = ptr;
+                        rv = parsednode(fout, *zone, *net, *node, point,
+                                        username);
+                    }
+                    break ;
+                }
+                break;
+
             case F_POINTS24:
 
                 switch (k)

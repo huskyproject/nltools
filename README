@@ -296,12 +296,14 @@ existing fidoconfig file if you have one.
    Syntax:  Nodelistformat <format>
    Example: NodelistFormat Standard
    Example: NodelistFormat Points24
+   Example: NodelistFormat Points4D
 
    Here you can specify the format of the unpacked nodelist.  The default is
    "standard":  this is the normal Fidonet nodelist format.  You can also
    specify "points24", which is needed for the nodelist compiler to recognise
    a point list in the German points24 format as such, so that it can see the
-   proper 5D point numbers instead of the fakenet numbers.
+   proper 4D point numbers instead of the fakenet numbers. Or you can specify
+   "points4d", which means a 4D point list with "Boss" entries.
 
 
 VI) SAMPLE CONFIG
