@@ -1,6 +1,12 @@
 Current Version
 ---------------
 
+Wed Oct 13 10:31:36 MET DST 1999
+mtt:
+- fixed typo in linux makefile
+- added sun makefile
+- removed nldiff binary :-)
+
 Mo  11 Okt 1999 00:20:20 CEST
 - Fixed the sort routine. It was buggy and slow, so I replaced it with
   the brute force method (read everything into RAM) until I find time to
