@@ -1,3 +1,9 @@
+nltools (1.4.0+beta2-1) unstable; urgency=low
+
+  * New cvs version
+
+ -- Pavel Andreew <pavel@collage.etel.ru>  Tue, 25 Feb 2003 15:01:51 +0500
+
 nltools (1.4.0+beta1-2) unstable; urgency=low
 
   * Place nltools package to main. Now smapi has LGPL license and
