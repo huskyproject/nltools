@@ -1,3 +1,12 @@
+2003-02-12 Wednesday 10:25  sfpavel
+
+	* make/: makefile.bco, makefile.bcw, makefile.be, makefile.cyg,
+	makefile.djg, makefile.emo, makefile.emx, makefile.lnx,
+	makefile.mgw, makefile.mvc, makefile.mvcdll, makefile.sun,
+	makefile.unx, makefile.wco, makefile.wcw
+	(nltools-1_4-stable.[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]): Fix makefiles
+	(use SRC_DIR)
+
 2003-02-11 Tuesday 12:30  sfpavel
 
 	* debian/changelog (nltools-1_4-stable.2): Change debian version to
