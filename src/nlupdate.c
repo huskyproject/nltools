@@ -9,7 +9,7 @@
 #include <sys/stat.h> /* S_I... constants */
 #include <unistd.h>
 #else
-#incluse <io.h>
+#include <io.h>
 #endif
 
 #include <smapi/compiler.h>
