@@ -1,5 +1,10 @@
 Current Version
----------------
+--------------
+	
+Wed Oct 13 10:49:05 MET DST 1999 
+mtt:
+- fixed makefile.sun
+- added include of stddef.h (where size_t is defined) to string.c
 
 Wed Oct 13 10:31:36 MET DST 1999
 mtt:

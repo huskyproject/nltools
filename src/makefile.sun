@@ -4,7 +4,7 @@ INSTDIR = /usr/local/bin
 
 default: nldiff nlcrc ulc nlupdate
 
-CC=cc
+CC=gcc
 CFLAGS=-g -I../../smapi -I../../fidoconfig -DUNIX
 LFLAGS=-g -L../../smapi -L../../fidoconfig 
 

@@ -1,6 +1,8 @@
 #include <ctype.h>
+#include <stddef.h>
 
 #if !defined(__linux__) && !defined(__FreeBSD__) && !defined(__EMX__)
+
 int ncasecmp(const char *s, const char *t, size_t x)
 {
     long n;
