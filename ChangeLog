@@ -1,3 +1,8 @@
+2002-10-22 Tuesday 10:59  sfpavel
+
+	* debian/: changelog, control (nltools-1_2-stable.[1,1]): New
+	debian package
+
 2002-10-18 Friday 09:03  stas_degteff
 
 	* man/: README, nlcrc.1, nldiff.1, nlupdate.1, ulc.1
