@@ -1,8 +1,16 @@
 Current Version
---------------
+---------------
+
+Tue Dec 28 19:25:59 MET 1999
+ml:
+- Removed some unnecessary variables
+- Added makefile for Watcom C for Windows
+
 Tue 30 Nov 1999 22:10:01 CET
 sms:
 - fixed some misuses of ++ in ulcomp.c
+(Remark by TE: I don't think those caused any problems, they were both
+ ANSI and K&R proofed)
 
 Sun 28 Nov 1999 03:00:00 CET
 tobi:

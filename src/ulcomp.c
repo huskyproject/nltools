@@ -84,12 +84,13 @@ static void parse2d(char *ptr, unsigned int *net, unsigned int *node)
         *net = 10 * (*net) + (*ptr)-'0';
         ptr++;
     }
-    if ((*(ptr++)) != '/')
+    if ((*(ptr)) != '/')
     {
         *net = *node = 0;
     }
     else
     {
+	ptr++;
         while (isdigit(*ptr))
         {
             *node = 10 * (*node) + (*ptr)-'0';
