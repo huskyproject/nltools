@@ -81,7 +81,11 @@ int logentry(char level, char *format, ...)
         va_start(args, format);
         rv+=vfprintf (f, format, args);
         va_end(args);
-        fprintf (f, "\n");
+       
+         if (*format && format[strlen(format) - 1] != '\n')
+         {
+              fprintf (f, "\n");
+         }
     }
     return rv;
 }        
