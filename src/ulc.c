@@ -133,16 +133,17 @@ int main(void)
 
     versionStr = GenVersionStr( "ulc", VER_MAJOR, VER_MINOR, VER_PATCH,
                                VER_BRANCH, cvs_date );
+    fprintf (stderr, "%s\n", versionStr);
+
     if (config != NULL)
     {
         initLog(config->logFileDir, config->logEchoToScreen, config->loglevels, config->screenloglevels);
         openLog(LOGNAME, versionStr);
-
-        w_log(LL_START, "%s - userlist compiler", versionStr);
+        w_log(LL_START, "Start");
 
         rv=process(config);
 
-        w_log( LL_STOP, "Done" );
+        w_log( LL_STOP, "End" );
         closeLog();
         disposeConfig(config);
         return rv;

@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <stdlib.h>
+
 #include <huskylib/huskylib.h>
 #include "crc16.h"
 #include "version.h"
@@ -326,7 +327,7 @@ void usage(void)
 {
     versionStr = GenVersionStr( "nldiff", VER_MAJOR, VER_MINOR, VER_PATCH,
                                VER_BRANCH, cvs_date );
-    fprintf (stderr, "%s - nodelist differ\n", versionStr);
+    fprintf (stderr, "%s\n", versionStr);
     fprintf (stderr, "Usage:\n"\
 "   nldiff [-n] [-d] LISTNAME.DNR DIFFNAME.DNR\n\n"\
 "   The -n option causes the original Nodelist to be deleted if the new\n"\

@@ -8,7 +8,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+
+#include <huskylib/huskylib.h>
+
 #include "crc16.h"
+#include "version.h"
 
 enum {SCANCOLON, SCANDIGIT, CRCVAL, AFTERCRCVAL, FINISH};
 
@@ -106,12 +110,16 @@ int main(int argc, char **argv)
 {
     FILE *f;
     unsigned short should, is;
+    char *versionStr;
 
     if (argc != 2)
     {
-        fprintf (stderr, "Usage: nlcrc <FILENAME>\n");
-        fprintf (stderr, "If nothing is printed, the CRC was OK. If the CRC is not OK, an\n");
-        fprintf (stderr, "error message and a return code>0 is given.\n");
+    versionStr = GenVersionStr( "nlcrc", VER_MAJOR, VER_MINOR, VER_PATCH,
+                               VER_BRANCH, cvs_date );
+        fprintf (stderr, "%s\n", versionStr);
+        fprintf (stderr, "\nUsage: nlcrc <FILENAME>\n\n");
+        fprintf (stderr, "\tIf nothing is printed, the CRC was OK. If the CRC is not OK, an\n");
+        fprintf (stderr, "\terror message and a return code>0 is given.\n");
         return 8;
     }
 
