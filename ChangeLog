@@ -1,3 +1,12 @@
+2002-07-20 Saturday 00:10  stas
+
+	* Makefile (1.7), src/makefile.bco (1.6), src/makefile.bcw (1.4),
+	src/makefile.be (1.3), src/makefile.cyg (1.2), src/makefile.inc
+	(1.1), src/makefile.mgw (1.5), src/nldate.c (1.6), src/nlfind.c
+	(1.8), src/nllog.h (1.6), src/nlupdate.c (1.21), src/ulc.c (1.11),
+	src/ulcsort.c (1.3): Implement common husky logging. Warning: not
+	all makefiles corrected
+
 2002-07-17 Wednesday 20:15  stas
 
 	* src/: crc16.c (1.5), fexist.c (1.5), nldate.c (1.5): Fix warnings
