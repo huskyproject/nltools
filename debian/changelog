@@ -1,3 +1,12 @@
+nltools (1.2-6) unstable; urgency=low
+
+  * New cvs version
+  * Install sample config into /etc/husky
+  * Clean up debian/rules
+  * Add ChangeLog.old to distribution
+
+ -- Pavel Andreew <pavel@collage.etel.ru>  Fri,  4 Oct 2002 18:20:22 +0600
+
 nltools (1.2-5) unstable; urgency=low
 
   * New maintainer

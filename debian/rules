@@ -13,39 +13,19 @@ export VERSION=1.2
 # Next Line to build debug-versions !
 #export DEB_BUILD_OPTIONS=nostrip
 
-configure: configure-stamp
-configure-stamp:
-	dh_testdir
-	# Add here commands to configure the package.
-	
-
-	touch configure-stamp
-
-build: configure-stamp build-stamp
+build: build-stamp
 build-stamp:
 	dh_testdir
-
 	# Add here commands to compile the package.
 	$(MAKE)
-
 	touch build-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp configure-stamp
-
+	rm -f build-stamp
 	# Add here commands to clean up after the build process.
 	-$(MAKE) distclean
-	-rm -f configure-stamp
-	-rm -f build-stamp
-	-rm -rf debian/$(PACKAGE)
-	-rm -f debian/postinst.debhelper
-	-rm -f debian/postrm.debhelper
-	-rm -f debian/prerm.debhelper
-	-rm -f debian/substvars
-	-rm -f debian/files
-
 	dh_clean
 
 install: build
@@ -53,9 +33,9 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-
 	# Add here commands to install the package into debian/nltools.
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/$(PACKAGE)
+	cp sample.lnx debian/$(PACKAGE)/etc/husky/config.nltools
 
 
 # Build architecture-independent files here.
@@ -88,4 +68,4 @@ binary-arch: build install
 	dh_builddeb
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+.PHONY: build clean binary-indep binary-arch binary install
