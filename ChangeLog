@@ -1,3 +1,8 @@
+2003-02-25 Tuesday 10:02  sfpavel
+
+	* debian/changelog (nltools-1_4-stable.4): New debian version:
+	1.4-beta2
+
 2003-02-19 Wednesday 06:57  sfpavel
 
 	* FILE_ID.DIZ, debian/changelog, debian/control
