@@ -432,7 +432,7 @@ int main(int argc, char **argv)
                 }
             }
             break;
-        case DELETE:
+        case DEL:
             for (i = 0; i < arg; i++)
                 if (skipline(fn))
                 {
