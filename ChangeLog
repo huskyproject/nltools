@@ -1,3 +1,7 @@
+2002-10-12 Saturday 06:26  pgul
+
+	* src/nlupdate.c (1.29): Fix previous patch
+
 2002-10-11 Friday 04:49  sfpavel
 
 	* src/nlupdate.c (1.28): Fix OS/2 build (patch from Andy Luk'yanov)
