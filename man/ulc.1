@@ -1,0 +1,44 @@
+.TH ULC 1 "ulc" "04 April 2001" "Husky - Portable Fidonet Software"
+.SH NAME
+ulc \- Husky Fido Userlist Compiler
+.SH SYNOPSIS
+.B ulc
+.SH "DESCRIPTION"
+.B ulc
+is the Husky Fido Userlist Compiler. ulc reads all nodelists that are
+configured in Fidoconfig (via the "nodelist" keyword) and creates the
+FIDOUSER.LST file (the name has to be configured with the "fidouserlist"
+keyword). ulc does not take any command line options; it uses fidoconfig
+to determine where to find the nodelist files. A log file named
+"nltools.log" is placed in the fidoconfig log file directory.
+
+The FIDOUSER.LST file format is defined as follows: The file consists of
+text records of fixed length (65 characters including the terminal \\r\\n
+sequence). The name of the sysop is left-aligned in the line in reverse
+order (e.g. "Tobias_Ernst" would become "Ernst, Tobias"). Aligned to the
+right of the record is the node number of the user. The records are sorted
+alphabetically, so that a program can use a binary search algorithm to
+find the corresponding node number for a given user name very fast.
+
+The FIDOUSER.LST file format is supported by many mail readers, e.g. Timed
+and Msged. For Msged, FIDOUSER.LST is currently the best method to
+implement a node lookup at all, because Msged's V7 routines are flawed.
+
+.br
+.sp 2
+This manual page was written for the Debian GNU/Linux distribution
+because the original program does not have a manual page (but a good README :) )
+.SH FILES
+.br
+.nf
+.\" set tabstop to longest possible filename, plus a wee bit
+.ta \w'/fido/etc/config   'u
+\fI/fido/etc/config\fR  Default Fidoconfig.
+.SH NOTES
+All Husky-Software is written by various developers. For detailed information
+about the Husky-Team take a look at 
+http://husky.physcip.uni-stuttgart.de/team.html.
+.SH AUTHOR
+This manual page was written by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
+for the Debian GNU/Linux system (but may be used by others).
+

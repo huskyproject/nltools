@@ -1,0 +1,46 @@
+.TH NLDIFF 1 "nldiff" "04 April 2001" "Husky - Portable Fidonet Software"
+.SH NAME
+nldiff \- Applies a Nodediff file to a given Nodelist
+.SH SYNOPSIS
+.B nldiff
+[-d] [-n] /path/to/nodelist /path/to/nodediff
+.SH "DESCRIPTION"
+.B nldiff
+applies a Nodediff file to a given Nodelist.  It has no
+intelligence as to determining which of multiple Nodediff files is the
+correct one (you have to use other tools for this), but it expects the
+Nodelist filename and the Nodediff filename as explicit arguments with the
+correct day file name extension.
+.sp 2
+This manual page was written for the Debian GNU/Linux distribution
+because the original program does not have a manual page (but a good README).
+.SH OPTIONS
+.br
+.B [-d]
+Delete the Nodediff after the process succeeds.
+.br
+.B [-n]
+Delete the old Nodelist after the process succeeds.
+.br
+.B /path/to/nodelist
+The Nodelist to patch.
+.br
+.B /path/to/nodediff
+The Nodediff to be used.
+.SH EXAMPLES
+.B nldiff NODELIST.260 NODEDIFF.267
+.br
+Builds NODELIST.267 from NODELIST.260 and NODEDIFF.267
+.sp 1
+.B nldiff -d -n NODELIST.260 NODEDIFF.267
+.br
+Same as above, but will delete old Nodelist and the Nodediff after process
+succeeds.
+.SH NOTES
+All Husky-Software is written by various developers. For detailed information
+about the Husky-Team take a look at 
+http://husky.physcip.uni-stuttgart.de/team.html.
+.SH AUTHOR
+This manual page was written by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
+for the Debian GNU/Linux system (but may be used by others).
+

@@ -1,0 +1,37 @@
+.TH NLCRC 1 "nlcrc" "04 April 2001" "Husky - Portable Fidonet Software"
+.SH NAME
+nlcrc \- Checks the CRC Checksum in a given Nodelist.
+.SH SYNOPSIS
+.B nlcrc
+[/path/to/nodelist]
+.SH "DESCRIPTION"
+.B nlcrc
+checks the CRC checksum in a given Nodelist (not Nodediff!) file. 
+.br
+.sp 2
+This manual page was written for the Debian GNU/Linux distribution
+because the original program does not have a manual page (but a fine README).
+.SH OPTIONS
+.B [/path/to/nodelist]
+The Nodelist to check.
+.SH "RETURN VALUE"
+.B 0
+Check succeeded.
+.SH ERRORS
+.B 4
+File Does not contain a CRC Checksum.
+.br
+.B 8
+File IO Error.
+.br
+.B 16
+Checksumtest failed.
+.SH NOTES
+All Husky-Software is written by various developers. For detailed information
+about the Husky-Team take a look at 
+http://husky.physcip.uni-stuttgart.de/team.html.
+
+.SH AUTHOR
+This manual page was written by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
+for the Debian GNU/Linux system (but may be used by others).
+

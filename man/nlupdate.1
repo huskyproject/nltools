@@ -1,0 +1,38 @@
+.TH NLUPDATE 1 "nlupdate" "04 April 2001" "Husky - Portable Fidonet Software"
+.SH NAME
+nlupdate \- Manages your Nodelists and keeps them up to date.
+.SH SYNOPSIS
+.B nlupdate
+.SH "DESCRIPTION"
+.B nlupdate
+manages your nodelists and keeps them up to date. For each
+nodelist that you have configured with a "Nodelist" statement,
+it will search the latest nodelist in the "NodelistDir", then
+caluclate the day number of the difference file that is needed to 
+update this nodelist (the algorithm is Y2K safe and knows that 2000 is a
+leap year), then searches the difference file, unpacks it if necessary,
+and applies it to the nodelist using nldiff. nlupdate can also find full
+replacement files if you configure this, and just unpack them and copy
+them over the old nodelist. This is usefule for othernets that do not have
+nodediff files.  - With only a few keywords, nlupdate manages the whole
+process of updating your nodelist files for you.
+.br
+.sp 2
+This manual page was written for the Debian GNU/Linux distribution
+because the original program does not have a manual page (but a nice README).
+.SH FILES
+.br
+.nf
+.\" set tabstop to longest possible filename, plus a wee bit
+.ta \w'/fido/etc/config   'u
+\fI/fido/etc/config\fR  Default Fidoconfig.
+.SH "SEE ALSO"
+ulc(1), nldiff(1), nlcrc(1)
+.SH NOTES
+All Husky-Software is written by various developers. For detailed information
+about the Husky-Team take a look at 
+http://husky.physcip.uni-stuttgart.de/team.html.
+.SH AUTHOR
+This manual page was written by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
+for the Debian GNU/Linux system (but may be used by others).
+
