@@ -1,0 +1,458 @@
+2002-06-19 Wednesday 10:37  stas
+
+	* .cvs2cl (1.1): Use standard husky ChangeLog generation feature.
+	Old changelog backed up as ChangeLog.old
+
+2002-06-18 Tuesday 22:37  tobi
+
+	* src/ulcomp.c (1.10): fixes for russian point list. now should
+	work as 4d type.
+
+2002-06-18 Tuesday 22:37  tobi
+
+	* src/makefile.emx (1.4): fixes for os/2
+
+2002-06-18 Tuesday 22:37  tobi
+
+	* src/fexist.c (1.4): adaptions for new fidoconfig
+
+2002-06-13 Thursday 21:51  stas
+
+	* src/nldiff.c (1.8): Bugfix: add parameter to 'fprintf()' call.
+
+2002-06-10 Monday 15:52  mche
+
+	* src/makefile.mvc (1.5): link only with necessary *.obj from smapi
+
+2002-05-20 Monday 10:49  mche
+
+	* src/makefile.cyg (1.1): correct makefile
+
+2002-04-26 Friday 17:39  mche
+
+	* src/nlupdate.c (1.19): some code improvement fidoconfig string
+	routine used
+
+2002-04-15 Monday 10:37  mche
+
+	* src/makefile.mvcdll (1.1): makefile for mvcdll version
+
+2002-04-05 Friday 13:42  ml
+
+	* src/: makefile.sun (1.10), makefile.wcw (1.9): compiling under
+	sun & watcom [patch by sir]
+
+2002-03-05 Tuesday 01:27  joerg.jaspert
+
+	* debian/: changelog (1.3), control (1.4), huskymak.cfg (1.4): New
+	Debian Package built
+
+2001-07-08 Sunday 23:16  joerg.jaspert
+
+	* debian/: README.Debian (1.3), control (1.3), huskymak.cfg (1.3):
+	Rebuild Nltools
+
+2001-07-05 Thursday 23:22  joerg.jaspert
+
+	* debian/: README.Debian (1.2), changelog (1.2), control (1.2),
+	huskymak.cfg (1.2), manpages (1.2), rules (1.2): Rebuild
+
+2001-04-14 Saturday 17:03  joerg.jaspert
+
+	* debian/: README.Debian (1.1), changelog (1.1), control (1.1),
+	copyright (1.1), dirs (1.1), docs (1.1), huskymak.cfg (1.1),
+	manpages (1.1), rules (1.1): Files for package-building on
+	Debian-Systems
+
+2001-04-14 Saturday 17:02  joerg.jaspert
+
+	* Makefile (1.6): Debian-specific change to path of huskymak.cfg
+
+2001-04-05 Thursday 14:09  joerg.jaspert
+
+	* man/: README (1.1), nlcrc.1 (1.1), nldiff.1 (1.1), nlupdate.1
+	(1.1), ulc.1 (1.1): Small manpages for the nltools-Package. Please
+	check for errors.
+
+2000-12-03 Sunday 18:59  sms
+
+	* Makefile (1.5): using RMOPT from huskymak.cfg
+
+2000-09-17 Sunday 17:53  tobi
+
+	* src/: julian.c (1.6), nllog.c (1.4), nllog.h (1.5), nlupdate.c
+	(1.18): - Fixed Julian day number calculation - Introduced debug
+	mode (set the NLDEBUG env var to 1 to activate)
+
+2000-08-21 Monday 15:15  sms
+
+	* Makefile (1.4): added target uninstall
+
+2000-08-15 Tuesday 02:12  sms
+
+	* src/nlupdate.c (1.17): Fixed uninitialized variable in nlupdate.c
+	(could cause nlupdate not to find
+
+2000-08-14 Monday 14:07  sms
+
+	* src/: nlstring.h (1.2), string.c (1.3), ulcomp.c (1.9): added
+	abstraction casecmp
+
+2000-08-11 Friday 01:20  tobi
+
+	* README (1.10), src/ulc.c (1.10), src/ulc.h (1.5), src/ulcomp.c
+	(1.8): new nodelist type "points4d"
+
+2000-08-10 Thursday 14:24  tobi
+
+	* src/: julian.c (1.5), nldate.c (1.4), nlfind.c (1.5), nlfind.h
+	(1.5), nlupdate.c (1.16): - Relaxed the checking of the nodelist
+	header line to allow non-conforming   nodelists (like the wipost
+	pointlist, etc. pp.) to pass.  - Bugfixes for the previous checkin.
+
+2000-08-10 Thursday 13:27  tobi
+
+	* README (1.9): fixed some typos
+
+2000-08-10 Thursday 13:24  tobi
+
+	* src/nlupdate.c (1.15): 
+	New feature: previously, you needed to unpack the first instance of
+	a nodelist manually into the nodelist directory, before nlupdate
+	could find updates for it. Now, if there is a FullUpdate
+	configured, nlupdate will use the most recent full update file to
+	create the instance of the nodelist if none is present.
+
+2000-08-10 Thursday 11:21  tobi
+
+	* sample.lnx (1.3): re-added sample.lnx. wonder why it has been
+	removed.
+
+2000-08-07 Monday 00:52  tobi
+
+	* README (1.8), sample.be (1.2), sample.cfg (1.3), sample.lnx
+	(1.2), src/nllog.c (1.3): bugfixes and beos adaptions from -stable
+
+2000-08-07 Monday 00:50  tobi
+
+	* sample.be (1.1): file sample.be was initially added on branch
+	nltools-1_1.
+
+2000-08-06 Sunday 22:52  tobi
+
+	* src/makefile.be (1.2): beos adaptions from -stabel
+
+2000-08-06 Sunday 22:36  tobi
+
+	* src/makefile.be (1.1): file makefile.be was initially added on
+	branch nltools-1_1.
+
+2000-07-20 Thursday 21:47  tobi
+
+	* FILE_ID.DIZ (1.4): fixed file_id.diz
+
+2000-07-14 Friday 12:16  tobi
+
+	* FILE_ID.DIZ (1.3), README (1.7), VERSION (1.2), src/nldiff.h
+	(1.2), src/nlu.h (1.3), src/ulc.h (1.4): adapted version number
+
+2000-07-14 Friday 12:03  tobi
+
+	* VERSION (1.1): file VERSION was initially added on branch
+	nltools-1_1.
+
+2000-07-14 Friday 11:52  tobi
+
+	* src/: ffind.c (1.1), patmat.h (1.1) (utags:
+	nltools-1_1a-release): added some files I had forgotten
+
+2000-07-14 Friday 11:44  tobi
+
+	* src/: makefile.wco (1.1), makefile.wcw (1.8) (utags:
+	nltools-1_1a-release): watcom makefiles
+
+2000-07-14 Friday 11:41  tobi
+
+	* src/makefile.mvc (1.3, nltools-1_1a-release): mvc makefile fix
+
+2000-07-14 Friday 11:37  tobi
+
+	* src/fexist.c (1.3, nltools-1_1a-release): fix fexist for watcom
+
+2000-07-14 Friday 01:55  tobi
+
+	* README (1.6), src/fexist.c (1.2), src/makefile.bco (1.5,
+	nltools-1_1a-release), src/makefile.bcw (1.3,
+	nltools-1_1a-release), src/makefile.djg (1.3,
+	nltools-1_1a-release), src/makefile.emo (1.6,
+	nltools-1_1a-release), src/makefile.emx (1.3,
+	nltools-1_1a-release), src/makefile.lnx (1.9,
+	nltools-1_1a-release), src/makefile.mgw (1.4,
+	nltools-1_1a-release), src/makefile.unx (1.5,
+	nltools-1_1a-release), src/makefile.wcw (1.7), src/nlupdate.c
+	(1.14), src/patmat.c (1.2, nltools-1_1a-release), src/trail.c (1.1,
+	nltools-1_1a-release): makefile fixes etc.
+
+2000-06-09 Friday 12:04  tobi
+
+	* src/: makefile.mvc (1.2), makefile.wcw (1.6): makefile fixes
+
+2000-06-09 Friday 12:00  tobi
+
+	* src/: makefile.lnx (1.8), makefile.sun (1.8), makefile.unx (1.4),
+	makefile.mgw (1.3): makefile fixes
+
+2000-06-09 Friday 11:55  tobi
+
+	* src/: makefile.bcw (1.2), makefile.djg (1.2), makefile.lnx (1.7):
+	Makefile fixes
+
+2000-06-09 Friday 11:47  tobi
+
+	* src/: fexist.c (1.1), makefile.bco (1.4), makefile.emo (1.5),
+	makefile.emx (1.2), nlupdate.c (1.13): Makefile Fixes for OS/2
+
+2000-06-04 Sunday 19:39  tobi
+
+	* src/makefile.emo (1.4): fixes for emo makefile
+
+2000-05-23 Tuesday 23:50  sms
+
+	* Makefile (1.3, nltools-1_1a-release): added target all to
+	Makefile
+
+2000-05-18 Thursday 00:04  sms
+
+	* Makefile (1.2): added smapi to Makefile
+
+2000-04-21 Friday 13:14  sms
+
+	* Makefile (1.1), makefile.husky (1.2): renamed makefile.husky to
+	Makefile
+
+2000-04-17 Monday 17:39  tobi
+
+	* src/makefile.sun (1.6): patches by serguei
+
+2000-04-17 Monday 01:42  nestyurkin.nikolay
+
+	* src/makefile.wcw (1.4): path fix
+
+2000-04-15 Saturday 20:09  tobi
+
+	* src/: nlfind.c (1.4, nltools-1_1a-release), nlfind.h (1.4,
+	nltools-1_1a-release), nllog.h (1.4, nltools-1_1a-release),
+	nlupdate.c (1.10), ulc.c (1.7): fixed include statements to match
+	new 8.3 filenames
+
+2000-04-14 Friday 13:58  nestyurkin.nikolay
+
+	* src/makefile.wcw (1.3): lib. name fix
+
+2000-03-13 Monday 23:47  sms
+
+	* src/: makefile.lnx (1.6), makefile.sun (1.4), makefile.unx (1.3):
+	updated legacy makefiles
+
+2000-03-09 Thursday 17:44  sms
+
+	* makefile.husky (1.1), src/makefile.husky (1.5): moved
+	makefile.husky into topdir
+
+2000-03-09 Thursday 17:27  sms
+
+	* src/: makefile.husky (1.4), nlfind.c (1.3), nlfind.h (1.3),
+	nllog.h (1.3), nlupdate.c (1.9), ulc.c (1.6): moved smapi and
+	fidoconfig headers to INCDIR/smapi and INCDIR/fidoconfig
+
+2000-03-07 Tuesday 16:52  tobi
+
+	* src/makefile.husky (1.3): Husky makefile fixes
+
+2000-02-13 Sunday 12:02  tobi
+
+	* src/nlupdate.c (1.8): undone a bug introduced in previous commit.
+
+2000-02-07 Monday 00:08  tobi
+
+	* src/nlupdate.c (1.7): - Nodediff and -list update files were not
+	rejected if they contained an	invalid header line (even though
+	this invalid line was detected).
+
+2000-02-03 Thursday 18:17  tobi
+
+	* src/nldiff.c (1.7, nltools-1_1a-release): Fixed bug in testing
+	for misuse
+
+2000-01-23 Sunday 00:42  sms
+
+	* src/makefile.husky (1.2): Updated makefile.husky and huskymak.cfg
+
+2000-01-22 Saturday 12:00  sms
+
+	* src/makefile.husky (1.1): Created/Updated makefile.husky and
+	huskymak.cfg
+
+2000-01-22 Saturday 00:43  tobi
+
+	* src/makefile.lnx (1.5): Forgot patmat.o in clean target
+
+2000-01-02 Sunday 12:35  tobi
+
+	* src/nldiff.c (1.6): - When nldiff was invoked with a nodediff
+	filename that had the same   extension as the nodelist filename
+	(obviously an user error) and the -n   parameter was given, the
+	original nodelist was deleted. Fixed.
+
+1999-12-28 Tuesday 22:45  tobi
+
+	* src/: julian.c (1.4, nltools-1_1a-release), nlupdate.c (1.6): -
+	Fixed bug on Unix that could, in the situation that a nodelist and
+	two   consequent nodediffs were found, lead to the situation that
+	only the   first nodediff was applied, but not the second one. (On
+	a consecutive	run, though, of course the second one was also
+	applied).
+
+1999-12-28 Tuesday 20:32  tobi
+
+	* src/: crc16.c (1.4, nltools-1_1a-release), nldiff.c (1.5),
+	ulcomp.c (1.7, nltools-1_1a-release): Adapted changes by ml
+	(removed C++ style comments) and sms (removed the ++ prefix, though
+	it really is OK)
+
+1999-12-06 Monday 15:01  tobi
+
+	* src/: nlfind.h (1.2), nlupdate.c (1.5), ulc.c (1.5): adapted
+	dirlayer.h
+
+1999-12-05 Sunday 11:44  tobi
+
+	* src/ulcomp.c (1.6): Undone changes by sms
+
+1999-12-05 Sunday 11:39  tobi
+
+	* src/: julian.c (1.3), nldate.c (1.3, nltools-1_1a-release): Fixed
+	data corruption.
+
+1999-12-05 Sunday 11:12  tobi
+
+	* README (1.5): Fixed something in README file
+
+1999-11-30 Tuesday 22:13  sms
+
+	* src/ulcomp.c (1.5): fixed some misuses of ++ in ulcomp.c
+
+1999-11-28 Sunday 14:12  tobi
+
+	* src/hello.c (1.2): uups ;-)
+
+1999-11-28 Sunday 14:11  tobi
+
+	* src/: hello.c (1.1), makefile.djg (1.1, nltools-1-0): DOS
+	makefile (DJGPP)
+
+1999-11-28 Sunday 14:11  tobi
+
+	* FILE_ID.DIZ (1.2), README (1.4), sample.cfg (1.2),
+	src/makefile.mgw (1.2), src/nllog.h (1.2) (utags: nltools-1-0):
+	Last minute fixes, docs, and mingw32 makefile
+
+1999-11-28 Sunday 14:08  tobi
+
+	* src/ulcomp.c (1.4, nltools-1-0): Changed entrysize to 60, as done
+	by other compilers.
+
+1999-11-28 Sunday 03:00  tobi
+
+	* legal/README (1.2, nltools-1_1a-release, nltools-1-0): docs
+
+1999-11-28 Sunday 03:00  tobi
+
+	* legal/COPYING (1.2, nltools-1_1a-release), src/nldiff.h (1.1),
+	src/patmat.c (1.1) (utags: nltools-1-0): added a file from smapi to
+	get rid of smapi
+
+1999-11-28 Sunday 02:59  tobi
+
+	* src/ulcomp.c (1.3): argh!!
+
+1999-11-28 Sunday 02:57  tobi
+
+	* FILE_ID.DIZ (1.1), src/julian.c (1.2, nltools-1-0), src/nldate.c
+	(1.2, nltools-1-0): Added FILE_ID.DIZ
+
+1999-11-28 Sunday 02:50  tobi
+
+	* README (1.3), sample.cfg (1.1), sample.lnx (1.1, nltools-1-0):
+	docs etc
+
+1999-11-28 Sunday 01:50  tobi
+
+	* src/: crc16.c (1.2, nltools-1-0), makefile.bco (1.3,
+	nltools-1-0), makefile.bcw (1.1, nltools-1-0), makefile.emo (1.3,
+	nltools-1-0), makefile.emx (1.1, nltools-1-0), makefile.lnx (1.4,
+	nltools-1-0), makefile.mgw (1.1), makefile.sun (1.3, nltools-1-0),
+	makefile.unx (1.2, nltools-1-0), nlcrc.c (1.4,
+	nltools-1_1a-release, nltools-1-0), nldiff.c (1.3, nltools-1-0),
+	nllog.c (1.2, nltools-1-0), nlu.h (1.2, nltools-1-0), nlupdate.c
+	(1.4, nltools-1-0), ulc.c (1.4, nltools-1-0), ulc.h (1.3,
+	nltools-1-0): Last minute changes, cleaned up everyting, made it
+	ready for build.
+
+1999-11-16 Tuesday 23:20  tobi
+
+	* src/nlcrc.c (1.3): Fixed problem that only occured with IBM C
+	compilers
+
+1999-10-13 Wednesday 11:06  mt
+
+	* src/: makefile.sun (1.2), string.c (1.2, nltools-1_1a-release,
+	nltools-1-0): compiled now on sun
+
+1999-10-13 Wednesday 10:49  mt
+
+	* src/: makefile.sun (1.1), nldiff (1.3): makefile updates
+
+1999-10-12 Tuesday 23:31  tobi
+
+	* src/: makefile (1.5), makefile.lnx (1.1), makefile.unx (1.1),
+	nlcrc.c (1.2), nlupdate.c (1.3): Now it works.
+
+1999-10-12 Tuesday 18:36  tobi
+
+	* src/: makefile (1.4), nldiff (1.2), nldiff.c (1.2), nlfind.c
+	(1.2, nltools-1-0), nlupdate.c (1.2): Nearly done by now. Applying
+	multiple diffs at once does not work yet.
+
+1999-10-11 Monday 23:20  tobi
+
+	* src/: julian.c (1.1), julian.h (1.1, nltools-1_1a-release,
+	nltools-1-0), makefile (1.3), makefile.bco (1.2), makefile.emo
+	(1.2), nldate.c (1.1), nldate.h (1.1, nltools-1_1a-release,
+	nltools-1-0), nlfind.c (1.1), nlfind.h (1.1, nltools-1-0), nlu.h
+	(1.1), nlupdate.c (1.1), ulc.c (1.3): Implemented nlupdate (not
+	complete yet)
+
+1999-10-11 Monday 00:41  tobi
+
+	* README (1.2), legal/COPYING (1.1), legal/README (1.1),
+	src/makefile (1.2), src/makefile.bco (1.1), src/makefile.emo (1.1),
+	src/nlstring.h (1.1, nltools-1_1a-release, nltools-1-0),
+	src/string.c (1.1), src/ulc.c (1.2), src/ulc.h (1.2), src/ulcomp.c
+	(1.2), src/ulcsort.c (1.2, nltools-1_1a-release, nltools-1-0): See
+	ChangeLog
+
+1999-10-09 Saturday 13:55  tobi
+
+	* src/: nlcrc (1.2), ulc (1.2): Removed binaries that went into the
+	CVS server by accident. :-(
+
+1999-10-08 Friday 19:51  tobi
+
+	* README (1.1), src/ccitttab.c (1.1), src/ccitttab.h (1.1),
+	src/crc16.c (1.1), src/crc16.h (1.1), src/makefile (1.1), src/nlcrc
+	(1.1), src/nlcrc.c (1.1), src/nldiff (1.1), src/nldiff.c (1.1),
+	src/nllog.c (1.1), src/nllog.h (1.1), src/ulc (1.1), src/ulc.c
+	(1.1), src/ulc.h (1.1), src/ulcomp.c (1.1), src/ulcsort.c (1.1):
+	Initial revision
+
