@@ -775,6 +775,7 @@ int main(int argc, char **argv)
     s_fidoconfig *config = readConfig(NULL);
     int rv;
     int l = 0;
+    char *tp=NULL; /* pathname - temporary variable */
 
     /* construct the name of the nldiff command */
     if (argc)
@@ -796,7 +797,9 @@ int main(int argc, char **argv)
     /* run the main program */
     if (config != NULL)
     {
-        openLog(LOGNAME, "nlupdate " REV, config);
+        xstrscat( &tp, config->logFileDir, LOGNAME, NULL );
+        openLog( tp, "nlupdate " REV, config);
+        nfree(tp);
         w_log(LL_START, "nlupdate - nodelist updater rev. %s", REV);
 
         rv=process(config);
