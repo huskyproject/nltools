@@ -1,7 +1,17 @@
+2002-12-30 Monday 15:26  stas_degteff
+
+	* VERSION, src/version.h (nltools-1_2-stable.[3,4]): Set version to
+	1.2.2-stable
+
+2002-12-30 Monday 15:09  stas_degteff
+
+	* VERSION, src/version.h (nltools-1_2-stable.[2,3]) (utags:
+	nltools-1_2_2-release): 1.2.2-release
+
 2002-12-27 Friday 13:21  sfpavel
 
-	* debian/changelog, src/version.h (nltools-1_2-stable.[3,2])
-	(utags: nltools-1_2_2-release): nltools 1.2.2 release
+	* debian/changelog (tags: nltools-1_2_2-release), src/version.h
+	(nltools-1_2-stable.[3,2]): nltools 1.2.2 release
 
 2002-11-11 Monday 10:43  stas_degteff
 
@@ -27,9 +37,10 @@
 
 2002-10-18 Friday 09:00  stas_degteff
 
-	* FILE_ID.DIZ, README, VERSION (nltools-1_2-stable.[1,1,1]) (utags:
-	nltools-1_2_2-release, nltools-1_2-release): Update documentation
-	(fix version numbers, URLs & typo error)
+	* FILE_ID.DIZ (tags: nltools-1_2_2-release), README (tags:
+	nltools-1_2_2-release), VERSION (nltools-1_2-stable.[1,1,1])
+	(utags: nltools-1_2-release): Update documentation (fix version
+	numbers, URLs & typo error)
 
 2002-10-18 Friday 08:56  stas_degteff
 
