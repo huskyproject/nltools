@@ -1,9 +1,9 @@
 .PHONY: default
 
 INSTDIR = /home/fido/sbin
-LIBDIR = /home/fido/lib
+LIBDIR = /home/fido/lib -L/home/tobi/prg/fidoconfig -L/home/tobi/prg/smapi
 
-default: nldiff nlcrc ulc
+default: nldiff nlcrc ulc nlupdate
 
 CC=cc
 CFLAGS=-g -I../../smapi -I../../fidoconfig -DUNIX
@@ -13,24 +13,31 @@ LFLAGS=-g -L$(LIBDIR)
 	$(CC) $(CFLAGS) -c $<
 
 nldiff: nldiff.o crc16.o
-	$(CC) $(LFLAGS) -o nldiff ndiff.o crc16.o
+	$(CC) $(LFLAGS) -o nldiff nldiff.o crc16.o
 
 nlcrc: crc16.o nlcrc.o
 	$(CC) $(LFLAGS) -o nlcrc crc16.o nlcrc.o
 
-ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o
-	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.obj -lfidoconfig
+ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o
+	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o  -lfidoconfig -lsmapilnx
+
+nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o
+	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o -lfidoconfig -lsmapilnx
 
 clean:
-	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o
+	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o julian.o nlfind.o nldate.o nlupdate.o string.o
 	-rm nlcrc
 	-rm nldiff
 	-rm ulc
+	-rm nlupdate
+
+
 
 install:
 	cp ulc $(INSTDIR)/ulc
 	cp nldiff $(INSTDIR)/nldiff
 	cp nlcrc $(INSTDIR)/nlcrc
+	cp nlupdate $(INSTDIR)/nlcrc
 
 
 

@@ -6,60 +6,7 @@
 #include "nllog.h"
 #include "dir.h"
 #include "nlstring.h"
-
-char *findNodelist(s_fidoconfig *config, int i)
-{
-    char *nl = malloc(strlen(config->nodelistDir) +
-                      strlen(config->nodelists[i].nodelistName) + 5);
-    struct dirent *dp;
-    DIR *hdir;
-    size_t l, l2;
-    int found;
-
-    if (nl == NULL)
-    {
-        logentry(LOG_ERROR, "out of memory");
-        return NULL;
-    }
-    
-    strcpy(nl, config->nodelistDir);
-
-    hdir = opendir(config->nodelistDir);
-
-    if (hdir == NULL)
-    {
-        logentry(LOG_ERROR, "cannot read directory %s", config->nodelistDir);
-        free(nl);
-        return NULL;
-    }
-
-    l = strlen(config->nodelists[i].nodelistName);
-
-    while ((dp = readdir(hdir)) != NULL)
-    {
-        l2 = strlen(dp->d_name);
-        if (l2 == l + 4 &&
-            !ncasecmp(config->nodelists[i].nodelistName,
-                         dp->d_name, l) &&
-            dp->d_name[l] == '.' &&
-            isdigit(dp->d_name[l+1]) &&
-            isdigit(dp->d_name[l+2]) &&
-            isdigit(dp->d_name[l+3]))
-        {
-            strcat(nl, dp->d_name);
-            found = 1;
-            break;
-        }
-    }
-
-    closedir(hdir);
-
-    if (found)
-        return nl;
-
-    free(nl);
-    return NULL;
-}
+#include "nlfind.h"
 
 int process(s_fidoconfig *config)
 {
@@ -157,11 +104,6 @@ int process(s_fidoconfig *config)
     fclose(fin);
     fclose(fout);
 }
-
-    
-        
-
-    
 
 int main(void)
 {

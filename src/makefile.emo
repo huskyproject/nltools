@@ -18,14 +18,18 @@ nldiff.exe: nldiff.obj crc16.obj
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(CC) $(LFLAGS) -o nlcrc.exe crc16.obj nlcrc.obj
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj
-	$(CC) $(LFLAGS) -o ulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj -lfidoconfig -lsmapiemo
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
+	$(CC) $(LFLAGS) -o ulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj -lfidoconfig -lsmapiemo
+
+nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
+	$(CC) $(LFLAGS) -o nlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj -lfidoconfig -lsmapiemx
 
 clean:
-	-del crc16.obj nlcrc.obj nldiff.obj ulc.obj ulcomp.obj ulcsort.obj nllog.obk
+	-del crc16.obj nlcrc.obj nldiff.obj ulc.obj ulcomp.obj ulcsort.obj nllog.obk nldate.obj julian.obj nlfind.obj nlupdate.obj nllog.obj
 	-del nlcrc.exe
 	-del nldiff.exe
 	-del ulc.exe
+	-del nlupdate.exe
 
 
 

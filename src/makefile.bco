@@ -17,11 +17,14 @@ nldiff.exe: nldiff.obj crc16.obj
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(CC) $(LFLAGS) -enlcrc.exe crc16.obj nlcrc.obj
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj
-	$(CC) $(LFLAGS) -eulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj ..\..\fidoconfig\fidoconfig.lib ..\..\smapi\smapibco.lib
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj
+	$(CC) $(LFLAGS) -eulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj ..\..\fidoconfig\fidoconfig.lib ..\..\smapi\smapibco.lib
+
+nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
+	$(CC) $(LFLAGS) -enlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj ..\..\fidoconfig\fidoconfig.lib ..\..\smapi\smapibco.lib
 
 clean:
-	-del crc16.obj nlcrc.obj nldiff.obj ulc.obj ulcomp.obj ulcsort.obj nllog.obk
+	-del crc16.obj nlcrc.obj nldiff.obj ulc.obj ulcomp.obj ulcsort.obj nllog.obj julian.obj nldate.obj nlfind.obj nlupdate.obj
 	-del nlcrc.exe
 	-del nldiff.exe
 	-del ulc.exe
