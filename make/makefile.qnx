@@ -6,9 +6,9 @@ CC=gcc
 _OBJ=.o
 RM=rm
 EXE=
-CFLAGS=-O2 -I../h -I../.. -DUNIX
-LFLAGS=-s -L../../fidoconf -L../../smapi
-LIBS= -lfidoconfigqnx -lsmapiqnx
+CFLAGS=-O2 -I../h -I../../fidoconf -DUNIX
+LFLAGS=-s -L../../fidoconf/make
+LIBS= -lfidoconfigqnx
 SRC_DIR=../src/
 
 %$(_OBJ): $(SRC_DIR)%.c
