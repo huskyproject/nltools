@@ -5,15 +5,17 @@ include ../../huskymak.cfg
 default: nldiff$(EXE) nlcrc$(EXE) ulc$(EXE) nlupdate$(EXE)
 
 ifeq ($(DEBUG), 1)
-  CFLAGS=-O3 -I../../smapi -I$(INCDIR) -ggdb
+  CFLAGS= -I../../smapi -I$(INCDIR) $(DEBCFLAGS)
+  LFLAGS=$(DEBLFLAGS)
 else
-  CFLAGS=-O3 -I../../smapi -I$(INCDIR) -s
+  CFLAGS= -I../../smapi -I$(INCDIR) $(OPTCFLAGS)
+  LFLAGS=$(OPTLFLAGS)
 endif
 
 ifeq ($(SHORTNAME), 1)
-  LFLAGS=-L$(LIBDIR) -lfidoconf
+  LIBS=-L$(LIBDIR) -lfidoconf
 else
-  LFLAGS=-L$(LIBDIR) -lfidoconfig
+  LIBS=-L$(LIBDIR) -lfidoconfig
 endif
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS)
@@ -22,21 +24,23 @@ CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 	$(CC) $(CFLAGS) $(CDEFS) -c $<
 
 nldiff$(EXE): nldiff$(OBJ) crc16$(OBJ) patmat$(OBJ)
-	$(CC) $(LFLAGS) -o nldiff$(EXE) nldiff$(OBJ) crc16$(OBJ) patmat$(OBJ)
+	$(CC) $(LFLAGS) -o nldiff$(EXE) nldiff$(OBJ) crc16$(OBJ) patmat$(OBJ) \
+              $(LIBS)
 
 nlcrc$(EXE): crc16$(OBJ) nlcrc$(OBJ) patmat$(OBJ)
-	$(CC) $(LFLAGS) -o nlcrc$(EXE) crc16$(OBJ) nlcrc$(OBJ) patmat$(OBJ)
+	$(CC) $(LFLAGS) -o nlcrc$(EXE) crc16$(OBJ) nlcrc$(OBJ) patmat$(OBJ) \
+              $(LIBS)
 
 ulc$(EXE): ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) nllog$(OBJ) string$(OBJ) \
      nldate$(OBJ) julian$(OBJ) nlfind$(OBJ)  patmat$(OBJ)
 	$(CC) $(LFLAGS) -o ulc$(EXE) ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) \
           nllog$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) \
-          patmat$(OBJ)
+          patmat$(OBJ) $(LIBS)
 
 nlupdate$(EXE): nlupdate$(OBJ) nllog$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) \
           nlfind$(OBJ) patmat$(OBJ)
 	$(CC) $(LFLAGS) -o nlupdate$(EXE) nlupdate$(OBJ) nllog$(OBJ) string$(OBJ) \
-          nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) patmat$(OBJ)
+          nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) patmat$(OBJ) $(LIBS)
 
 clean:
 	-$(RM) crc16$(OBJ)
