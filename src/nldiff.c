@@ -30,7 +30,7 @@ int  analyze_first_line(FILE *f, unsigned short *crcnum, int *has_crc,
     char c=0;
     int state = SCANDASH;
     unsigned short crc, day, hcrc, result = 1;
-    
+
     while (state != FINISH)
     {
         if (fread(&c, 1, 1, f) != 1)
@@ -39,7 +39,7 @@ int  analyze_first_line(FILE *f, unsigned short *crcnum, int *has_crc,
             state = FINISH;
             continue;
         }
-                
+
         if ( c == '\n' )
         {
             hcrc = 1;
@@ -109,7 +109,7 @@ int  analyze_first_line(FILE *f, unsigned short *crcnum, int *has_crc,
         }
     }
 
-    *crcnum = crc; *daynum = day; *has_crc = hcrc;    
+    *crcnum = crc; *daynum = day; *has_crc = hcrc;
     return result;
 }
 
@@ -134,7 +134,7 @@ int passline (FILE *from, FILE *to)
             return -1;
     } while (buf1[l - 1] != '\n');
     return 0;
-}   
+}
 
 /* Skip a line. */
 
@@ -152,7 +152,7 @@ int skipline (FILE *from)
             return -1;
     } while (buf1[l - 1] != '\n');
     return 0;
-}   
+}
 
 /* Compare two lines. */
 
@@ -174,7 +174,7 @@ int compareline (FILE *from1, FILE *from2)
             return -2;
     } while (buf1[l - 1] != '\n');
     return 0;
-}   
+}
 
 /* Analyse a Nodediff command */
 
@@ -194,7 +194,7 @@ int readcommand(FILE *f, int *argument)
     switch (*buffer)
     {
     case 'A':
-        cmd = ADD; 
+        cmd = ADD;
         break;
     case 'C':
         cmd = COPY;
@@ -225,24 +225,24 @@ char *construct_new_filename(char *listname, char *diffname)
     /* Sanity checks on the given filenames */
     if ((l = strlen(listname)) < 5)
     {
-        fprintf (stderr, "%s is not a valid nodelist filename.\n");
+        fprintf (stderr, "%s is not a valid nodelist filename.\n", listname);
         return NULL;
     }
     if (listname[l-4] != '.' || !isdigit(listname[l-3]) ||
         !isdigit(listname[l-2]) || !isdigit(listname[l-1]))
     {
-        fprintf (stderr, "%s is not a valid nodelist filename.\n");
+        fprintf (stderr, "%s is not a valid nodelist filename.\n", listname);
         return NULL;
     }
     if ((m = strlen(diffname)) < 5)
     {
-        fprintf (stderr, "%s is not a valid nodediff filename.\n");
+        fprintf (stderr, "%s is not a valid nodediff filename.\n", listname);
         return NULL;
     }
     if (diffname[m-4] != '.' || !isdigit(diffname[m-3]) ||
         !isdigit(diffname[m-2]) || !isdigit(diffname[m-1]))
     {
-        fprintf (stderr, "%s is not a valid nodediff filename.\n");
+        fprintf (stderr, "%s is not a valid nodediff filename.\n", listname);
         return NULL;
     }
 
@@ -276,7 +276,7 @@ int parse_args (int argc, char **argv, char **listname, char **diffname,
     char *args[2];
     int i,j = 0;
     int flags;
-    
+
     flags = 0;
 
     for (i = 1; i < argc; i++)
@@ -316,7 +316,7 @@ int parse_args (int argc, char **argv, char **listname, char **diffname,
     }
     return 0;
 }
-                
+
 /* Usage help */
 
 void usage(void)
@@ -335,7 +335,7 @@ void usage(void)
 "   without you having to manually specify the day number file\n"\
 "   extensions, use \"nlupdate\". It will call nldiff internally.\n");
 }
-    
+
 /* Main program */
 
 int main(int argc, char **argv)
@@ -357,7 +357,7 @@ int main(int argc, char **argv)
     /* construct the filename of the new nodelist */
     if ((tempname = construct_new_filename(listname, diffname)) == NULL)
         return 8;
-    expnewday=atoi(tempname + strlen(tempname) - 3);   
+    expnewday=atoi(tempname + strlen(tempname) - 3);
 
     /* open the files */
     if ((fn = fopen(listname, "rb")) == NULL)
@@ -447,7 +447,7 @@ int main(int argc, char **argv)
 
     /* Now determine the actual day number and the expected CRC of the newly
        written nodelist file */
-    if ((fseek(fo, 0L, SEEK_SET)) || 
+    if ((fseek(fo, 0L, SEEK_SET)) ||
         (!analyze_first_line(fo, &crc, &hascrc, &newday)))
     {
         fprintf (stderr, "New file is not a valid nodelist.\n");
@@ -466,7 +466,7 @@ int main(int argc, char **argv)
         fprintf (stderr, "New day number and diff file name do not match.\n");
         goto abnormal;
     }
-        
+
     fclose(fn); fclose(fd); fclose(fo); rv=0;
 
     /* Delete files that are not needed any more, if the user requested it. */
@@ -480,15 +480,15 @@ int main(int argc, char **argv)
         fprintf (stderr, "Cannot remove old nodediff file %s.\n", diffname);
         rv = 8;
     }
-    
+
     return rv;
 
 abnormal:
     fprintf (stderr, "Processing aborted.\n");
     if (fn != NULL)
-        fclose(fn); 
+        fclose(fn);
     if (fd != NULL)
-        fclose(fd); 
+        fclose(fd);
     if (fo != NULL)
         fclose(fo);
     if (tempname != NULL)
