@@ -1,5 +1,11 @@
 Current Version
 ---------------
+
+Mo   7 Feb 2000 00:07:24 CET
+tobi:
+- Nodediff and -list update files were not rejected if they contained an
+  invalid header line (even though this invalid line was detected).
+
 So   2 Jan 2000 11:28:26 CET
 tobi:
 - When nldiff was invoked with a nodediff filename that had the same
