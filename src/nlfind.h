@@ -1,8 +1,8 @@
 #ifndef NLFIND_H
 #define NLFIND_H
 
-#include "fidoconfig.h"
-#include "dirlayer.h"
+#include <fidoconfig/fidoconfig.h>
+#include <fidoconfig/dirlayer.h>
 
 typedef struct s_nlist
 {

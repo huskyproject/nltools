@@ -8,18 +8,17 @@
 #include <sys/stat.h> /* S_I... constants */
 #endif
 
-#include "compiler.h"
-#include "fidoconfig.h"
-#include "adcase.h"
-#include "progprot.h"
-#include "common.h"
+#include <smapi/compiler.h>
+#include <fidoconfig/fidoconfig.h>
+#include <fidoconfig/adcase.h>
+#include <smapi/progprot.h>
+#include <fidoconfig/common.h>
+#include <fidoconfig/dirlayer.h>
 #include "nllog.h"
 #include "nlstring.h"
 #include "nlfind.h"
 #include "nldate.h"
 #include "julian.h"
-#include "adcase.h"
-#include "dirlayer.h"
 #include "ulc.h" /* for REV */
 
 /* store the nldiff command name */

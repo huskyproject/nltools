@@ -3,9 +3,9 @@
 
 #define LOGNAME "nltools.log"
 #ifdef MSDOS
-#include "fidoconf.h"
+#include <fidoconf/fidoconf.h>
 #else
-#include "fidoconfig.h"
+#include <fidoconfig/fidoconfig.h>
 #endif
 
 void loginit(s_fidoconfig *config);

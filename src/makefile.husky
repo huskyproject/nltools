@@ -5,10 +5,10 @@ include ../../huskymak.cfg
 default: nldiff$(EXE) nlcrc$(EXE) ulc$(EXE) nlupdate$(EXE)
 
 ifeq ($(DEBUG), 1)
-  CFLAGS= -I../../smapi -I$(INCDIR) $(DEBCFLAGS)
+  CFLAGS= -I$(INCDIR) $(DEBCFLAGS)
   LFLAGS=$(DEBLFLAGS)
 else
-  CFLAGS= -I../../smapi -I$(INCDIR) $(OPTCFLAGS)
+  CFLAGS= -I$(INCDIR) $(OPTCFLAGS)
   LFLAGS=$(OPTLFLAGS)
 endif
 

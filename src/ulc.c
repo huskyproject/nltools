@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fidoconfig.h"
+#include <fidoconfig/fidoconfig.h>
 #include "ulc.h"
 #include "nllog.h"
-#include "dirlayer.h"
+#include <fidoconfig/dirlayer.h>
 #include "nlstring.h"
 #include "nlfind.h"
 
