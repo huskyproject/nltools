@@ -6,10 +6,14 @@
 #include <time.h>
 #include <errno.h>
 #ifdef UNIX
-#include <sys/stat.h> /* S_I... constants */
-#include <unistd.h>
+#   include <sys/stat.h> /* S_I... constants */
+#   include <unistd.h>
 #else
-#include <io.h>
+#   include <io.h>
+#   if (defined(_MSC_VER) && (_MSC_VER >= 1200))
+#       define F_OK 00
+#       define R_OK 04
+#   endif
 #endif
 
 #include <smapi/compiler.h>
@@ -137,7 +141,8 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
     char *tmpfilename = NULL;
     char cmd[256];
     FILE *f;
-    int i, j, found, exitcode;
+    int j, found, exitcode;
+    UINT i;
 
     xstrscat(&tmpfilename, directory, filename, NULL);
 
@@ -670,7 +675,8 @@ static int create_instance(s_fidoconfig *config, int nl, long today,
 
 static int process(s_fidoconfig *config)
 {
-    int i, rv=0;
+    UINT i;
+    int rv=0;
     char *nodelist;
     char *tmpdir;
     long today = julian_today();
