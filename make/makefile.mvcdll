@@ -67,7 +67,7 @@ $(ULC): $(ULCOBJS)
 	@$(CC) $(LFLAGS) $(EXENAMEFLAG)$@ $** $(LIBS) $(EXEFLAGS)
 
 $(NLUPDATE): $(NLUPDATEOBJS)
-	$(CC) $(LFLAGS) $(EXENAMEFLAG)$@ $** $(LIBS) $(EXEFLAGS)
+	@$(CC) $(LFLAGS) $(EXENAMEFLAG)$@ $** $(LIBS) $(EXEFLAGS)
 
 man:
 
