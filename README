@@ -1,0 +1,184 @@
+Husky Nodelist Utilities
+========================
+
+Written 1999 by Tobias Ernst and released to the Public Domain
+
+I) Abstract
+
+This archive contains a set of nodelist management utilities. The following
+functionality is provided:
+
+- Compiling raw nodelists into a FIDOUSER.LST file, that can be used for
+  nodelist lookup by sysop name, as supported by Msged and others.
+
+- Keeping your raw nodelists up to date, i.E. logic is provided to find the
+  nodediff files that apply to your current nodelist files (not yet
+  implemented), and a tool to apply nodediffs to nodelists.
+
+This package does NOT presently include something like a V7 nodelist
+compiler. Therefore, this package is enough if you are running an IP node,
+but you need additional software if you are running Binkley or some other
+software that requires an V7 nodelist index.
+
+The tools can be compiled on Unix, as well as a lot of other platforms (OS/2,
+Win32, DOS/DJGPP), provided you have a working fidoconfig library and
+installation for that platform.
+
+II) About Fidoconfig
+
+These tools are written as an addition to the Husky suite of Fidonet
+software. The tools do not read their own configuration file, but rather they
+read the global "Fidoconfig" configuration file. Because of this, you do need
+the fidoconfig library to compile these tools. If you do not know what
+Fidoconfig is, visit http://husky.sar-gmbh.com.
+
+The following fidoconfig keywords are implemented:
+
+  Nodelistdir
+  FidoUserList
+  Nodelist
+  DiffUpdate
+  FullUpdate
+  NodelistFormat
+  DefaultZone
+
+More information on what these keywords do mean is provided in the fidoconfig
+documentation (fidoconfig.info / fidoconfig.texi). 
+
+III) General Considerations
+
+These tools expect the Nodelist and Nodediff files to be in the FTS-0005
+defined format, that means: text lines that are finished with a CRLF
+sequence, and an EOF character after the last CRLF. This is normally true
+on any DOSish computer, and also on a Unix system if you just extract the
+distribution archives of Nodelist and Nodediff without giving some sort of
+auto conversion option. You might loose the CRs (^Ms) at the end when working
+with a text editor on these files, though. If the files do not have the ^M
+at the line end, the CRC checks will fail.
+
+IV) About the tools
+
+a) nlcrc
+
+   You normally do not need to call nlcrc manually.
+
+   This simple tool checks the CRC checksum in a given Nodelist (not
+   Nodediff!) file. Simply invoke it with the filename as argument:
+
+      nlcrc NODELIST.260
+
+   If there is not any output, the check succeeded and the return code will
+   be zero. If the file does not contain a CRC checksum, a message will be
+   printed to stderr and the return code will be 4. If a file I/O error or
+   similar happens, the return code will be 8. If the file has a checksum,
+   but the check fails, a message will be printed to stderr and the return
+   code will be 16.
+
+
+b) nldiff
+
+   You normally do not need to call nldiff manually. nldiff is designed to be
+   called automatically by nlupdate.
+
+   This tool applies a Nodediff file to a given Nodelist. It has no
+   intelligence as to determining which of multiple Nodediff files is the
+   correct one (you have to use other tools for this), but it expects the
+   Nodelist filename and the Nodediff filename as explicit arguments with the
+   correct day file name extension, as for example in:
+
+      nldiff NODELIST.260 NODEDIFF.267
+
+   This will crate a new file NODELIST.267.
+
+   If you want the old file (NODELIST.260 in this case) to be deleted if the
+   process succeeds (this means that no I/O errors occured and that the new
+   nodelist file passes a CRC check), you can give the -n parameter:
+
+      nldiff -n NODELIST.260 NODEDIFF.267
+
+   If you also want the nodediff file (NODEDIFF.260) to be deleted, you can
+   specify the -d parameter:
+
+      nldiff -d -n NODELIST.260 NODEDIFF.267
+
+c) ulc
+
+   ulc is the Husky Fido Userlist Compiler. ulc reads all nodelists that are
+   configured in Fidoconfig (via the "nodelist" keyword) and creates the
+   FIDOUSER.LST file (the name has to be configured with the "fidouserlist"
+   keyword). ulc does not take any command line options; it uses fidoconfig
+   to determine where to find the nodelist files. A log file named
+   "nltools.log" is placed in the fidoconfig log file directory.
+
+   The FIDOUSER.LST file format is defined as follows: The file consists of
+   text record of fixed length (65 characters including the terminal \r\n
+   sequence). The name of the sysop is left-aligned in the line in reverse
+   order (e.g. "Tobias_Ernst" would become "Ernst, Tobias"). Algined to the
+   right of the record is the node number of the user. The records are sorted
+   alphabetically, so that a program can use a binary search algorithm to
+   find the corresponding node number for a given user name very fast.
+
+   The FIDOUSER.LST file format is supported by many mail readers, e.g. Timed
+   and Msged. For Msged, FIDOUSER.LST is currently the best method to
+   implement a node lookup at all, because Msged's V7 routines are flawed.
+   
+d) nlupdate
+
+   nlupdate is not implemented yet. It will unpack nodediff files and apply
+   them using nldiff automatically.
+
+V) SAMPLE CONFIG
+
+   The fidoconfig keywords that configure what nodelists to use and where to
+   find the update files are explained in detail in the fidoconfig
+   documentation (fidoconfig.texi, proposal.texi). Here I just provide a
+   sample extract of a fidoconfig file:
+
+   NodelistDir /var/spool/fido/nodelist
+   FidoUserList fidouser.lst
+
+   Nodelist nodelist
+   DiffUpdate /var/spool/fido/filebase/nodediff/nodediff
+   NodelistFormat Standard
+
+   Nodelist points24
+   DiffUpdate /var/spool/fido/filebase/24000/pr24diff
+   DefaultZone 2
+   NodelistFormat Points24
+
+VI) COMPILING
+
+   - Extract nltools on the same level as fidoconfig, e.g. you could have:
+       ~/fido/fidoconfig
+       ~/fido/nltools
+   - Change to the src subdirectory.
+   - Edit the makefile. Set the INSTDIR and LIBDIR variables according to
+     your needs.
+   - Type "make"
+   - If it worked, type "make install"
+   - If you like, type "make clean".
+   
+
+VII) LICENCSE
+
+    This tools are donated to the Public Domain, which means that you can do
+    with the Binaries and with the Source Code whatever you want, but also
+    that the author does not take any responsibilites whatsoever.
+
+VIII)  CONTATCT
+
+    If you have questions, you can reach me at:
+
+    Fido:   Tobias Ernst @ 2:2476/418
+    e-mail: tobi@bland.fido.de
+
+    Questions are also appropriate in the LINUX.FIDO.GER, FIDOSOFT.HUSKY, and
+    FIDO_UTIL conferences.
+
+    For more information on the Husky project, our CVS server, and on how to
+    obtain the most recent version of this software, visit
+    http://husky.sar-gmbh.com
+
+[EOF]
+
+   
