@@ -1,3 +1,8 @@
+2002-12-27 Friday 13:21  sfpavel
+
+	* debian/changelog, src/version.h (nltools-1_2-stable.[3,2]):
+	nltools 1.2.2 release
+
 2002-11-11 Monday 10:43  stas_degteff
 
 	* legal/: COPYING, README (nltools-1_2-stable.[1,1]): Fix license
