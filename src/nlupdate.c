@@ -184,7 +184,7 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
     }
 
     /* create the unpack command */
-    // unpack_command(cmd,config->unpack[i].call, directory, filename, tempdir);
+    /* unpack_command(cmd,config->unpack[i].call, directory, filename, tempdir); */
     fillCmdStatement(cmd,config->unpack[i].call,tmpfilename,"",tempdir);
 
     /* execute the unpacker */
