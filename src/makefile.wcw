@@ -1,6 +1,6 @@
 LINK=wlink
 CC=wcl386
-CFLAGS=-I..\..\smapi -I..\..\fidoconfig -zq -wx -bt=nt -l=nt
+CFLAGS=-I..\.. -zq -wx -bt=nt -l=nt
 COPT = -oneatx -5
 LFLAGS=
 

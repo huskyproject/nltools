@@ -2,6 +2,11 @@ Current Version
 ---------------
 
 ----- cvs ci ------
+Thu Mar 23 10:15:52 MSK 2000
+max (patch from Serguei Revtov):
+- change Win makefile to compile with new includes
+
+----- cvs ci ------
 Mon Mar 20 08:56:28 MSK 2000
 max (patch from Serguei Revtov):
 - change legacy SUN makefile to compile with new includes, simplifying
