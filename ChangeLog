@@ -12,6 +12,9 @@ sms:
 (Remark by TE: I don't think those caused any problems, they were both
  ANSI and K&R proofed)
 
+NLTOOLS 1.0 Public Release
+--------------------------
+
 Sun 28 Nov 1999 03:00:00 CET
 tobi:
 - lots of last minute bug fixes, cleaned up everything, prepared for release
