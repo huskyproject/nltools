@@ -1,3 +1,7 @@
+2003-02-10 Monday 05:58  sfpavel
+
+	* src/nldiff.c (nltools-1_4-stable.1): Merge with current fixes
+
 2003-02-07 Friday 11:04  sfpavel
 
 	* Makefile (1.9), debian/changelog (1.8), debian/control (1.6),
