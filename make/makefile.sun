@@ -14,7 +14,7 @@ LFLAGS= -s -L../../fidoconf -L../../smapi
 LIBS  = -lfidoconfigsun -lsmapisun
 SRC_DIR=../src/
 
-{$(SRC_DIR)}.c.o: 
+%$(OBJ): $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -c $<
 
 include makefile.inc

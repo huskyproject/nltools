@@ -13,7 +13,7 @@ nldiff$(EXE): $(NLDIFFOBJS)
 	$(CC) $(LFLAGS) -o nldiff$(EXE) $(NLDIFFOBJS) $(LIBS)
 
 nlcrc$(EXE): $(NLCRCOBJS)
-	$(CC) $(LFLAGS) -o nlcrc$(EXE) $(NLCRCOBJS)
+	$(CC) $(LFLAGS) -o nlcrc$(EXE) $(NLCRCOBJS) $(LIBS)
 
 ulc$(EXE): $(ULCOBJS)
 	$(CC) $(LFLAGS) -o ulc$(EXE) $(ULCOBJS) $(LIBS)

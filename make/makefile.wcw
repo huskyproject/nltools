@@ -20,7 +20,7 @@ OBJS = ulcsort.obj ulcomp.obj crc16.obj nlcrc.obj nldiff.obj ulc.obj nlupdate.ob
 all: $(OBJS) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
 
 nldiff.exe: nldiff.obj crc16.obj
-  $(LINK) $(LFLAGS) FILE nldiff.obj, crc16.obj NAME nldiff.exe
+  $(LINK) $(LFLAGS) FILE nldiff.obj, crc16.obj NAME nldiff.exe LIBRARY ..\..\fidoconf\fconfwcw.lib LIBRARY ..\..\smapi\smapiwcw.lib
 
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(LINK) $(LFLAGS) NAME nlcrc.exe FILE crc16.obj, nlcrc.obj
