@@ -1,19 +1,29 @@
 # $Id$
 # Microsoft Visual C++ Makefile for build dinamic program(s)
+# with Internal ZIP (Zlib) support
 # No support for the Husky build environment.
 #
 # Tested on MS Visual C 6.0
 #
 
+HPTZIP=0
+
+!if $(HPTZIP) == 1
+HPTZIPL = ..\..\hptzip\make\hptzip.lib
+HPTZIPI = -I..\..\hptzip
+HPTZIPD = -DUSE_HPTZIP
+!endif
+
 CC=     cl
 CFLAGS= -nologo -Zp1 -MD
-CINCL	= -I..\h -I..\..\fidoconf -I..\..\smapi -I..\..\huskylib
-CDEFS=  -D__NT__ -DNT -DWINNT -D_CONSOLE
+CINCL	= -I..\h -I..\..\fidoconf -I..\..\smapi -I..\..\huskylib $(HPTZIPI)
+CDEFS=  -D__NT__ -DNT -DWINNT -D_CONSOLE $(HPTZIPD)
 COPT=   -O2
 TLIB=   lib -nologo
 
 LIBS	= ..\..\huskylib\make\huskymvc.lib \
 	  ..\..\fidoconf\fconfmvc.lib \
+	  $(HPTZIPL) \
 	  msvcrt.lib Kernel32.lib /link /opt:nowin98
 
 NLTOOLSL= nltoolsmvc.lib 
