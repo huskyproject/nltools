@@ -1,3 +1,8 @@
+2004-01-23 Friday 04:43  andr_lukyanov
+
+	* src/: nlcrc.c, nldiff.c, nlupdate.c, ulc.c
+	(nltools-1_4-stable.[1,2,2,1]): Fix stdout version strings
+
 2003-09-24 Wednesday 19:45  d_sergienko
 
 	* make/makefile.lnx (nltools-1_4-stable.3): fixed build
