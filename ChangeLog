@@ -1,3 +1,24 @@
+2002-10-18 Friday 09:03  stas_degteff
+
+	* man/: README, nlcrc.1, nldiff.1, nlupdate.1, ulc.1
+	(nltools-1_2-stable.[1,1,1,1,1]): Update man pages: fix URLs and
+	rev. number
+
+2002-10-18 Friday 09:00  stas_degteff
+
+	* FILE_ID.DIZ, README, VERSION (nltools-1_2-stable.[1,1,1]): Update
+	documentation (fix version numbers, URLs & typo error)
+
+2002-10-18 Friday 08:56  stas_degteff
+
+	* src/ulc.c (nltools-1_2-stable.1): Fix bug with log creation (now
+	created into logFileDir, not current dir)
+
+2002-10-18 Friday 05:35  stas_degteff
+
+	* src/nlupdate.c (nltools-1_2-stable.2): Fix bug with log creation
+	(now created into logFileDir, not current)
+
 2002-10-11 Friday 04:52  sfpavel
 
 	* src/nlupdate.c (nltools-1_2-stable.1): Fix OS/2 build (patch from
