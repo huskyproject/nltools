@@ -8,8 +8,8 @@ CC=gcc
 OBJ=.o
 RM=rm
 EXE=.exe
-CFLAGS=	-DNT -D__NT__ -DWINNT -D__CYG__ -I. -I../.. -Wall -pedantic -c -Wno-char-subscripts -mno-cygwin
-LFLAGS=-mno-cygwin -O3
+CFLAGS=-O3 -D__NT__ -I. -I../.. -Wall -pedantic -Wno-char-subscripts -mno-cygwin
+LFLAGS=-mno-cygwin
 LIBS=../../fidoconf/libfidoconfigcyg.a ../../smapi/libsmapicyg.a  -lmingwex
 
 .SUFFIXES:
