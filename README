@@ -141,7 +141,7 @@ d) nlupdate
    leap year), then searches the difference file, unpacks it if necessary,
    and applies it to the nodelist using nldiff. nlupdate can also find full
    replacement files if you configure this, and just unpack them and copy
-   them over the old nodelist. This is usefule for othernets that do not have
+   them over the old nodelist. This is useful for othernets that do not have
    nodediff files.  - With only a few keywords, nlupdate manages the whole
    process of updating your nodelist files for you.
 

@@ -109,5 +109,3 @@ Fri Oct  8 19:31:06 MET DST 1999 (tobi)
 - contains nldiff, nlcrc, ulc
 - ulc is still very slow due to broken sort routine
 - nlupdate still missing
-
-	 
