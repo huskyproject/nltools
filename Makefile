@@ -34,24 +34,24 @@ CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 %$(OBJ): src$(DIRSEP)%.c
 	$(CC) $(CFLAGS) $(CDEFS) -c $<
 
-nldiff$(EXE): nldiff$(OBJ) crc16$(OBJ) patmat$(OBJ)
-	$(CC) $(LFLAGS) -o nldiff$(EXE) nldiff$(OBJ) crc16$(OBJ) patmat$(OBJ) \
+nldiff$(EXE): nldiff$(OBJ) crc16$(OBJ)
+	$(CC) $(LFLAGS) -o nldiff$(EXE) nldiff$(OBJ) crc16$(OBJ) \
               $(LIBS)
 
-nlcrc$(EXE): crc16$(OBJ) nlcrc$(OBJ) patmat$(OBJ)
-	$(CC) $(LFLAGS) -o nlcrc$(EXE) crc16$(OBJ) nlcrc$(OBJ) patmat$(OBJ) \
+nlcrc$(EXE): crc16$(OBJ) nlcrc$(OBJ)
+	$(CC) $(LFLAGS) -o nlcrc$(EXE) crc16$(OBJ) nlcrc$(OBJ) \
               $(LIBS)
 
 ulc$(EXE): ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) string$(OBJ) \
-     nldate$(OBJ) julian$(OBJ) nlfind$(OBJ)  patmat$(OBJ)
+     nldate$(OBJ) julian$(OBJ) nlfind$(OBJ)
 	$(CC) $(LFLAGS) -o ulc$(EXE) ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) \
           string$(OBJ) nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) \
-          patmat$(OBJ) $(LIBS)
+         $(LIBS)
 
 nlupdate$(EXE): nlupdate$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) \
-          nlfind$(OBJ) patmat$(OBJ)
+          nlfind$(OBJ)
 	$(CC) $(LFLAGS) -o nlupdate$(EXE) nlupdate$(OBJ) string$(OBJ) \
-          nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) patmat$(OBJ) $(LIBS)
+          nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) $(LIBS)
 
 clean:
 	-$(RM) $(RMOPT) crc16$(OBJ)
