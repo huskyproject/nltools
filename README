@@ -15,8 +15,8 @@ operating systems.  The following functionality is provided:
   nodelist lookup by sysop name, as supported by Msged and others.
 
 - Keeping your raw nodelists up to date, i.E. logic is provided to find the
-  nodediff files that apply to your current nodelist files (not yet
-  implemented), and a tool to apply nodediffs to nodelists.
+  nodediff files that apply to your current nodelist files, and a tool to 
+  apply nodediffs to nodelists.
 
 This package does NOT presently include something like a V7 nodelist
 compiler.  Therefore, this package is enough if you are running an IP node,
