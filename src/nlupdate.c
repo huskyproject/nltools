@@ -468,7 +468,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
     char  *diffbase = NULL, *fullbase = NULL;
     nlist *difflist = NULL, *fulllist = NULL;
     int hit;
-    char *ufn=NULL;
+    char *ufn=NULL, *cfn=NULL;
 
     w_log( LL_FUNC, "do_update()");
 
@@ -568,6 +568,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                         if (call_differ(rawnl, ufn))
                         {
                             hit = 1;
+                            difflist->applied[j] = 1;
                         }
                     }
                     else
@@ -664,6 +665,18 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
             checkdiff = 0;
         }
     }
+
+    if (config->nodelists[nl].delAppliedDiff)
+        for (j = 0; j < difflist->n; j++)
+            if (difflist->applied[j])
+                {
+                    xstrscat(&cfn, diffbase, difflist->matches[j], NULL);
+                    if (remove(cfn)) {
+                        w_log(LL_ERROR, "Cannot delete file '%s': %s", cfn, strerror(errno));
+                    } else 
+                        w_log(LL_DEL, "File '%s' removed", cfn);
+                    nfree(cfn);
+                 }
 
     if (fullbase != NULL) free(fullbase);
     if (diffbase != NULL) free(diffbase);

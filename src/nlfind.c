@@ -31,6 +31,10 @@ void free_nlist(nlist *pnl)
     {
         free (pnl->julians);
     }
+    if (pnl->applied != NULL)
+    {
+        free (pnl->applied);
+    }
     free(pnl);
   }
 }
@@ -48,12 +52,14 @@ static nlist *make_nlist(void)
     res->n = 0; res->nmax = 5;
     res->matches = malloc(res->nmax*sizeof(char *));
     res->julians = malloc(res->nmax*sizeof(long));
+    res->applied = malloc(res->nmax*sizeof(int));
 
-    if (res->matches == NULL || res->julians == NULL)
+    if (res->matches == NULL || res->julians == NULL || res->applied == NULL)
     {
         w_log(LL_CRIT, "Out of memory.");
         if (res->julians) free(res->julians);
         if (res->matches) free(res->matches);
+        if (res->applied) free(res->applied);
         free(res);
         return NULL;
     }
@@ -65,6 +71,7 @@ int add_match(nlist *pnl, char *match)
 {
     char *cp = malloc(strlen(match) + 1);
     char **newm;
+    int *newa;
     long *newj;
 
 /*    w_log( 'X', "add_match()" ); */
@@ -81,6 +88,7 @@ int add_match(nlist *pnl, char *match)
     {
         newm = realloc(pnl->matches, ((pnl->nmax + 1) * 2 )*sizeof(char *));
         newj = realloc(pnl->julians, ((pnl->nmax + 1) * 2 )*sizeof(long));
+        newa = realloc(pnl->applied, ((pnl->nmax + 1) * 2 )*sizeof(int));
 
         if (newm == NULL || newj == NULL)
         {
@@ -89,12 +97,14 @@ int add_match(nlist *pnl, char *match)
         }
         pnl->matches = newm;
         pnl->julians = newj;
+        pnl->applied = newa;
         pnl->nmax = ((pnl->nmax + 1) * 2);
     }
 
     strcpy(cp, match);
     pnl->matches[pnl->n] = cp;
     pnl->julians[pnl->n] = 0;   /* 0 means: not yet known */
+    pnl->applied[pnl->n] = 0;
     pnl->n++;
     return 1;
 }
