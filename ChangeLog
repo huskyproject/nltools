@@ -1,5 +1,10 @@
 Current Version
 ---------------
+So   2 Jan 2000 11:28:26 CET
+tobi:
+- When nldiff was invoked with a nodediff filename that had the same
+  extension as the nodelist filename (obviously an user error) and the -n
+  parameter was given, the original nodelist was deleted. Fixed.
 
 Tue Dec 28 21:39:50 MET 1999
 tobi:

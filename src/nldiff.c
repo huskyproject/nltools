@@ -246,6 +246,14 @@ char *construct_new_filename(char *listname, char *diffname)
         return NULL;
     }
 
+    /* test for misuse like "nldiff -n nodelist.365 nodediff.365 */
+    if (!strcmp(diffname+m-4, listname+m-4))
+    {
+        fprintf (stderr, "%s does not seem to apply to %s.\n",
+                 diffname, listname);
+        return NULL;
+    }
+
     /* Construct filename of new nodelist */
     if ((tempname = malloc(strlen(listname) + 1)) == NULL)
     {
