@@ -16,11 +16,10 @@
 #   endif
 #endif
 
-#include <smapi/compiler.h>
+#include <huskylib/compiler.h>
 #include <fidoconf/fidoconf.h>
 #include <fidoconf/xstr.h>
 #include <fidoconf/adcase.h>
-#include <smapi/progprot.h>
 #include <fidoconf/common.h>
 #include <fidoconf/log.h>
 
