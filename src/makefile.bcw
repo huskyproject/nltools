@@ -1,10 +1,9 @@
 # Legacy makefile: Borland C for Windows
 
-default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
-all: default
 
 CC=bcc32 -O1 -WC
 OBJ=.obj
+RM=del
 TLIB=tlib
 CFLAGS=-I..\.. -I..\..\smapi -I..\..\fidoconf -DNT -DWINNT -D__NT__
 LFLAGS=
@@ -45,26 +44,10 @@ nlupdate.exe: $(NLUPDATEOBJS)
 
 
 clean:
-	-del crc16.obj
-	-del nlcrc.obj
-	-del nldiff.obj
-	-del ulc.obj
-	-del ulcomp.obj
-	-del ulcsort.obj
-	-del nllog.obj
-	-del julian.obj
-	-del nldate.obj
-	-del nlfind.obj
-	-del nlupdate.obj
-	-del string.obj
-	-del ffind.obj
-	-del fexist.obj
-	-del patmat.obj
-	-del bcwtmp.lib
-	-del bcwtmp.bak
+	-$(RM) *$(OBJ)
 
 distclean: clean
-	-del nlcrc.exe
-	-del nldiff.exe
-	-del ulc.exe
-	-del nlupdate.exe
+	-$(RM) nlcrc.exe
+	-$(RM) nldiff.exe
+	-$(RM) ulc.exe
+	-$(RM) nlupdate.exe

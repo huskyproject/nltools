@@ -1,29 +1,27 @@
-CC=gcc
-CFLAGS=-I../.. -DUNIX
-LFLAGS=-s -L../../fidoconf -L../../smapi
+# Legacy makefile for SUN(tm) Solaris
+#
+# Not support for husky build enviroment (without makefile.cfg)
+# Use GNU version of make
 
-all: nldiff nlcrc ulc nlupdate
+.PHONY: default
+
+CC    = gcc
+RM    = rm
+EXE   =
+OBJ   = .o
+CFLAGS= -I../.. -DUNIX
+LFLAGS= -s -L../../fidoconf -L../../smapi
+LIBS  = -lfidoconfigsun -lsmapisun
 
 .c.o: 
 	$(CC) $(CFLAGS) -c $<
 
-nldiff: nldiff.o crc16.o
-	$(CC) $(LFLAGS) -o nldiff nldiff.o crc16.o
+include makefile.inc
 
-nlcrc: crc16.o nlcrc.o
-	$(CC) $(LFLAGS) -o nlcrc crc16.o nlcrc.o
+all: commonprogs
 
-ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
-	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfigsun -lsmapisun
+default: all
 
-nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o
-	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o -lfidoconfigsun -lsmapisun
+clean: commonclean
 
-clean:
-	-rm *.o
-
-distclean: clean
-	-rm nlcrc
-	-rm nldiff
-	-rm ulc
-	-rm nlupdate
+commondistclean: commonclean commondistclean

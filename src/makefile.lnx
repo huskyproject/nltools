@@ -1,34 +1,24 @@
-.PHONY: default
-
-
-default: nldiff nlcrc ulc nlupdate
+# Legacy makefile for Linux
+#
+# Not support for husky build enviroment (makefile.cfg)
 
 CC=gcc
+OBJ=.o
+RM=rm
+EXE=
 CFLAGS=-O3 -I../.. -DUNIX
-LFLAGS=-s -L../../fidoconf
+LFLAGS=-s -L../../fidoconf -L../../smapi
+LIBS= -lfidoconfiglnx -lsmapilnx
 
 .c.o: 
 	$(CC) $(CFLAGS) -c $<
 
-nldiff: nldiff.o crc16.o
-	$(CC) $(LFLAGS) -o nldiff nldiff.o crc16.o
+include makefile.inc
 
-nlcrc: crc16.o nlcrc.o
-	$(CC) $(LFLAGS) -o nlcrc crc16.o nlcrc.o
+all: commonprogs
 
-ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o trail.o patmat.o ffind.o fexist.o
-	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o trail.o patmat.o  ffind.o fexist.o -lfidoconfiglnx
+default: all
 
-nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o ffind.o fexist.o trail.o patmat.o
-	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o trail.o patmat.o ffind.o fexist.o -lfidoconfiglnx
+clean: commonclean
 
-clean:
-	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o julian.o nlfind.o nldate.o nlupdate.o string.o trail.o patmat.o ffind.o fexist.o
-
-
-distclean: clean
-	-rm nlcrc
-	-rm nldiff
-	-rm ulc
-	-rm nlupdate
-
+commondistclean: commonclean commondistclean

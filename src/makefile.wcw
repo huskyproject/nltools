@@ -1,5 +1,10 @@
+# Legacy makefile: Watcom C for Windows
+
 LINK=wlink
 CC=wcl386
+OBJ=.obj
+RM=del
+
 CFLAGS=-I..\.. -zq -wx -bt=nt -l=nt -DNT -DWINNT -D__NT__
 COPT = -oneatx -5
 LFLAGS=system nt

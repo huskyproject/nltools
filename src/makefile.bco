@@ -1,11 +1,10 @@
 # BORLAND C 2.0 FOR OS/2
 # legacy makefile
 
-default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
-all: default
-
 CC=bcc -v
 OBJ=.obj
+RM=del
+EXE=.exe
 CFLAGS=-I..\.. -I..\..\smapi -I..\..\fidoconf -DOS2
 LFLAGS=
 LIBS=..\..\fidoconf\fconfbco.lib ..\..\smapi\smapibco.lib
@@ -18,38 +17,11 @@ include makefile.inc
 .c.obj:
 	$(CC) $(CFLAGS) -c $<
 
-nldiff.exe:  $(NLDIFFOBJS)
-	$(CC) $(LFLAGS) -enldiff.exe $(NLDIFFOBJS)
+all: commonprogs
 
-nlcrc.exe: $(NLCRCOBJS)
-	$(CC) $(LFLAGS) -enlcrc.exe $(NLCRCOBJS)
-
-ulc.exe: $(ULCOBJS)
-	$(CC) $(LFLAGS) -eulc.exe $(ULCOBJS) $(LIBS)
-
-nlupdate.exe: $(NLUPDATEOBJS)
-	$(CC) $(LFLAGS) -enlupdate.exe $(NLUPDATEOBJS) $(LIBS)
+default: all
 
 clean:
-	-del crc16.obj
-	-del nlcrc.obj
-	-del nldiff.obj
-	-del ulc.obj
-	-del ulcomp.obj
-	-del ulcsort.obj
-	-del nllog.obj
-	-del julian.obj
-	-del nldate.obj
-	-del nlfind.obj
-	-del trail.obj
-	-del nlupdate.obj
-	-del string.obj
-	-del patmat.obj
-	-del fexist.obj
-	-del ffind.obj
+	-$(RM) *$(OBJ)
 
-distclean: clean
-	-del ulc.exe
-	-del nlupdate.exe
-	-del nlcrc.exe
-	-del nldiff.exe
+distclean: clean commondistclean

@@ -1,12 +1,12 @@
 # This builds a OS/2 executable the requires EMX RT-I
 
-.PHONY: default
-
-default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
-
 CC=gcc
+OBJ=.o
+RM=del
+EXE=.exe
 CFLAGS=-Zcrtdll -O3 -I../.. -DOS2
 LFLAGS=-s -Zcrtdll -O3 -L../../fidoconf -L../../smapi
+LIBS= -lfconfemx -lsmapiemx
 
 .SUFFIXES:
 .SUFFIXES: .c .o .exe
@@ -14,27 +14,13 @@ LFLAGS=-s -Zcrtdll -O3 -L../../fidoconf -L../../smapi
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
-nldiff.exe: nldiff.o crc16.o
-	$(CC) $(LFLAGS) -o nldiff.exe nldiff.o crc16.o
+include makefile.inc
 
-nlcrc.exe: crc16.o nlcrc.o
-	$(CC) $(LFLAGS) -o nlcrc.exe crc16.o nlcrc.o
+all: commonprogs
 
-ulc.exe:  ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o fexist.o ffind.o trail.o
-	$(CC) $(LFLAGS) -o ulc.exe ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o fexist.o ffind.o trail.o -lfconfemx
-
-nlupdate.exe: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o trail.o
-	$(CC) $(LFLAGS) -o nlupdate.exe nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o patmat.o fexist.o ffind.o trail.o -lfconfemx
+default: all
 
 clean:
-	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.obk nldate.o julian.o nlfind.o nlupdate.o nllog.o string.o patmat.o fexist.o ffind.o trail.o
+	-$(RM) *$(OBJ)
 
-distclean: clean
-	-del nlcrc.exe
-	-del nldiff.exe
-	-del ulc.exe
-	-del nlupdate.exe
-
-
-
-
+distclean: clean commondistclean

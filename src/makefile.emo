@@ -2,11 +2,13 @@
 
 .PHONY: default
 
-default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
-
 CC=gcc
+OBJ=.obj
+RM=del
+EXE=.exe
 CFLAGS=-Zomf -O3 -I../.. -I../.. -DUNIX
 LFLAGS=-Zomf -O3 -L../../fidoconf -L../../smapi
+LIBS= -lfconfemo -lsmapiemo
 
 .SUFFIXES:
 .SUFFIXES: .c .obj .exe
@@ -14,23 +16,13 @@ LFLAGS=-Zomf -O3 -L../../fidoconf -L../../smapi
 .c.obj:
 	$(CC) $(CFLAGS) -c $<
 
-nldiff.exe: nldiff.obj crc16.obj
-	$(CC) $(LFLAGS) -o nldiff.exe nldiff.obj crc16.obj
+include makefile.inc
 
-nlcrc.exe: crc16.obj nlcrc.obj
-	$(CC) $(LFLAGS) -o nlcrc.exe crc16.obj nlcrc.obj
+all: commonprogs
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj trail.obj
-	$(CC) $(LFLAGS) -o ulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj trail.obj -lfconfemo
-
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj trail.obj
-	$(CC) $(LFLAGS) -o nlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj trail.obj -lfconfemo
+default: all
 
 clean:
-	-rm crc16.obj nlcrc.obj nldiff.obj ulc.obj ulcomp.obj ulcsort.obj nllog.obj nldate.obj julian.obj nlfind.obj nlupdate.obj trail.obj nllog.obj patmat.obj string.obj fexist.obj
+	$(RM) *$(OBJ)
 
-distclean: clean
-	-del nlcrc.exe
-	-del nldiff.exe
-	-del ulc.exe
-	-del nlupdate.exe
+distclean: clean commondistclean

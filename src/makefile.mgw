@@ -2,19 +2,14 @@
 #
 # This builds a Win32 executable the requires CRTDLL.DLL
 
-.PHONY: default
-
-default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
-all: default
 
 CC=i386-mingw32-gcc
 OBJ=.o
-
+EXE=.exe
+RM=del
 CFLAGS=-O3 -I../.. -DNT -DWINNT
 LFLAGS=-O3 -L../../fidoconf
 LIBS=../../fidoconf/libfidoconfigmgw.a ../../smapi/libsmapimgw.a
-
-include makefile.inc
 
 .SUFFIXES:
 .SUFFIXES: .c .o .exe
@@ -22,23 +17,13 @@ include makefile.inc
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
-nldiff.exe: $(NLDIFFOBJS)
-	$(CC) $(LFLAGS) -o nldiff.exe $(NLDIFFOBJS)
+include makefile.inc
 
-nlcrc.exe: $(NLCRCOBJS)
-	$(CC) $(LFLAGS) -o nlcrc.exe $(NLCRCOBJS)
+all: commonprogs
 
-ulc.exe: $(ULCOBJS)
-	$(CC) $(LFLAGS) -o ulc.exe $(ULCOBJS) $(LIBS)
-
-nlupdate.exe: $(NLUPDATEOBJS)
-	$(CC) $(LFLAGS) -o nlupdate.exe $(NLUPDATEOBJS) $(LIBS)
+default: all
 
 clean:
-	-rm $(OBJS)
+	-$(RM) *$(OBJ)
 
-diestclean: clean
-	-rm nlcrc.exe
-	-rm nldiff.exe
-	-rm ulc.exe
-	-rm nlupdate.exe
+distclean: clean commondistclean

@@ -4,18 +4,13 @@
 
 .PHONY: default
 
-all: default
-
-default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
-
 CC=gcc
 OBJ=.o
-
+RM=rm
+EXE=.exe
 CFLAGS=	-DNT -D__NT__ -DWINNT -D__CYG__ -I. -I../.. -Wall -pedantic -c -Wno-char-subscripts -mno-cygwin
 LFLAGS=-mno-cygwin -O3
 LIBS=../../fidoconf/libfidoconfigcyg.a ../../smapi/libsmapicyg.a
-
-include makefile.inc
 
 .SUFFIXES:
 .SUFFIXES: .c .o .exe
@@ -23,20 +18,13 @@ include makefile.inc
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
-nldiff.exe: $(NLDIFFOBJS)
-	$(CC) $(LFLAGS) -o nldiff.exe $(NLDIFFOBJS)
+include makefile.inc
 
-nlcrc.exe: $(NLCRCOBJS)
-	$(CC) $(LFLAGS) -o nlcrc.exe $(NLCRCOBJS)
+all: commonprogs
 
-ulc.exe: $(ULCOBJS)
-	$(CC) $(LFLAGS) -o ulc.exe $(ULCOBJS) $(LIBS)
+default: all
 
-nlupdate.exe: $(NLUPDATEOBJS)
-	$(CC) $(LFLAGS) -o nlupdate.exe $(NLUPDATEOBJS) $(LIBS)
+clean:  commonclean
+	-$(RM) $(OBJS)
 
-clean:
-	-rm $(OBJS)
-
-distclean: clean
-	-rm nlcrc.exe nldiff.exe ulc.exe nlupdate.exe
+distclean: clean commondistclean
