@@ -1,23 +1,26 @@
-# Linux / UNIX  sample configuration for the nodelist tools
+# BeOS sample configuration for the nodelist tools
 
 # use "export FIDOCONFIG=/path/to/this/config.file" in the batch that
-# calls the tools, or in /etc/profile
+# calls the tools, or in /boot/home/.profile
 
 # === Generic settings ===
 
 # Make sure these unpackers are in your search path, esp. ARC 5.21!
-Unpack "/usr/local/bin/unzip -joLqq $a -d $p" 0 504b0304 
-Unpack "/usr/local/bin/unrar e -o+ -y -c- -p- $a $p/ >/dev/null" 0 52617221
-Unpack "/usr/local/bin/arc eno $a $p'/*.*'" 0 1a
+Unpack "/bin/unzip -joLqq $a -d $p" 0 504b0304 
+# Get unrar for BeOS at: www.bebits.com/app/414
+Unpack "/boot/home/config/bin/unrar e -o+ -y -c- -p- $a $p/ >/dev/null" 0 52617221
+# Get arc for BeOS at: www.physcip.uni-stuttgart.de/tobi7bin/arc521be.zip
+Unpack "/boot/home/config/bin/arc eno $a $p'/*.*'" 0 1a
+
 
 # Directory in which the nltools.log file will be stored:
-logFileDir /var/fido/log
+logFileDir /boot/home/fido/log
 
 # Where the nodelist is and where the fidouser.lst goes:
-nodelistDir /var/fido/nodelist
+nodelistDir /boot/home/fido/nodelist
 
 # Point this to any existing directory, the nltools do not use it:
-msgBaseDir /var/fido/msgbase
+msgBaseDir /boot/home/fido/msgbase
 
 # Filename of fidouser list (without path!)
 fidoUserList fidouser.lst
@@ -28,10 +31,11 @@ fidoUserList fidouser.lst
 Nodelist nodelist
 
 # where nodediffs can be found (path + base filename)
-DiffUpdate /var/fido/filebase/nodediff/nodediff
+DiffUpdate /boot/home/fido/filebase/nodediff/nodediff
+
 
 # where full updates can be found, if any (path + base filename)
-FullUpdate /var/fido/filebase/complete_nodelist/nodelist
+FullUpdate /boot/home/fido/filebase/nodelist/nodelist
 
 # format of this nodelist
 NodelistFormat Standard
@@ -42,10 +46,10 @@ NodelistFormat Standard
 Nodelist points24
 
 # where nodediffs can be found (path + base filename)
-DiffUpdate /var/fido/filebase/24000/pr24diff
+DiffUpdate /boot/home/fido/filebase/24000/pr24diff
 
 # format of this nodelist
-Nodelistformat Point24
+Nodelistformat Points24
 
 # Points24 requires a default zone!
 DefaultZone 2
