@@ -1,3 +1,10 @@
+nltools (1.2-4) unstable; urgency=low
+
+  * Long time - no new Upstream Version Number. But a new Debian Package.
+  * Build-Depend for libfidoconf now for 0.13
+
+ -- Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>  Sun,  3 Mar 2002 23:40:01 +0100
+
 nltools (1.2-3) unstable; urgency=low
 
   * Rebuild to link again new smapi/fidoconf.
@@ -16,6 +23,4 @@ nltools (1.2-1) unstable; urgency=low
 
  -- Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>  Wed, 11 Apr 2001 22:56:02 +0200
 
-Local variables:
-mode: debian-changelog
-End:
+
