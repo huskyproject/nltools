@@ -1,3 +1,11 @@
+2002-08-01 Thursday 10:15  d.sergienko
+
+	* Makefile (1.8): removed patmat.o from Makefile
+
+2002-08-01 Thursday 10:13  d.sergienko
+
+	* src/nlupdate.c (1.23): replaced fexist() usage with access()
+
 2002-07-29 Monday 10:28  mche
 
 	* src/: nllog.c (1.5), nllog.h (1.7): no message
