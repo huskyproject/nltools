@@ -1,6 +1,6 @@
 #ifndef NLU_H
 #define NLU_H
 
-#define REV "1.0"
+#define REV "1.1-stable"
 
 #endif

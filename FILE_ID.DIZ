@@ -1,6 +1,6 @@
-NLTOOLS 1.0 --- The Husky Nodelist Tools
+NLTOOLS 1.1 --- The Husky Nodelist Tools
 ========================================
-Written 1999 by Tobias Ernst. A tool kit
+Written 2000 by Tobias Ernst. A tool kit
 for keeping  your  nodelists  up to date 
 (nlupdate automatically finds the latest
 diff files  using an Y2K-safe algorithm,
