@@ -9,8 +9,8 @@ OBJ=.o
 RM=rm
 EXE=.exe
 CFLAGS=	-DNT -D__NT__ -DWINNT -D__CYG__ -I. -I../.. -Wall -pedantic -c -Wno-char-subscripts -mno-cygwin
-LFLAGS=-mno-cygwin -O3 -lmingwex
-LIBS=../../fidoconf/libfidoconfigcyg.a ../../smapi/libsmapicyg.a
+LFLAGS=-mno-cygwin -O3
+LIBS=../../fidoconf/libfidoconfigcyg.a ../../smapi/libsmapicyg.a  -lmingwex
 
 .SUFFIXES:
 .SUFFIXES: .c .o .exe
