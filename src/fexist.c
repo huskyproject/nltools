@@ -35,6 +35,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <io.h>              /* for _mkdir() in win32 */
 #include "smapi/ffind.h"
 #include "smapi/prog.h"
 #ifdef USE_STAT_MACROS

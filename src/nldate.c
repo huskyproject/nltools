@@ -7,6 +7,7 @@
 #include "nllog.h"
 #include "nlstring.h"
 
+/* not used
 static char *monthnames[]=
 {
     "January",
@@ -21,7 +22,7 @@ static char *monthnames[]=
     "October",
     "November",
     "December"
-};
+};*/
 
 /* this routine does a relaxed check of the header, thus allowing for
    non-standard othernet lodelist headers */
@@ -93,7 +94,7 @@ long parse_nodelist_date(char *filename)
     char buffer[300], *cp;
     int m, d, y, dn, dnv;
     long julian;
-    
+
     FILE *f = fopen(filename, "r");
 
     if (f == NULL)
@@ -161,7 +162,7 @@ long parse_nodelist_date(char *filename)
 
     fclose(f);
     return julian;
-    
+
 invalid:
     fclose(f);
     logentry(LOG_ERROR, "Invalid nodelist header in %s.", filename);
