@@ -24,6 +24,7 @@ char *versionStr;
    number and an optional CRC value. */
 
 enum {SCANDASH, SCANFDIGIT, DAYVAL, SCANCOLON, SCANNDIGIT, CRCVAL, AFTERCRCVAL, FINISH};
+enum {COPY, ADD, DEL, END, ILL};
 
 int  analyze_first_line(FILE *f, unsigned short *crcnum, int *has_crc,
                         unsigned short *daynum)
@@ -180,7 +181,6 @@ int compareline (FILE *from1, FILE *from2)
 
 /* Analyse a Nodediff command */
 
-enum {COPY, ADD, DELETE, END, ILL};
 
 int readcommand(FILE *f, int *argument)
 {
@@ -202,7 +202,7 @@ int readcommand(FILE *f, int *argument)
         cmd = COPY;
         break;
     case 'D':
-        cmd = DELETE;
+        cmd = DEL;
         break;
     default:
         return ILL;
