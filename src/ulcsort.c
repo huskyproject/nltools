@@ -12,6 +12,8 @@
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
+
+#include <fidoconf/log.h>
 #include "nlstring.h"
 #include "nllog.h"
 #include "ulc.h"
@@ -32,14 +34,14 @@ int ul_sort(FILE *f)
     long n;
     void *buffer;
     char buf[200];
-    
+
 
     if (fseek(f, 0L, SEEK_END))
         return 0;
 
     if ((filelen = ftell(f)) == -1)
         return 0;
-    
+
     if (fseek(f, 0L, SEEK_SET))
         return 0;
 
@@ -61,7 +63,7 @@ int ul_sort(FILE *f)
 
     if (buffer == NULL)
     {
-        logentry(LOG_ERROR, "Out of memory (request for %ld bytes failed).",
+        w_log(LL_ERROR, "Out of memory (request for %ld bytes failed).",
                  n * reclen);
         return 0;
     }

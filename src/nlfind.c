@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <errno.h>
+
 #include <fidoconf/fidoconf.h>
+#include <fidoconf/log.h>
 #include "nlstring.h"
 #include "julian.h"
 #include "nlfind.h"
@@ -33,7 +36,7 @@ static nlist *make_nlist(void)
 
     if (res == NULL)
     {
-        logentry(LOG_ERROR, "Out of memory.");
+        w_log(LL_CRIT, "Out of memory.");
         return NULL;
     }
 
@@ -43,7 +46,7 @@ static nlist *make_nlist(void)
 
     if (res->matches == NULL || res->julians == NULL)
     {
-        logentry(LOG_ERROR, "Out of memory.");
+        w_log(LL_CRIT, "Out of memory.");
         if (res->julians) free(res->julians);
         if (res->matches) free(res->matches);
         free(res);
@@ -59,11 +62,11 @@ static int add_match(nlist *pnl, char *match)
     char **newm;
     long *newj;
 
-/*    logentry( 'X', "add_match()" ); */
+/*    w_log( 'X', "add_match()" ); */
 
     if (cp == NULL)
     {
-        logentry(LOG_ERROR, "Out of memory.");
+        w_log(LL_CRIT, "Out of memory.");
         return 0;
     }
     if (pnl->n == pnl->nmax)
@@ -73,7 +76,7 @@ static int add_match(nlist *pnl, char *match)
 
         if (newm == NULL || newj == NULL)
         {
-            logentry(LOG_ERROR, "Out of memory.");
+            w_log(LL_CRIT, "Out of memory.");
             return 0;
         }
         pnl->matches = newm;
@@ -95,7 +98,7 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
     nlist *pnl = make_nlist();
     size_t l, l2;
 
-    logentry( 'X', "find_nodelistfiles()" );
+    w_log( LL_FUNC, "find_nodelistfiles()" );
 
     if (pnl == NULL)
     {
@@ -106,12 +109,12 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
 
     if (hdir == NULL)
     {
-        logentry(LOG_ERROR, "cannot read directory %s", path);
+        w_log(LL_ERROR, "Cannot read directory '%s': %s", path, strerror(errno));
         free_nlist(pnl);
         return NULL;
     }
 
-    logentry( 'X', "Scan directory %s for %s", path, base);
+    w_log( LL_DIR, "Scan directory %s for %s", path, base);
 
     l = strlen(base);
 
@@ -131,7 +134,7 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
                 closedir(hdir);
                 return NULL;
             }else
-                logentry( 'X', "Found: %s", dp->d_name);
+                w_log( LL_DEBUG, "Found: %s", dp->d_name);
 
         }
     }
@@ -156,7 +159,7 @@ char *findNodelist(s_fidoconfig *config, int i)
     int lastmatch = -1;
     int l;
 
-    logentry( 'X', "findNodelist()" );
+    w_log( LL_FUNC, "findNodelist()" );
 
     pnl = find_nodelistfiles(config->nodelistDir,
                              config->nodelists[i].nodelistName, 0);
@@ -169,7 +172,7 @@ char *findNodelist(s_fidoconfig *config, int i)
 
     if (nl == NULL)
     {
-        logentry(LOG_ERROR, "Out of memory.");
+        w_log(LL_CRIT, "Out of memory.");
         free_nlist(pnl);
         return NULL;
     }

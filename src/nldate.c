@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <errno.h>
 
+#include <fidoconf/log.h>
 #include "julian.h"
 #include "nldate.h"
 #include "nllog.h"
@@ -37,14 +39,14 @@ long parse_nodelist_date(char *filename)
 
     if (f == NULL)
     {
-        logentry(LOG_ERROR, "cannot open %s", filename);
+        w_log(LL_ERROR, "Cannot open '%s': %s", filename, strerror(errno));
         return -1L;
     }
 
     if (fgets(buffer, sizeof(buffer), f) == NULL)
     {
         fclose(f);
-        logentry(LOG_ERROR, "I/O error reading %s", filename);
+        w_log(LL_ERROR, "I/O error reading %s: %s", filename, strerror(errno));
         return -1L;
     }
 
@@ -79,7 +81,7 @@ long parse_nodelist_date(char *filename)
     return get_julian_date(day, 0, year);
 
 invalid:
-    logentry(LOG_ERROR, "invalid header in %s", filename);
+    w_log(LL_ERROR, "Iinvalid header in %s", filename);
     return -1L;
 }
 
@@ -99,14 +101,14 @@ long parse_nodelist_date(char *filename)
 
     if (f == NULL)
     {
-        logentry(LOG_ERROR, "Cannot open %s.", filename);
+        w_log(LL_ERROR, "Cannot open %s: %s", filename, strerror(errno));
         return -1L;
     }
 
     if (fgets(buffer, sizeof(buffer), f) == NULL)
     {
         fclose(f);
-        logentry(LOG_ERROR, "I/O error reading %s.", filename);
+        w_log(LL_ERROR, "I/O error reading %s: %s", filename, strerror(errno));
         return -1L;
     }
 
@@ -155,7 +157,7 @@ long parse_nodelist_date(char *filename)
     if (dn != dnv)
     {
         fclose(f);
-        logentry(LOG_ERROR, "Inconsistent nodelist header information in %s.",
+        w_log(LL_ERROR, "Inconsistent nodelist header information in %s.",
                  filename);
         return -1L;
     }
@@ -165,7 +167,7 @@ long parse_nodelist_date(char *filename)
 
 invalid:
     fclose(f);
-    logentry(LOG_ERROR, "Invalid nodelist header in %s.", filename);
+    w_log(LL_ERROR, "Invalid nodelist header in %s.", filename);
     return -1L;
 }
 

@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <time.h>
+#include <errno.h>
 #ifdef UNIX
 #include <sys/stat.h> /* S_I... constants */
 #endif
@@ -14,6 +15,8 @@
 #include <fidoconf/adcase.h>
 #include <smapi/progprot.h>
 #include <fidoconf/common.h>
+#include <fidoconf/log.h>
+
 #if !(defined(_MSC_VER) && (_MSC_VER >= 1200))
 #include <fidoconf/dirlayer.h>
 #endif
@@ -44,7 +47,7 @@ static int nl_fexist(char *filename)
 #else
 #define nl_fexist fexist
 #endif
-   
+
 
 static char *mk_uncompressdir(char *nldir)
 {
@@ -59,7 +62,7 @@ static char *mk_uncompressdir(char *nldir)
     /* try to create it */
     mymkdir(upath);
 
-    logentry( 'X', "Use temp dir: '%s'", upath );
+    w_log( LL_DIR, "Use temp dir: '%s'", upath );
 
     /* check if we can write to the directory */
     nfree(upath);
@@ -69,7 +72,7 @@ static char *mk_uncompressdir(char *nldir)
     {
         fprintf (stderr, "%s\n",upath);
         upath[l] = '\0';
-        logentry(LOG_ERROR, "cannot create/access %s", upath);
+        w_log(LL_ERROR, "Cannot create/access temporary directory (%s): %s", upath, strerror(errno));
         free(upath);
         return NULL;
     }
@@ -89,7 +92,7 @@ int destroy_uncompressdir(char *upath)
     hdir = opendir(upath);
     if (hdir == NULL)
     {
-        logentry(LOG_ERROR, "cannot read temporary directory %s", upath);
+        w_log(LL_ERROR, "Cannot read temporary directory (%s): %s", upath, strerror(errno));
         free(upath);
         return 0;
     }
@@ -105,9 +108,9 @@ int destroy_uncompressdir(char *upath)
 
             if (remove(upath))
             {
-                logentry(LOG_ERROR, "cannot erase %s", upath);
+                w_log(LL_ERROR, "Cannot delete file '%s': %s", upath, strerror(errno));
             }else
-                logentry( 'X', "Temp dir '%s' removed", upath );
+                w_log( LL_DEL, "File '%s' removed", upath );
         }
     }
     closedir(hdir);
@@ -116,8 +119,7 @@ int destroy_uncompressdir(char *upath)
 
     if (rmdir(upath))
     {
-        logentry(LOG_ERROR, "cannot remove temporary directory %s", 
-                 upath);
+        w_log(LL_ERROR, "Cannot remove temporary directory '%s': %s", upath, strerror(errno));
         free(upath);
         return 0;
     }
@@ -140,18 +142,18 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
     f = fopen(tmpfilename, "rb");
     if (f == NULL)
     {
-        logentry(LOG_ERROR, "cannot access %s", tmpfilename);
+        w_log(LL_ERROR, "Cannot access %s: %s", tmpfilename, strerror(errno));
         return 0;
     }
-        
+
     /* find what unpacker to use */
     for (i = 0, found = 0; (i < config->unpackCount) && !found; i++)
     {
         fseek(f, config->unpack[i].offset,
               config->unpack[i].offset >= 0 ? SEEK_SET : SEEK_END);
         if (ferror(f))
-        { 
-            logentry(LOG_ERROR, "seek error on %s", tmpfilename);
+        {
+            w_log(LL_ERROR, "Seek error on %s: %s", tmpfilename, strerror(errno));
             break;
         }
         for (found = 1, j = 0; j < config->unpack[i].codeSize; j++)
@@ -162,12 +164,12 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
         }
         if (found) break;
     }
-    
+
     fclose(f);
 
     if (!found)
     {
-        logentry(LOG_ERROR,"did not find an appropriate unpacker for %s", tmpfilename);
+        w_log(LL_ERROR,"Did not find an appropriate unpacker for %s", tmpfilename);
         nfree(tmpfilename);
         return 0;
     }
@@ -177,16 +179,16 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
     fillCmdStatement(cmd,config->unpack[i].call,tmpfilename,"",tempdir);
 
     /* execute the unpacker */
-    logentry(LOG_MSG, "executing %s", cmd);
+    w_log(LL_EXEC, "Executing '%s'", cmd);
     exitcode=system(cmd);
     if (exitcode != 0)
     {
-        logentry(LOG_MSG, "unpacker returned %d", exitcode);
+        w_log(LL_EXEC, "Unpacker returned exit code '%d'", exitcode);
         nfree(tmpfilename);
         return 0;
     }
     adaptcase_refresh_dir(tempdir);
-    
+
     nfree(tmpfilename);
     return 1;
 }
@@ -203,21 +205,21 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
     {
         *reason = 0;  /* means: all sorts of errors */
     }
-        
+
     assert (l >= 4); /* a match should never happen w/o ".???" at the end */
 
-    logentry(LOG_DBG, "get_unc_fn for %s", filename);
+    w_log(LL_DEBUG, "get_unc_fn for %s", filename);
 
     if ( isdigit(filename[l-3]) && expday == atoi(filename + l-3))
     {
         /* the file is not compressed and the day number in the file
            name matches the expected day number */
 
-        logentry(LOG_DBG, "file is not compressed");
+        w_log(LL_DEBUG, "File '%s' is not compressed", filename);
 
         if ((rv = malloc(strlen(directory) + l + 1)) == NULL)
         {
-            logentry(LOG_ERROR, "out of memory");
+            w_log(LL_ERROR, "Out of memory");
             return NULL;
         }
         strcpy(rv, directory);
@@ -228,17 +230,17 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
     {
         /* the file is compressed and its name looks like it could match */
 
-        logentry(LOG_DBG, "file is compressed");
+        w_log(LL_DEBUG, "File '%s' is compressed", filename);
 
         if (!uncompress(config, directory, filename, tempdir))
         {
-            logentry(LOG_DBG, "uncompress failed");
+            w_log(LL_DEBUG, "Uncompress failed");
             return NULL;
         }
 
         if ((rv = malloc(strlen(tempdir) + l + 1)) == NULL)
         {
-            logentry(LOG_ERROR, "out of memory");
+            w_log(LL_ERROR, "Out of memory");
             return NULL;
         }
         strcpy(rv, tempdir);
@@ -246,9 +248,10 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
         sprintf(rv + strlen(tempdir) + l - 3, "%03d", expday % 1000);
 
         adaptcase(rv);
-        logentry(LOG_DBG, "expected uncompressed fn after adaptcase: %s", rv);
+        w_log(LL_DEBUG, "Expected uncompressed filename after adaptcase(): %s", rv);
         if (!nl_fexist(rv))
         {
+            w_log(LL_WARN, "Uncompressed file '%s' not exist", rv);
             free(rv);
             return NULL;
         }
@@ -258,21 +261,21 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
     {
         /* no match */
 
-        logentry(LOG_DBG, "file ext %d does not match exp day %d",
+        w_log(LL_DEBUG, "File suffix %d does not match exp day %d",
                  atoi(filename + l - 2), expday);
-      
+
         if (reason)
         {
             *reason = 1; /* means: file extension simply doesn't match */
-        }            
-        
+        }
+
         return NULL;
     }
 }
 
 static char *basedir(const char *stemname)
 {
-    char *rv; 
+    char *rv;
     size_t l;
     int j;
 
@@ -299,12 +302,12 @@ static int call_differ(char *nodelist, char *nodediff)
     int rv;
 
     xscatprintf(&cmd,"%s -n %s %s", differ, nodelist, nodediff);
-    logentry(LOG_MSG, "executing %s", cmd);
+    w_log(LL_EXEC, "Executing diff processor (%s)", cmd);
     rv = system(cmd);
     nfree(cmd);
     if (rv != 0)
     {
-        logentry(LOG_ERROR, "diff processor returned %d", rv);
+        w_log(LL_ERROR, "Diff processor returned exit code '%d'", rv);
         return 0;
     }
     return 1;
@@ -347,7 +350,7 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
     ufn = get_uncompressed_filename(config, fullbase, fulllist->matches[j],
                                     tmpdir, ndnr, &reason);
 
-    logentry( 'X', "Uncomressed filename: %s", ufn );
+    w_log( LL_FILENAME, "Uncomressed filename: %s", ufn );
 
     if (!reason)
         fulllist->julians[j] = -1;
@@ -356,14 +359,14 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
     {
         if (julian == (fulllist->julians[j] = parse_nodelist_date(ufn)))
         {
-            logentry(LOG_MSG, "found full update: %s", ufn);
+            w_log(LL_INFO, "Found full update: %s", ufn);
 
             newfn = malloc(strlen(config->nodelistDir) +
                            strlen(config->nodelists[nl].nodelistName) + 5);
 
             if (newfn == NULL)
             {
-                logentry(LOG_ERROR, "out of memory");
+                w_log(LL_ERROR, "Out of memory");
                 return 1;
             }
             else
@@ -372,12 +375,11 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
                 strcat(newfn, config->nodelists[nl].nodelistName);
                 sprintf(newfn + strlen(newfn), ".%03d", ndnr);
 
-                logentry( 'X', "Copy '%s' to '%s'", ufn, newfn );
-                            
+                w_log( LL_FILE, "Copy '%s' to '%s'", ufn, newfn );
+
                 if (copy_file(ufn, newfn))
                 {
-                    logentry(LOG_ERROR, "error copying %s to %s",
-                             ufn, newfn);
+                    w_log(LL_ERROR, "Error copying '%s' to '%s'", ufn, newfn);
                     return 1;
                 }
                 else
@@ -385,19 +387,17 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
                     rv = 3;
                     if (rawnl != NULL)
                     {
-                        logentry(LOG_MSG, "replacing %s with %s",
-                                 rawnl, newfn);
+                        w_log(LL_FILE, "Replacing '%s' with '%s'", rawnl, newfn);
 
                         if (remove(rawnl))
                         {
-                            logentry(LOG_ERROR, "cannot remove %s",
-                                     rawnl);
+                            w_log(LL_ERROR, "Cannot remove '%s'", rawnl);
                             rv = 2; /* error, but still proceed */
                         }
                     }
                     else
                     {
-                        logentry(LOG_MSG, "creating %s", newfn);
+                        w_log(LL_CREAT, "Creating '%s'", newfn);
                     }
 
                 }
@@ -406,8 +406,7 @@ static int try_full_update(s_fidoconfig *config, char *rawnl,char *fullbase,
         }
         else
         {
-            logentry(LOG_MSG,
-                     "%s does not contain nodelist for day %03d", ufn, ndnr);
+            w_log(LL_ALERT, "%s does not contain nodelist for day %03d", ufn, ndnr);
         }
         free(ufn);
     }
@@ -437,14 +436,14 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
     int hit;
     char *ufn;
 
-    logentry( 'X', "do_update()");
+    w_log( LL_FUNC, "do_update()");
 
     if ((julian = parse_nodelist_date(rawnl)) == -1)
         return 0;
 
     if (today - julian < 7)
     {
-        logentry(LOG_MSG, "younger than 7 days, no update necessary");
+        w_log(LL_INFO, "%s younger than 7 days, no update necessary", rawnl);
         return 1;
     }
 
@@ -454,7 +453,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
         if ((diffbase = basedir(config->nodelists[nl].diffUpdateStem)) != NULL)
         {
             difflist = find_nodelistfiles(diffbase,
-                                          config->nodelists[nl].diffUpdateStem 
+                                          config->nodelists[nl].diffUpdateStem
                                           + strlen(diffbase), 1);
         }
         else
@@ -467,7 +466,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
         if ((fullbase = basedir(config->nodelists[nl].fullUpdateStem)) != NULL)
         {
             fulllist =  find_nodelistfiles(fullbase,
-                                           config->nodelists[nl].fullUpdateStem 
+                                           config->nodelists[nl].fullUpdateStem
                                            + strlen(fullbase), 1);
         }
         else
@@ -487,24 +486,24 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
             for (j = 0; j < difflist->n && !hit; j++)
             {
 
-                logentry(LOG_DBG, "checking %s%s", diffbase, difflist->matches[j]);
-                
+                w_log(LL_DEBUG, "Checking %s%s", diffbase, difflist->matches[j]);
+
                 ufn = get_uncompressed_filename(config, diffbase,
                                                 difflist->matches[j],
                                                 tmpdir, ndnr, NULL);
 
-                logentry(LOG_DBG, "ufn is: %s", ufn!=NULL ? ufn : "(null)" );
-                
+                w_log(LL_DEBUG, "ufn is: %s", ufn );
+
                 if (ufn != NULL)
                 {
 
                     /* nodediffs contain the header of the nodelist to which
                        they apply as the first line, so we need to compare the
                        parsed date with julian, not with i */
-                    
+
                     if (julian == parse_nodelist_date(ufn))
                     {
-                        logentry(LOG_MSG, "found diff update: %s", ufn);
+                        w_log(LL_INFO, "Found diff update: %s", ufn);
 
                         if (call_differ(rawnl, ufn))
                         {
@@ -513,8 +512,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                     }
                     else
                     {
-                        logentry(LOG_MSG,
-                                 "%s is not applicable to %s", rawnl);
+                        w_log(LL_INFO, "%s is not applicable to %s", rawnl, ufn);
                     }
                     free(ufn);
                 }
@@ -526,7 +524,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
             for (j = 0; j < fulllist->n && !hit; j++)
             {
 
-                logentry(LOG_DBG, "checking %s%s", fullbase, fulllist->matches[j]);
+                w_log(LL_DEBUG, "Checking %s%s", fullbase, fulllist->matches[j]);
 
                 switch (try_full_update(config, rawnl, fullbase,
                                         fulllist, j, tmpdir, i, nl))
@@ -537,7 +535,7 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
                     i = today; /* fatal error; stop searching! */
                     rv = 0;
                     break;
-                case 2:       
+                case 2:
                     rv = 0;    /* hit, minor error, but don't exit loop! */
                     hit = 1;
                     break;
@@ -554,8 +552,8 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
             rawnl = findNodelist(config, nl);
             if (rawnl == NULL)
             {
-                logentry(LOG_ERROR,
-                         "instance of nodelist %s vanished during update!?",
+                w_log(LL_ERROR,
+                         "Instance of nodelist %s vanished during update!?",
                          config->nodelists[nl].nodelistName);
             }
             else if ((i = parse_nodelist_date(rawnl)) == -1)
@@ -565,8 +563,8 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
             }
             else if (i <= julian)
             {
-                logentry(LOG_ERROR,
-                         "nodelist %s still as old as before!?", rawnl);
+                w_log(LL_ERROR,
+                         "Nodelist %s still as old as before!?", rawnl);
                 rv = 0;
                 i = today; /* exit loop :-( */
             }
@@ -584,12 +582,12 @@ static int do_update(s_fidoconfig *config, int nl, char *rawnl, long today,
 
     if (fullbase != NULL) free(fullbase);
     if (diffbase != NULL) free(diffbase);
-    
+
     /* check if nodelist is extraordinarily old, just for information */
     if (today - julian > 14)
     {
-        logentry(LOG_WARNING,
-                 "%s is more than two weeks old, but still no way to update it",
+        w_log( LL_ALERT,
+               "%s is more than two weeks old, but still no way to update it",
                  rawnl);
     }
 
@@ -618,14 +616,14 @@ static int create_instance(s_fidoconfig *config, int nl, long today,
 
     /* build the list of candidate full update files */
 
-    logentry( 'X', "create_instance()");
+    w_log( LL_FUNC, "create_instance()");
 
     if (config->nodelists[nl].fullUpdateStem)
     {
         if ((fullbase = basedir(config->nodelists[nl].fullUpdateStem)) != NULL)
         {
             fulllist = find_nodelistfiles(fullbase,
-                                          config->nodelists[nl].fullUpdateStem 
+                                          config->nodelists[nl].fullUpdateStem
                                           + strlen(fullbase), 1);
         }
         else
@@ -676,15 +674,15 @@ static int process(s_fidoconfig *config)
 
     if (config->nodelistDir == NULL)
     {
-        logentry(LOG_ERROR,
-                 "no nodelist directory configured in fidoconfig");
+        w_log(LL_CRIT,
+                 "No nodelist directory configured in fidoconfig");
         return 8;
     }
 
     if (config->nodelistCount < 1 )
     {
-        logentry(LOG_ERROR,
-                 "no nodelist configured in fidoconfig");
+        w_log(LL_CRIT,
+                 "No nodelist configured in fidoconfig");
         return 8;
     }
 
@@ -693,10 +691,10 @@ static int process(s_fidoconfig *config)
         for (i = 0; i < config->nodelistCount; i++)
         {
             nodelist = findNodelist(config, i);
-            
+
             if (nodelist == NULL)
             {
-                logentry(LOG_WARNING, "no instance of nodelist %s found.\n",
+                w_log(LL_ALERT, "No instance of nodelist %s found.",
                          config->nodelists[i].nodelistName);
 
                 /* New: If there is no instance, we can still try
@@ -704,11 +702,11 @@ static int process(s_fidoconfig *config)
 
                 if (config->nodelists[i].fullUpdateStem != NULL)
                 {
-                    logentry( 'X', "Check fullupdate: %s", config->nodelists[i].fullUpdateStem );
+                    w_log( LL_INFO, "Check fullupdate: %s", config->nodelists[i].fullUpdateStem );
                     if (!create_instance(config, i, today, tmpdir))
                     {
-                        logentry(LOG_WARNING, "no full update for "
-                                 "nodelist %s found.",
+                        w_log( LL_ALERT,
+                               "no full update for nodelist %s found.",
                                  config->nodelists[i].nodelistName);
                         if (rv < 4) rv = 4;
                     }
@@ -717,7 +715,7 @@ static int process(s_fidoconfig *config)
                         nodelist = findNodelist(config, i);
                         if (nodelist == NULL)
                         {
-                            logentry (LOG_ERROR, "unpacked full update, but "
+                            w_log (LL_ERROR, "Unpacked full update, but "
                                       "still no instance of nodelist %s !?",
                                       config->nodelists[i].nodelistName);
                             if (rv < 8) rv = 8;
@@ -726,7 +724,7 @@ static int process(s_fidoconfig *config)
                 }
                 else
                 {
-                    logentry(LOG_WARNING, "don't know how to create instance"
+                    w_log(LL_ALERT, "Don't know how to create instance"
                              " of nodelist %s (no full update configured)",
                              config->nodelists[i].nodelistName);
                     if (rv < 4) rv = 4;
@@ -738,15 +736,15 @@ static int process(s_fidoconfig *config)
                 if (config->nodelists[i].diffUpdateStem == NULL &&
                     config->nodelists[i].fullUpdateStem == NULL)
                 {
-                    logentry(LOG_WARNING, "don't know how to update "
+                    w_log(LL_ALERT, "Don't know how to update "
                              "nodelist %s", config->nodelists[i].nodelistName);
                     if (rv < 4) rv = 4;
                     free(nodelist);
                 }
                 else
                 {
-                    logentry(LOG_MSG, "trying to update %s", nodelist);
-                    
+                    w_log(LL_INFO, "Trying to update %s", nodelist);
+
                     if (!do_update(config, i, nodelist, today, tmpdir))
                     {
                         if (rv < 8) rv = 8;
@@ -758,7 +756,7 @@ static int process(s_fidoconfig *config)
         destroy_uncompressdir(tmpdir);
     }
 
-    logentry(LOG_MSG, "done");
+    w_log(LL_FUNC, "%s::process() done", __FILE__);
     return rv;
 }
 
@@ -788,16 +786,17 @@ int main(int argc, char **argv)
     /* run the main program */
     if (config != NULL)
     {
-        loginit(config);
-        logentry(LOG_MSG, "nlupdate - nodelist updater rev. %s", REV);
+        openLog(LOGNAME, "nlupdate " REV, config);
+        w_log(LL_START, "nlupdate - nodelist updater rev. %s", REV);
 
         rv=process(config);
 
-        logdeinit();
+        w_log( LL_STOP, "Done" );
+        closeLog();
         disposeConfig(config);
         free(differ);
         return rv;
-        
+
     }
     else
     {

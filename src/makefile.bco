@@ -2,10 +2,15 @@
 # legacy makefile
 
 default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
+all: default
 
 CC=bcc -v
+OBJ=.obj
 CFLAGS=-I..\.. -I..\..\smapi -I..\..\fidoconf -DOS2
-LFLAGS=-L..\..\fidoconf
+LFLAGS=
+LIBS=..\..\fidoconf\fconfbco.lib ..\..\smapi\smapibco.lib
+
+include makefile.inc
 
 .SUFFIXES:
 .SUFFIXES: .c .obj .exe
@@ -13,17 +18,17 @@ LFLAGS=-L..\..\fidoconf
 .c.obj:
 	$(CC) $(CFLAGS) -c $<
 
-nldiff.exe: nldiff.obj crc16.obj
-	$(CC) $(LFLAGS) -enldiff.exe nldiff.obj crc16.obj
+nldiff.exe:  $(NLDIFFOBJS)
+	$(CC) $(LFLAGS) -enldiff.exe $(NLDIFFOBJS)
 
-nlcrc.exe: crc16.obj nlcrc.obj
-	$(CC) $(LFLAGS) -enlcrc.exe crc16.obj nlcrc.obj
+nlcrc.exe: $(NLCRCOBJS)
+	$(CC) $(LFLAGS) -enlcrc.exe $(NLCRCOBJS)
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj fexist.obj ffind.obj trail.obj
-	$(CC) $(LFLAGS) -eulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj fexist.obj trail.obj ffind.obj ..\..\fidoconf\fconfbco.lib
+ulc.exe: $(ULCOBJS)
+	$(CC) $(LFLAGS) -eulc.exe $(ULCOBJS) $(LIBS)
 
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj ffind.obj trail.obj
-	$(CC) $(LFLAGS) -enlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj ffind.obj trail.obj ..\..\fidoconf\fconfbco.lib
+nlupdate.exe: $(NLUPDATEOBJS)
+	$(CC) $(LFLAGS) -enlupdate.exe $(NLUPDATEOBJS) $(LIBS)
 
 clean:
 	-del crc16.obj
@@ -48,9 +53,3 @@ distclean: clean
 	-del nlupdate.exe
 	-del nlcrc.exe
 	-del nldiff.exe
-
-
-
-
-
-

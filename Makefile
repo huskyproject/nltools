@@ -1,3 +1,7 @@
+# $Id$
+# Makefile for nltools with Husky build enviroment
+# Use GNU version of 'make' program
+
 ifeq ($(DEBIAN), 1)
 # Every Debian-Source-Paket has one included.
 include debian/huskymak.cfg
@@ -38,15 +42,15 @@ nlcrc$(EXE): crc16$(OBJ) nlcrc$(OBJ) patmat$(OBJ)
 	$(CC) $(LFLAGS) -o nlcrc$(EXE) crc16$(OBJ) nlcrc$(OBJ) patmat$(OBJ) \
               $(LIBS)
 
-ulc$(EXE): ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) nllog$(OBJ) string$(OBJ) \
+ulc$(EXE): ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) string$(OBJ) \
      nldate$(OBJ) julian$(OBJ) nlfind$(OBJ)  patmat$(OBJ)
 	$(CC) $(LFLAGS) -o ulc$(EXE) ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) \
-          nllog$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) \
+          string$(OBJ) nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) \
           patmat$(OBJ) $(LIBS)
 
-nlupdate$(EXE): nlupdate$(OBJ) nllog$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) \
+nlupdate$(EXE): nlupdate$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) \
           nlfind$(OBJ) patmat$(OBJ)
-	$(CC) $(LFLAGS) -o nlupdate$(EXE) nlupdate$(OBJ) nllog$(OBJ) string$(OBJ) \
+	$(CC) $(LFLAGS) -o nlupdate$(EXE) nlupdate$(OBJ) string$(OBJ) \
           nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) patmat$(OBJ) $(LIBS)
 
 clean:
@@ -56,7 +60,6 @@ clean:
 	-$(RM) $(RMOPT) ulc$(OBJ)
 	-$(RM) $(RMOPT) ulcomp$(OBJ)
 	-$(RM) $(RMOPT) ulcsort$(OBJ)
-	-$(RM) $(RMOPT) nllog$(OBJ)
 	-$(RM) $(RMOPT) julian$(OBJ)
 	-$(RM) $(RMOPT) nlfind$(OBJ)
 	-$(RM) $(RMOPT) nldate$(OBJ)
@@ -81,4 +84,3 @@ uninstall:
 	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nldiff$(EXE)
 	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlcrc$(EXE)
 	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlupdate$(EXE)
-

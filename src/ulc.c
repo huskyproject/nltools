@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+
 #include <fidoconf/fidoconf.h>
+#include <fidoconf/log.h>
+
 #include "ulc.h"
 #include "nllog.h"
 #if !(defined(_MSC_VER) && (_MSC_VER >= 1200))
@@ -18,22 +22,22 @@ int process(s_fidoconfig *config)
 
     if (config->fidoUserList == NULL)
     {
-        logentry(LOG_ERROR, "no fido user list configured in fidoconfig.\n");
+        w_log(LL_CRIT, "No fido user list configured in fidoconfig.");
         return 8;
     }
 
     if (config->nodelistDir == NULL)
     {
-        logentry(LOG_ERROR,
-                 "no nodelist directory configured in fidoconfig.\n");
+        w_log(LL_CRIT,
+                 "No nodelist directory configured in fidoconfig.");
         return 8;
     }
 
 
     if (config->nodelistCount < 1 )
     {
-        logentry(LOG_ERROR,
-                 "no nodelist configured in fidoconfig.\n");
+        w_log(LL_CRIT,
+                 "No nodelist configured in fidoconfig.");
         return 8;
     }
 
@@ -41,7 +45,7 @@ int process(s_fidoconfig *config)
                           strlen(config->fidoUserList) + 1);
     if (fidouserlist == NULL)
     {
-        logentry(LOG_ERROR, "out of memory.\n");
+        w_log(LL_CRIT, "Out of memory.");
         return 8;
     }
 
@@ -52,12 +56,12 @@ int process(s_fidoconfig *config)
     fout = fopen(fidouserlist, "w+b");
     if (fout == NULL)
     {
-        logentry(LOG_ERROR, "cannot open %s.\n", fidouserlist);
+        w_log(LL_CRIT, "Cannot open %s: %s", fidouserlist, strerror(errno));
         free(fidouserlist);
         return 8;
     }
 
-    logentry(LOG_MSG, "building %s", fidouserlist);
+    w_log(LL_INFO, "Building %s", fidouserlist);
 
     for (i = 0; i < config->nodelistCount; i++)
     {
@@ -65,18 +69,18 @@ int process(s_fidoconfig *config)
 
         if (nodelist == NULL)
         {
-            logentry(LOG_WARNING, "no instance of nodelist %s found.\n",
+            w_log(LL_ALERT, "No instance of nodelist %s found.",
                      config->nodelists[i].nodelistName);
             if (rv < 4) rv = 4;
         }
         else
         {
-            logentry(LOG_MSG, "using %s", nodelist);
+            w_log(LL_INFO, "Using %s", nodelist);
 
             fin = fopen(nodelist, "rb");
             if (fin == NULL)
             {
-                logentry(LOG_ERROR, "error opening %s.\n", nodelist);
+                w_log(LL_ERROR, "Error opening %s: %s", nodelist, strerror(errno));
                 if (rv < 8) rv = 8;
             }
             else
@@ -95,11 +99,11 @@ int process(s_fidoconfig *config)
                 default:
                     format = F_NODELIST;
                 }
-                
+
                 if (!ul_compile(fin, fout, format,
                                 config->nodelists[i].defaultZone))
                 {
-                    logentry(LOG_ERROR, "error during compile");
+                    w_log(LL_ERROR, "Error during compile");
                     if (rv < 8) rv = 8;
                 }
             }
@@ -107,14 +111,12 @@ int process(s_fidoconfig *config)
         free(nodelist);
     }
 
-    logentry(LOG_MSG, "sorting");
+    w_log(LL_INFO, "Sorting");
     if (!ul_sort(fout))
     {
-        logentry(LOG_ERROR, "error while sorting");
+        w_log(LL_ERROR, "Error while sorting");
         if (rv < 8) rv = 8;
     }
-    logentry(LOG_MSG, "done");
-    
 
     fclose(fin);
     fclose(fout);
@@ -128,15 +130,17 @@ int main(void)
 
     if (config != NULL)
     {
-        loginit(config);
-        logentry(LOG_MSG, "ulc - userlist compiler rev. %s", REV);
+        openLog(LOGNAME, "ulc " REV, config);
+
+        w_log(LL_START, "ulc - userlist compiler rev. %s", REV);
 
         rv=process(config);
 
-        logdeinit();
+        w_log( LL_STOP, "Done" );
+        closeLog();
         disposeConfig(config);
         return rv;
-        
+
     }
     else
     {

@@ -1,20 +1,28 @@
+# Legacy makefile: Borland C for Windows
 
 default: nldiff.exe nlcrc.exe ulc.exe nlupdate.exe
+all: default
 
 CC=bcc32 -O1 -WC
+OBJ=.obj
 TLIB=tlib
 CFLAGS=-I..\.. -I..\..\smapi -I..\..\fidoconf -DNT -DWINNT -D__NT__
 LFLAGS=
+LIBS=  bcwtmp.lib ..\..\fidoconf\fconfbcw.lib  ..\..\smapi\smapibcw.lib
+
+include makefile.inc
+
 
 .SUFFIXES:
 .SUFFIXES: .c .obj .exe
 
-.c.obj: 
+.c.obj:
 	$(CC) $(CFLAGS) -c $<
 	$(TLIB) bcwtmp.lib -+$@
 
 ulc.obj: ulc.c
 	$(CC) $(CFLAGS) -c ulc.c
+
 nldiff.obj: nldiff.c
 	$(CC) $(CFLAGS) -c nldiff.c
 nlcrc.obj: nlcrc.c
@@ -23,30 +31,31 @@ nlupdate.obj: nlupdate.c
 	$(CC) $(CFLAGS) -c nlupdate.c
 
 
-nldiff.exe: nldiff.obj crc16.obj
-	$(CC) $(LFLAGS) -enldiff.exe nldiff.obj crc16.obj
+nldiff.exe:  $(NLDIFFOBJS)
+	$(CC) $(LFLAGS) -enldiff.exe $(NLDIFFOBJS)
 
-nlcrc.exe: crc16.obj nlcrc.obj
-	$(CC) $(LFLAGS) -enlcrc.exe crc16.obj nlcrc.obj
+nlcrc.exe: $(NLCRCOBJS)
+	$(CC) $(LFLAGS) -enlcrc.exe $(NLCRCOBJS)
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj ffind.obj fexist.obj trail.obj
-	$(CC) $(LFLAGS) -eulc.exe ulc.obj bcwtmp.lib ..\..\fidoconf\fconfbcw.lib
+ulc.exe: $(ULCOBJS)
+	$(CC) $(LFLAGS) -eulc.exe $(ULCOBJS) $(LIBS)
 
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj ffind.obj fexist.obj trail.obj
-	$(CC) $(LFLAGS) -enlupdate.exe nlupdate.obj bcwtmp.lib ..\..\fidoconf\fconfbcw.lib
+nlupdate.exe: $(NLUPDATEOBJS)
+	$(CC) $(LFLAGS) -enlupdate.exe $(NLUPDATEOBJS) $(LIBS)
+
 
 clean:
-	-del crc16.obj 
-	-del nlcrc.obj 
-	-del nldiff.obj 
-	-del ulc.obj 
-	-del ulcomp.obj 
-	-del ulcsort.obj 
-	-del nllog.obj 
-	-del julian.obj 
-	-del nldate.obj 
-	-del nlfind.obj 
-	-del nlupdate.obj 
+	-del crc16.obj
+	-del nlcrc.obj
+	-del nldiff.obj
+	-del ulc.obj
+	-del ulcomp.obj
+	-del ulcsort.obj
+	-del nllog.obj
+	-del julian.obj
+	-del nldate.obj
+	-del nlfind.obj
+	-del nlupdate.obj
 	-del string.obj
 	-del ffind.obj
 	-del fexist.obj
@@ -59,7 +68,3 @@ distclean: clean
 	-del nldiff.exe
 	-del ulc.exe
 	-del nlupdate.exe
-
-
-
-
