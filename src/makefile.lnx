@@ -36,7 +36,4 @@ install:
 	cp ulc $(INSTDIR)/ulc
 	cp nldiff $(INSTDIR)/nldiff
 	cp nlcrc $(INSTDIR)/nlcrc
-	cp nlupdate $(INSTDIR)/nlcrc
-
-
-
+	cp nlupdate $(INSTDIR)/nlupdate
