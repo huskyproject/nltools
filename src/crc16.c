@@ -16,7 +16,7 @@ void crc16_process(unsigned short *crcptr, const unsigned char *buffer, size_t l
 {
     const unsigned char *ptr = buffer;
     size_t ctr;
-    int k;
+//    int k;
  
     for (ctr = 0; ctr < length; ctr++, ptr++)
     {

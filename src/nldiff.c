@@ -183,7 +183,7 @@ enum {COPY, ADD, DELETE, END, ILL};
 int readcommand(FILE *f, int *argument)
 {
     char buffer[64];
-    size_t l;
+//    size_t l;
     int cmd, arg;
 
     if (fgets(buffer, 64, f) == NULL)
@@ -339,7 +339,7 @@ int main(int argc, char **argv)
     unsigned short crc, newday, expnewday;
     int crci = 0;
     int flags = 0;
-    unsigned char c;
+//    unsigned char c;
 
     /* parse the command line */
     if (!parse_args(argc, argv, &listname, &diffname, &flags))
