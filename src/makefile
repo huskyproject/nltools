@@ -18,8 +18,8 @@ nldiff: nldiff.o crc16.o
 nlcrc: crc16.o nlcrc.o
 	$(CC) $(LFLAGS) -o nlcrc crc16.o nlcrc.o
 
-ulc: ulcsort.o ulcomp.o ulc.o nllog.o
-	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o -lfidoconfig
+ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o
+	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.obj -lfidoconfig
 
 clean:
 	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o

@@ -1,12 +1,13 @@
 Husky Nodelist Utilities
 ========================
 
-Written 1999 by Tobias Ernst and released to the Public Domain
+Written 1999 by Tobias Ernst and released to the Public Domain.
 
 I) Abstract
 
-This archive contains a set of nodelist management utilities. The following
-functionality is provided:
+This archive contains a set of nodelist management utilities, in source code
+and, if you got a full distribution, also with binaries for some common
+operating systems.  The following functionality is provided:
 
 - Compiling raw nodelists into a FIDOUSER.LST file, that can be used for
   nodelist lookup by sysop name, as supported by Msged and others.
@@ -16,7 +17,7 @@ functionality is provided:
   implemented), and a tool to apply nodediffs to nodelists.
 
 This package does NOT presently include something like a V7 nodelist
-compiler. Therefore, this package is enough if you are running an IP node,
+compiler.  Therefore, this package is enough if you are running an IP node,
 but you need additional software if you are running Binkley or some other
 software that requires an V7 nodelist index.
 
@@ -27,40 +28,39 @@ installation for that platform.
 II) About Fidoconfig
 
 These tools are written as an addition to the Husky suite of Fidonet
-software. The tools do not read their own configuration file, but rather they
-read the global "Fidoconfig" configuration file. Because of this, you do need
-the fidoconfig library to compile these tools. If you do not know what
-Fidoconfig is, visit http://husky.sar-gmbh.com.
+software.  The tools do not read a separate configuration file, but rather
+they read a common, global "Fidoconfig" configuration file.  This does not
+mean that you need to install the whole Husky suite - you can just use the
+programs of this package stand alone if you like, because the precompiled
+binaries have the fidoconfig linked in statically.
 
-The following fidoconfig keywords are implemented:
+But if you want to compile the tools, you do need the fidoconfig library.  If
+you do not know what Fidoconfig is, visit http://husky.sar-gmbh.com.
 
-  Nodelistdir
-  FidoUserList
-  Nodelist
-  DiffUpdate
-  FullUpdate
-  NodelistFormat
-  DefaultZone
+If you only want to use the precompiled binaries, you must set the
+environment variable FIDOCONFIG to point to a fidoconfig-style configuration
+file, e.g. on OS/2, put SET FIDOCONFIG=e:\bbs\etc\fidoconf.cfg in your
+CONFIG.SYS file.  On DOS, put the same command into autoatexec.bat
 
-More information on what these keywords do mean is provided in the fidoconfig
-documentation (fidoconfig.info / fidoconfig.texi). 
+The keywords that you can use in this configuration file will be explained
+below, in section V, or of course in the fidoconfig manual.
 
 III) General Considerations
 
 These tools expect the Nodelist and Nodediff files to be in the FTS-0005
-defined format, that means: text lines that are finished with a CRLF
-sequence, and an EOF character after the last CRLF. This is normally true
-on any DOSish computer, and also on a Unix system if you just extract the
+defined format, that means:  text lines that are finished with a CRLF
+sequence, and an EOF character after the last CRLF.  This is normally true on
+any DOSish computer, and also on a Unix system if you just extract the
 distribution archives of Nodelist and Nodediff without giving some sort of
-auto conversion option. You might loose the CRs (^Ms) at the end when working
-with a text editor on these files, though. If the files do not have the ^M
-at the line end, the CRC checks will fail.
+auto conversion option.  You might loose the CRs (^Ms) at the end when
+working with a text editor on these files, though.  If the files do not have
+the ^M at the line end, the CRC checks will fail.
 
 IV) About the tools
 
 a) nlcrc
 
-   You normally do not need to call nlcrc manually.
+   You normally do not need to call nlcrc manually, unless you are curious.
 
    This simple tool checks the CRC checksum in a given Nodelist (not
    Nodediff!) file. Simply invoke it with the filename as argument:
@@ -68,9 +68,9 @@ a) nlcrc
       nlcrc NODELIST.260
 
    If there is not any output, the check succeeded and the return code will
-   be zero. If the file does not contain a CRC checksum, a message will be
-   printed to stderr and the return code will be 4. If a file I/O error or
-   similar happens, the return code will be 8. If the file has a checksum,
+   be zero.  If the file does not contain a CRC checksum, a message will be
+   printed to stderr and the return code will be 4.  If a file I/O error or
+   similar happens, the return code will be 8.  If the file has a checksum,
    but the check fails, a message will be printed to stderr and the return
    code will be 16.
 
@@ -80,7 +80,7 @@ b) nldiff
    You normally do not need to call nldiff manually. nldiff is designed to be
    called automatically by nlupdate.
 
-   This tool applies a Nodediff file to a given Nodelist. It has no
+   This tool applies a Nodediff file to a given Nodelist.  It has no
    intelligence as to determining which of multiple Nodediff files is the
    correct one (you have to use other tools for this), but it expects the
    Nodelist filename and the Nodediff filename as explicit arguments with the
@@ -113,7 +113,7 @@ c) ulc
    The FIDOUSER.LST file format is defined as follows: The file consists of
    text record of fixed length (65 characters including the terminal \r\n
    sequence). The name of the sysop is left-aligned in the line in reverse
-   order (e.g. "Tobias_Ernst" would become "Ernst, Tobias"). Algined to the
+   order (e.g. "Tobias_Ernst" would become "Ernst, Tobias"). Aligned to the
    right of the record is the node number of the user. The records are sorted
    alphabetically, so that a program can use a binary search algorithm to
    find the corresponding node number for a given user name very fast.
@@ -121,18 +121,125 @@ c) ulc
    The FIDOUSER.LST file format is supported by many mail readers, e.g. Timed
    and Msged. For Msged, FIDOUSER.LST is currently the best method to
    implement a node lookup at all, because Msged's V7 routines are flawed.
-   
+
 d) nlupdate
 
    nlupdate is not implemented yet. It will unpack nodediff files and apply
    them using nldiff automatically.
 
-V) SAMPLE CONFIG
+V) CONFIGURATION SYNTAX
 
-   The fidoconfig keywords that configure what nodelists to use and where to
-   find the update files are explained in detail in the fidoconfig
-   documentation (fidoconfig.texi, proposal.texi). Here I just provide a
-   sample extract of a fidoconfig file:
+The following text describes the configuration statements in the fidoconfig
+file that control the behaviour of ulc and nlupdate.  Just put the
+appropriate configuration statements into a text file and point the
+FIDOCONFIG environment variable to this file, or add the statements to your
+existing fidoconfig file if you have one.
+
+   NodelistDir
+   -----------
+   Syntax:   nodelistDir <path>
+   Example:  nodelistDir /var/spool/fido/nodelist
+
+   This command specifies the path where the actual nodelists are or should
+   be written to.  This path contains the raw nodelist. Also, compiled
+   nodelists like the FIDOUSER.LST will be stored here.
+   This statement cannot be repeated.
+
+   FidoUserList
+   -------------
+   Syntax:   fidoUserList <filename>
+   Example:  fidoUserList fidouser.lst
+
+   If this keyword is present, the nodelist compiler (ulc) is instructed to
+   build a user list file with the given filename in the nodelist directory
+   (see nodelistdir).  This is a simple text file with fixed line length that
+   contains user names (nodes, points) and their corresponding node or
+   pointnumbers.  The file is sorted alphabetically by user name (case
+   insensitive), so that it can be bsearched to implement a quick node numer
+   lookup functinality.  The fido user list file format is understood by
+   Msged, for example.
+
+   NodeList
+   --------
+   Syntax:  Nodelist <name>
+   Example: Nodelist points24
+
+   This statement starts a new nodelist definition.  All the following
+   nodelist-related stamtements change the configuration of this nodelist
+   until a new nodeelist statement is found.
+
+   The name that you specify must match the base name (without extension and
+   without pathname) of the raw, unpacked, nodelist file.  The husky tools
+   ulc and nlupdate match the file name case-insensitively, but other tools
+   may need the exact spelling.  The raw nodelist file is expected to reside
+   in the nodelist directory (see nodelistdir)-
+
+   DiffUpdate
+   ----------
+   Syntax:  DiffUpdate <path_and_basename>
+   Example: DiffUpdate /var/spool/filebase/nodediff/nodediff
+
+   Here you can specify the base filename of nodelist difference files
+   (nodediffs) that are used to keep the corresponding nodelist up to date.
+   The argument to the DiffUpdate is the full file name with path of a
+   difference file, without the file extension.  For example, if you have a
+   file area at /var/spool/filebase/24000, where your ticker places the
+   updates for the German Pointlist, and those update files are called
+   points24.a26, points24.a33, and so on, you would use
+
+       DiffUpdate /var/spool/filebase/24000/points24
+
+   The Diffupdate keyword is used by nlupdate, for example.  The nodelist
+   updater will unpack the difference file (if it is archived, of course,
+   unpacked diffs are also supported), apply the diff to the corresponding
+   nodelist, and delete the temporary unpacked diff again.
+
+
+   FullUpdate
+   ----------
+   Syntax:  FullUpdate <path_and_basename>
+   Example: FullUpdate /var/spool/filebase/nodelist/nodelist
+
+   This statement works like DiffUpdate.  The difference is that here you
+   don't specify the location of a nodelist difference file, but the
+   locations where complete nodelist files/archives can be found.  Some
+   othernets do not (regularly) distribute a nodediff file, but just hatch a
+   new nodelist every few weeks.  In this case, you need the FullUpdate
+   statement.
+
+   Defaultzone
+   -----------
+   Syntax:  DefaultZone <zone>
+   Example: DefaultZone 2
+
+   Some nodelist files do not start with a Zone entry.  This is the case for
+   the German Points24 list, for example, but could also happen for othernets
+   that only have one zone.  In this case, you can use the DefaultZone
+   keyword to specify the default zone number for all nodes listed in this
+   nodelist.
+
+   Nodelistformat
+   --------------
+   Syntax:  Nodelistformat <format>
+   Example: NodelistFormat Standard
+   Example: NodelistFormat Points24
+
+   Here you can specify the format of the unpacked nodelist.  The default is
+   "standard":  this is the normal Fidonet nodelist format.  You can also
+   specify "points24", which is needed for the nodelist compiler to recognise
+   a point list in the German points24 format as such, so that it can see the
+   proper 5D point numbers instead of the fakenet numbers.
+
+
+VI) SAMPLE CONFIG
+
+The following lines show a sample configuration file.  If you are only
+interested in the nodelist tools, you can just copy those commands into a
+text file, modify them according to your needs (OS/2, Win and DOS users may
+of course use backslashes instead of forward slashes, and drive letters), and
+point the FIDOCONFIG variable to this file.  If, on the other hand, you
+already have a fidoconfig installtion, you can copy these commands into your
+existing fidoconfig file.
 
    NodelistDir /var/spool/fido/nodelist
    FidoUserList fidouser.lst
@@ -146,39 +253,51 @@ V) SAMPLE CONFIG
    DefaultZone 2
    NodelistFormat Points24
 
-VI) COMPILING
+VII) COMPILING
 
-   - Extract nltools on the same level as fidoconfig, e.g. you could have:
-       ~/fido/fidoconfig
-       ~/fido/nltools
-   - Change to the src subdirectory.
-   - Edit the makefile. Set the INSTDIR and LIBDIR variables according to
-     your needs.
-   - Type "make"
-   - If it worked, type "make install"
-   - If you like, type "make clean".
-   
+- Extract nltools on the same level as fidoconfig, e.g. you could have:
+    ~/fido/fidoconfig
+    ~/fido/nltools
+- Change to the src subdirectory.
+- Edit the makefile. Set the INSTDIR and LIBDIR variables according to
+  your needs.
+- Type "make"
+- If it worked, type "make install"
+- If you like, type "make clean".
 
-VII) LICENCSE
 
-    This tools are donated to the Public Domain, which means that you can do
-    with the Binaries and with the Source Code whatever you want, but also
-    that the author does not take any responsibilites whatsoever.
+VIII) LICENCSE
 
-VIII)  CONTATCT
+These tools are donated to the Public Domain, which means that you can do with
+with the SOURCE CODE whatever you want, but also that the author does not
+take any responsibilites whatsoever.
 
-    If you have questions, you can reach me at:
+In order to produce executables of the tools, you need the fidoconfig library
+(and I needed it as well).  The fidoconfig library is not Public Domain, but
+it is covered by the GNU LIBRARY GENERAL PUBLIC LICENSE.  A copy of this
+license can be found in the "legal" subdirectory.  The binary executables of
+the nodelist tools therefore are also covered by the LGPL.
+
+In order to comply with the LGPL, I hereby invite you to download the source
+code of both the nodelist tools and fidoconfig from
+http://husky.sar-gmbh.com.  Should you have any troubles in obtaining them
+from there, just contact me at the addresses below and I will send you the
+source code.
+
+IX)  CONTATCT
+
+If you have questions, you can reach me at:
 
     Fido:   Tobias Ernst @ 2:2476/418
     e-mail: tobi@bland.fido.de
 
-    Questions are also appropriate in the LINUX.FIDO.GER, FIDOSOFT.HUSKY, and
-    FIDO_UTIL conferences.
+Questions are also appropriate in the LINUX.FIDO.GER, FIDOSOFT.HUSKY, and
+FIDO_UTIL conferences.
 
-    For more information on the Husky project, our CVS server, and on how to
-    obtain the most recent version of this software, visit
-    http://husky.sar-gmbh.com
+For more information on the Husky project, our CVS server, and on how to
+obtain the most recent version of this software, visit
+http://husky.sar-gmbh.com
 
 [EOF]
 
-   
+

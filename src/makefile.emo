@@ -1,0 +1,32 @@
+.PHONY: default
+
+default: nldiff.exe nlcrc.exe ulc.exe
+
+CC=gcc
+CFLAGS=-Zomf -g -I../../smapi -I../../fidoconfig -DUNIX
+LFLAGS=-Zomf -g -L../../fidoconfig -L../../smapi
+
+.SUFFIXES:
+.SUFFIXES: .c .obj .exe
+
+.c.obj: 
+	$(CC) $(CFLAGS) -c $<
+
+nldiff.exe: nldiff.obj crc16.obj
+	$(CC) $(LFLAGS) -o nldiff.exe nldiff.obj crc16.obj
+
+nlcrc.exe: crc16.obj nlcrc.obj
+	$(CC) $(LFLAGS) -o nlcrc.exe crc16.obj nlcrc.obj
+
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj
+	$(CC) $(LFLAGS) -o ulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj -lfidoconfig -lsmapiemo
+
+clean:
+	-del crc16.obj nlcrc.obj nldiff.obj ulc.obj ulcomp.obj ulcsort.obj nllog.obk
+	-del nlcrc.exe
+	-del nldiff.exe
+	-del ulc.exe
+
+
+
+

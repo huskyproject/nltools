@@ -5,16 +5,16 @@
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include "ulc.h"
 
-enum { F_NODELIST, F_POINTS24 };
 enum { T_ZONE, T_REGION, T_HOST, T_HUB, T_NODE };
-
 
 /* A node or point has been parsed in a node list. Write it in Fidouser.Lst
    format to the output file. The output file is not yet sorted. The
    "username" parameter should contain underscores instead of spaces. */
 
-#define ENTRYLENGTH 63 /* without trailing \r\n! */
+#define ENTRYLENGTH 61 /* without trailing \r\n! */
 
 static int parsednode(FILE *fout, unsigned zone, unsigned net, unsigned node,
                       unsigned point, char *username)
@@ -72,20 +72,45 @@ static int parsednode(FILE *fout, unsigned zone, unsigned net, unsigned node,
     strcat(rev_username, "\r\n");
 
     return (fwrite(rev_username, ENTRYLENGTH+2, 1, fout) == 1);
-
-    return 1;
 }
 
 /* Process a line from a nodelist file */
 
+static void parse2d(char *ptr, unsigned int *net, unsigned int *node)
+{
+    *net = 0; *node = 0;
+    while (isdigit(*ptr))
+    {
+        *net = 10 * (*net) + (*ptr)-'0';
+        ptr++;
+    }
+    if ((*(ptr++)) != '/')
+    {
+        *net = *node = 0;
+    }
+    else
+    {
+        while (isdigit(*ptr))
+        {
+            *node = 10 * (*node) + (*ptr)-'0';
+            ptr++;
+        }
+        if (*ptr)
+        {
+            *net = *node = 0;
+        }
+    }
+}
+
+
 static int ulc_line(FILE *fin, FILE *fout, unsigned format,
-                    unsigned *zone, unsigned *net)
+                    unsigned *zone, unsigned *net, unsigned *node)
 {
     char linebuf[128], *ptr, *sptr;
     size_t l; int incomplete;
     int k, rv=1;
     char *username;
-    unsigned node;
+    unsigned point;
     int type;
 
     if (fgets(linebuf, sizeof(linebuf), fin) != NULL)
@@ -116,60 +141,113 @@ static int ulc_line(FILE *fin, FILE *fout, unsigned format,
         for (k = 0; ptr != NULL && k <= 4; k++)
         {
 
-            switch (k)
+            switch (format)
             {
-            case 0:
-                if (!strcmp(ptr, "Zone"))
-                {
-                    type = T_ZONE;
-                }
-                else if (!strcmp(ptr, "Region"))
-                {
-                    type = T_REGION;
-                }
-                else if (!strcmp(ptr, "Host"))
-                {
-                    type = T_HOST;
-                }
-                else if (!strcmp(ptr, "Hub"))
-                {
-                    type = T_HUB;
-                }
-                else /* Pvt, or empty */
-                {
-                    type = T_NODE;
-                }
-                break;
+            case F_POINTS24:
 
-            case 1:
-                switch (type)
+                switch (k)
                 {
-                case T_ZONE:
-                    *zone = *net = atoi(ptr);
-                    node = 0;
+                case 0:
+                    if (!strcmp(ptr, "Host"))
+                    {
+                        type = T_HOST;
+                    }
+                    else if (!*ptr)
+                    {
+                        type = T_NODE;
+                    }
+                    else
+                    {
+                        k = 4;  /* ignore this one */
+                    }
                     break;
-                case T_REGION:
-                case T_HOST:
-                    *net = atoi(ptr);
-                    node = 0;
+
+                case 1:
+                    if (type == T_NODE)
+                    {
+                        point = atoi(ptr);
+                    }
                     break;
-                case T_HUB:
-                case T_NODE:
-                    node = atoi(ptr);
+                    
+                case 2:
+                    if (type == T_HOST)
+                    {
+                        parse2d(ptr, net, node);
+                    }
                     break;
+
+                case 3: /* Country */
+                    break;
+
+                case 4: /* Sysop Name */
+                    if (type == T_NODE)
+                    {
+                        
+                        username = ptr;
+                        rv = parsednode(fout, *zone, *net, *node, point,
+                                        username);
+                    }
+                    break ;
                 }
                 break;
 
-            case 2: /* System Name */
-                break;
+            default:
 
-            case 3: /* Country */
-                break;
-
-            case 4: /* Sysop Name */
-                username = ptr;
-                rv = parsednode(fout, *zone, *net, node, 0,  username);
-                break;
+                switch (k)
+                {
+                case 0:
+                    if (!strcmp(ptr, "Zone"))
+                    {
+                        type = T_ZONE;
+                    }
+                    else if (!strcmp(ptr, "Region"))
+                    {
+                        type = T_REGION;
+                    }
+                    else if (!strcmp(ptr, "Host"))
+                    {
+                        type = T_HOST;
+                    }
+                    else if (!strcmp(ptr, "Hub"))
+                    {
+                        type = T_HUB;
+                    }
+                    else /* Pvt, or empty */
+                    {
+                        type = T_NODE;
+                    }
+                    break;
+                    
+                case 1:
+                    switch (type)
+                    {
+                    case T_ZONE:
+                        *zone = *net = atoi(ptr);
+                        *node = 0;
+                        break;
+                    case T_REGION:
+                    case T_HOST:
+                        *net = atoi(ptr);
+                        *node = 0;
+                        break;
+                    case T_HUB:
+                    case T_NODE:
+                        *node = atoi(ptr);
+                        break;
+                    }
+                    break;
+                    
+                case 2: /* System Name */
+                    break;
+                    
+                case 3: /* Country */
+                    break;
+                    
+                case 4: /* Sysop Name */
+                    username = ptr;
+                    rv = parsednode(fout, *zone, *net, *node, 0,  username);
+                    break;
+                }
             }
 
 
@@ -197,11 +275,11 @@ static int ulc_line(FILE *fin, FILE *fout, unsigned format,
 
 int ul_compile (FILE *fin, FILE *fout, int type, int defzone)
 {
-    unsigned int zone, net, code;
+    unsigned int zone, net, code, node;
 
-    zone = net = defzone;
+    zone = net = defzone; node = 0;
 
-    while ((code = ulc_line(fin, fout, type, &zone, &net)) == 1);
+    while ((code = ulc_line(fin, fout, type, &zone, &net, &node)) == 1);
 
     return code == 2;
 }

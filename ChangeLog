@@ -1,6 +1,13 @@
 Current Version
 ---------------
 
+Mo  11 Okt 1999 00:20:20 CEST
+- Fixed the sort routine. It was buggy and slow, so I replaced it with
+  the brute force method (read everything into RAM) until I find time to
+  do it better.
+- added Points24 support
+- revised documentation
+
 Fri Oct  8 19:31:06 MET DST 1999 (tobi)
 - first version in CVS
 - contains nldiff, nlcrc, ulc

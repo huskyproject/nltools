@@ -5,7 +5,7 @@
 #include "ulc.h"
 #include "nllog.h"
 #include "dir.h"
-
+#include "nlstring.h"
 
 char *findNodelist(s_fidoconfig *config, int i)
 {
@@ -39,7 +39,7 @@ char *findNodelist(s_fidoconfig *config, int i)
     {
         l2 = strlen(dp->d_name);
         if (l2 == l + 4 &&
-            !strncasecmp(config->nodelists[i].nodelistName,
+            !ncasecmp(config->nodelists[i].nodelistName,
                          dp->d_name, l) &&
             dp->d_name[l] == '.' &&
             isdigit(dp->d_name[l+1]) &&
@@ -132,8 +132,10 @@ int process(s_fidoconfig *config)
             }
             else
             {
-                if (!ul_compile(fin, fout, config->nodelists[i].format,
-                               config->nodelists[i].defaultZone))
+                if (!ul_compile(fin, fout,
+                                config->nodelists[i].format == fts5000 ?
+                                F_NODELIST: F_POINTS24,
+                                config->nodelists[i].defaultZone))
                 {
                     logentry(LOG_ERROR, "error during compile");
                     if (rv < 8) rv = 8;
