@@ -1,3 +1,48 @@
+2003-02-11 Tuesday 12:30  sfpavel
+
+	* debian/changelog (nltools-1_4-stable.2): Change debian version to
+	1.4.0-beta1
+
+2003-02-11 Tuesday 11:41  sfpavel
+
+	* Makefile, VERSION, debian/changelog, debian/control, h/version.h
+	(nltools-1_4-stable.[2,1,1,1,2]): Set version to 1.4.0-stable, New
+	debian package
+
+2003-02-11 Tuesday 11:33  sfpavel
+
+	* Makefile, h/ccitttab.h, h/crc16.h, h/julian.h, h/nldate.h,
+	h/nlfind.h, h/nlstring.h, h/ulc.h, h/version.h, make/makefile.bco,
+	make/makefile.bcw, make/makefile.be, make/makefile.cyg,
+	make/makefile.djg, make/makefile.emo, make/makefile.emx,
+	make/makefile.inc, make/makefile.lnx, make/makefile.mgw,
+	make/makefile.mvc, make/makefile.mvcdll, make/makefile.sun,
+	make/makefile.unx, make/makefile.wco, make/makefile.wcw,
+	src/ccitttab.h, src/crc16.h, src/julian.h, src/makefile.bco,
+	src/makefile.bcw, src/makefile.be, src/makefile.cyg,
+	src/makefile.djg, src/makefile.emo, src/makefile.emx,
+	src/makefile.inc, src/makefile.lnx, src/makefile.mgw,
+	src/makefile.mvc, src/makefile.mvcdll, src/makefile.sun,
+	src/makefile.unx, src/makefile.wco, src/makefile.wcw, src/nldate.h,
+	src/nlfind.h, src/nlstring.h, src/ulc.h, src/version.h
+	(nltools-1_4-stable.[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]): Reorganize
+	source tree: split headers and makefiles from 'src' dir
+
+2003-02-11 Tuesday 11:25  sfpavel
+
+	* h/ccitttab.h (1.1), h/crc16.h (1.1), h/julian.h (1.1), h/nldate.h
+	(1.1), h/nlfind.h (1.1), h/nlstring.h (1.1), h/ulc.h (1.1),
+	h/version.h (1.1), make/makefile.bco (1.1), make/makefile.bcw
+	(1.1), make/makefile.be (1.1), make/makefile.cyg (1.1),
+	make/makefile.djg (1.1), make/makefile.emo (1.1), make/makefile.emx
+	(1.1), make/makefile.inc (1.1), make/makefile.lnx (1.1),
+	make/makefile.mgw (1.1), make/makefile.mvc (1.1),
+	make/makefile.mvcdll (1.1), make/makefile.sun (1.1),
+	make/makefile.unx (1.1), make/makefile.wco (1.1), make/makefile.wcw
+	(1.1): Reorginize source tree: split headers and makefiles from
+	'src' dir
+
 2003-02-10 Monday 05:58  sfpavel
 
 	* src/nldiff.c (nltools-1_4-stable.1): Merge with current fixes
