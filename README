@@ -4,6 +4,7 @@ Husky Nodelist Utilities Documentation
 ======================================
 
 Written 2000 by Tobias Ernst and released to the Public Domain.
+Updated by Husky Team (for members see http://husky.sf.net/team)
 
 I) Abstract
 
@@ -42,14 +43,14 @@ binaries have the fidoconfig linked in statically.
 
 But if you want to compile the tools, you do need the fidoconfig library. 
 If you do not know what Fidoconfig is, visit
-http://husky.physcip.uni-stuttgart.de. This release of the nltools is
-designed to be built against fidoconfig. You will also require the smapi
-library because of some header files only found therein.
+http://husky.sf.net. This release of the nltools is designed to be built
+against fidoconfig. You will also require the smapi library because of some
+header files only found therein.
 
 If you only want to use the precompiled binaries, you must set the
 environment variable FIDOCONFIG to point to a fidoconfig-style configuration
 file, e.g. on OS/2, put SET FIDOCONFIG=e:\bbs\etc\fidoconf.cfg in your
-CONFIG.SYS file.  On DOS, put the same command into autoatexec.bat
+CONFIG.SYS file.  On DOS, put the same command into autoexec.bat
 
 The keywords that you can use in this configuration file will be explained
 below, in section V, or of course in the fidoconfig manual.
@@ -367,7 +368,7 @@ the nodelist tools therefore are also covered by the LGPL.
 
 In order to comply with the LGPL, I hereby invite you to download the source
 code of both the nodelist tools and fidoconfig from
-http://husky.sar-gmbh.com.  Should you have any troubles in obtaining them
+http://husky.sf.net.  Should you have any troubles in obtaining them
 from there, just contact me at the addresses below and I will send you the
 source code.
 
@@ -383,7 +384,7 @@ FIDO_UTIL conferences.
 
 For more information on the Husky project, our CVS server, and on how to
 obtain the most recent version of this software, visit
-http://husky.physcip.uni-stuttgart.de
+http://husky.sf.net
 
 You can also visit my private projects site at
 http://www.physcip.uni-stuttgart.de/tobi/projects.html
