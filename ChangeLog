@@ -2,6 +2,11 @@ Current Version
 ---------------
 
 ----- cvs ci ------
+Fr  14 Jul 2000 01:00:27 CEST
+tobi:
+* final cleanups before the release
+
+----- cvs ci ------
 Wed May 17 22:14:00 UTC 2000
 sms:
 * added smapi to Makefile

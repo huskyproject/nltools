@@ -10,7 +10,7 @@ LFLAGS=-L..\..\fidoconf
 .SUFFIXES:
 .SUFFIXES: .c .obj .exe
 
-.c.obj: 
+.c.obj:
 	$(CC) $(CFLAGS) -c $<
 
 nldiff.exe: nldiff.obj crc16.obj
@@ -19,11 +19,11 @@ nldiff.exe: nldiff.obj crc16.obj
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(CC) $(LFLAGS) -enlcrc.exe crc16.obj nlcrc.obj
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj fexist.obj ffind.obj
-	$(CC) $(LFLAGS) -eulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj fexist.obj ffind.obj ..\..\fidoconf\fconfbco.lib
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj fexist.obj ffind.obj trail.obj
+	$(CC) $(LFLAGS) -eulc.exe ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj fexist.obj trail.obj ffind.obj ..\..\fidoconf\fconfbco.lib
 
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj ffind.obj
-	$(CC) $(LFLAGS) -enlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj ffind.obj ..\..\fidoconf\fconfbco.lib
+nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj ffind.obj trail.obj
+	$(CC) $(LFLAGS) -enlupdate.exe nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj fexist.obj ffind.obj trail.obj ..\..\fidoconf\fconfbco.lib
 
 clean:
 	-del crc16.obj
@@ -36,11 +36,9 @@ clean:
 	-del julian.obj
 	-del nldate.obj
 	-del nlfind.obj
+	-del trail.obj
 	-del nlupdate.obj
 	-del string.obj
-	-del nlcrc.exe
-	-del nldiff.exe
-	-del ulc.exe
 	-del patmat.obj
 	-del fexist.obj
 	-del ffind.obj

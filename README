@@ -40,8 +40,10 @@ mean that you need to install the whole Husky suite - you can just use the
 programs of this package stand alone if you like, because the precompiled
 binaries have the fidoconfig linked in statically.
 
-But if you want to compile the tools, you do need the fidoconfig library.  If
-you do not know what Fidoconfig is, visit http://husky.sar-gmbh.com.
+But if you want to compile the tools, you do need the fidoconfig library. 
+If you do not know what Fidoconfig is, visit
+http://husky.physcip.uni-stuttgart.de. This release of the nltools is
+designed to be built against fidoconfig version "0.10-stable".
 
 If you only want to use the precompiled binaries, you must set the
 environment variable FIDOCONFIG to point to a fidoconfig-style configuration
@@ -368,7 +370,7 @@ FIDO_UTIL conferences.
 
 For more information on the Husky project, our CVS server, and on how to
 obtain the most recent version of this software, visit
-http://husky.sar-gmbh.com
+http://husky.physcip.uni-stuttgart.de
 
 You can also visit my private projects site at
 http://www.physcip.uni-stuttgart.de/tobi/projects.html
