@@ -1,3 +1,7 @@
+2003-02-27 Thursday 00:01  sfpavel
+
+	* src/nlupdate.c (nltools-1_4-stable.1): Fix C++ comments
+
 2003-02-25 Tuesday 10:02  sfpavel
 
 	* debian/changelog (nltools-1_4-stable.4): New debian version:
