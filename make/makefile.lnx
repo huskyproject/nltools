@@ -6,19 +6,20 @@ CC=gcc
 OBJ=.o
 RM=rm
 EXE=
+SRC_DIR=../src/
 CFLAGS=-O3 -I../h -I../.. -DUNIX
 LFLAGS=-s -L../../fidoconf -L../../smapi
 LIBS= -lfidoconfiglnx -lsmapilnx
-
-%$(OBJ): $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $<
 
 include makefile.inc
 
 all: commonprogs
 
+%$(OBJ): $(SRC_DIR)%.c
+		$(CC) $(CFLAGS) -c $<
+
 default: all
 
 clean: commonclean
 
-commondistclean: commonclean commondistclean
+distclean: commonclean commondistclean
