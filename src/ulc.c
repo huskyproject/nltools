@@ -135,7 +135,7 @@ int main(void)
     if (config != NULL)
     {
         initLog(config->logFileDir, config->logEchoToScreen, config->loglevels, config->screenloglevels);
-        openLog(LOGNAME, versionStr, config);
+        openLog(LOGNAME, versionStr);
 
         w_log(LL_START, "%s - userlist compiler", versionStr);
 

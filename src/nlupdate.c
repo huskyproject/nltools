@@ -891,7 +891,7 @@ int main(int argc, char **argv)
     if (config != NULL)
     {
         initLog(config->logFileDir, config->logEchoToScreen, config->loglevels, config->screenloglevels);
-        openLog(LOGNAME, versionStr, config);
+        openLog(LOGNAME, versionStr);
         w_log(LL_START, "%s - nodelist updater", versionStr);
 
         rv=process(config);
