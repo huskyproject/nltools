@@ -123,9 +123,28 @@ c) ulc
    implement a node lookup at all, because Msged's V7 routines are flawed.
 
 d) nlupdate
+   
+   Nlupdate manages your nodelists and keeps them up to date. For each
+   nodelist that you have configured with a "Nodelist" statement (see
+   below), it will search the latest nodelist in the "NodelistDir", then
+   caluclate the day number of the difference file that is needed to 
+   update this nodelist (the algorithm is Y2K safe and knows that 2000 is a
+   leap year), then searches the difference file, unpacks it if necessary,
+   and applies it to the nodelist using nldiff. nlupdate can also find full
+   replacement files if you configure this, and just unpack them and copy
+   them over the old nodelist. This is usefule for othernets that do not have
+   nodediff files.  - With only a few keywords, nlupdate manages the whole
+   process of updating your nodelist files for you.
 
-   nlupdate is not implemented yet. It will unpack nodediff files and apply
-   them using nldiff automatically.
+After you have set the configuration file up properly (see below), you just
+need to put the two commands
+
+   nlupdate
+   ulc
+   ;call your V7 index generator here if necessary
+
+into your weekly maintainance script and all the nodelist tasks are done for
+you.
 
 V) CONFIGURATION SYNTAX
 
@@ -134,6 +153,23 @@ file that control the behaviour of ulc and nlupdate.  Just put the
 appropriate configuration statements into a text file and point the
 FIDOCONFIG environment variable to this file, or add the statements to your
 existing fidoconfig file if you have one.
+
+   LogFileDir
+   ----------
+   Syntax:   logFileDir <path>
+   Example:  logFileDir /var/spool/fido/log
+
+   Where the logfile goes. This is a *path* name, the filename inside this
+   path is hardcoded to be "nltools.log".
+
+   MsgBaseDir
+   ---------
+   Syntax:  MsgBaseDir <patch>
+   Example: MsgBaseDir /var/spool/fido/msgbase
+
+   The nodelist tools do not use this, but you need to have it in the config
+   file. Just point it to any existing path. (Other Husky tools would place
+   files that store the message base in this directory).
 
    NodelistDir
    -----------
@@ -144,6 +180,33 @@ existing fidoconfig file if you have one.
    be written to.  This path contains the raw nodelist. Also, compiled
    nodelists like the FIDOUSER.LST will be stored here.
    This statement cannot be repeated.
+
+   Unpack
+   ------
+
+   Syntax:  Unpacker "<unpacker command>" <id pos> <id bytes>
+   
+   This configures the unpackers to use. It is crucial that you get these
+   lines right. For details, please consider the Fidoconfig manual. Below, I
+   simply give examples that work. I assume that you use the Freeware unrar
+   (available for OS/2, Windows, and in Source for Unix), the Freeware
+   Infozip unzip program (dito), and ARC 5.21. This last packer is required
+   for Fidonet node diffs especially; you can get it by f'requesting
+   ARC521_2.ZIP at 2:2476/418. This file contains a family mode executable 
+   (DOS + OS/2 also runs on Windows 95 and NT), as well as source code that 
+   can be compiled on Unix without major problems.
+
+   On Unix/Linux, use the follwing (adapt the path if necessary):
+
+   Unpack "/usr/local/bin/unzip -joLqq $a -d $p" 0 504b0304 
+   Unpack "/usr/local/bin/unrar e -o+ -y -c- -p- $a $p/ >/dev/null" 0 52617221
+   Unpack "/usr/local/bin/arc eno $a $p'/*.*'" 0 1a
+
+   On OS/2 and Windows, use the following:
+
+   Unpack "unzip -joLqq $a -d $p" 0 504b0304 
+   Unpack "unrar e -o+ -y -c- -p- $a $p\ >/dev/null" 0 52617221
+   Unpack "arc eno $a $p\*.*" 0 1a
 
    FidoUserList
    -------------
@@ -193,7 +256,6 @@ existing fidoconfig file if you have one.
    updater will unpack the difference file (if it is archived, of course,
    unpacked diffs are also supported), apply the diff to the corresponding
    nodelist, and delete the temporary unpacked diff again.
-
 
    FullUpdate
    ----------
@@ -255,14 +317,18 @@ existing fidoconfig file.
 
 VII) COMPILING
 
+- Download and compile SMAPI and FIDOCONFIG:
 - Extract nltools on the same level as fidoconfig, e.g. you could have:
+    ~/fido/smapi
     ~/fido/fidoconfig
     ~/fido/nltools
 - Change to the src subdirectory.
-- Edit the makefile. Set the INSTDIR and LIBDIR variables according to
-  your needs.
+- Select the proper makefile and rename it to "makefile". Edit it. Set the 
+  INSTDIR and LIBDIR variables according to your needs.
 - Type "make"
-- If it worked, type "make install"
+- If you get an unresolved symbol error for "fexist", upgrade your
+  fidoconfig source code to the latest CVS level.
+- If it worked, type "make install" (Unix only)
 - If you like, type "make clean".
 
 
@@ -297,6 +363,9 @@ FIDO_UTIL conferences.
 For more information on the Husky project, our CVS server, and on how to
 obtain the most recent version of this software, visit
 http://husky.sar-gmbh.com
+
+You can also visit my private projects site at
+http://www.physcip.uni-stuttgart.de/tobi/projects.html
 
 [EOF]
 
