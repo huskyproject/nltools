@@ -9,7 +9,7 @@ CFLAGS=-I..\.. -zq -wx -bt=nt -l=nt -DNT -DWINNT -D__NT__
 COPT = -oneatx -5
 LFLAGS=system nt
 
-OBJS = ulcsort.obj ulcomp.obj crc16.obj nlcrc.obj nldiff.obj ulc.obj nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj
+OBJS = ulcsort.obj ulcomp.obj crc16.obj nlcrc.obj nldiff.obj ulc.obj nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj
 
 .c.obj: 
 	$(CC) $(CFLAGS) $(COPT) -c $<
@@ -22,11 +22,11 @@ nldiff.exe: nldiff.obj crc16.obj
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(LINK) $(LFLAGS) NAME nlcrc.exe FILE crc16.obj, nlcrc.obj
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj trail.obj
-	$(LINK) $(LFLAGS) NAME ulc.exe FILE ulcsort.obj, ulcomp.obj, ulc.obj, nllog.obj, string.obj, julian.obj, nldate.obj, nlfind.obj, trail.obj, patmat.obj LIBRARY ..\..\fidoconf\fconfwcw.lib LIBRARY ..\..\smapi\smapiwcw.lib
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj trail.obj
+	$(LINK) $(LFLAGS) NAME ulc.exe FILE ulcsort.obj, ulcomp.obj, ulc.obj, nllog.obj, string.obj, julian.obj, nldate.obj, nlfind.obj, trail.obj LIBRARY ..\..\fidoconf\fconfwcw.lib LIBRARY ..\..\smapi\smapiwcw.lib
 
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj trail.obj
-	$(LINK) $(LFLAGS) NAME nlupdate.exe FILE nlupdate.obj, nllog.obj, string.obj, nldate.obj, julian.obj, nlfind.obj, patmat.obj, trail.obj LIBRARY ..\..\fidoconf\fconfwcw.lib LIBRARY ..\..\smapi\smapiwcw.lib
+nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
+	$(LINK) $(LFLAGS) NAME nlupdate.exe FILE nlupdate.obj, nllog.obj, string.obj, nldate.obj, julian.obj, nlfind.obj, trail.obj LIBRARY ..\..\fidoconf\fconfwcw.lib LIBRARY ..\..\smapi\smapiwcw.lib
 
 .IGNORE
 

@@ -21,11 +21,11 @@ nldiff.exe: nldiff.obj crc16.obj
 nlcrc.exe: crc16.obj nlcrc.obj
 	$(LINK) $(LFLAGS) NAME nlcrc.exe FILE crc16.obj, nlcrc.obj
 
-ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj patmat.obj trail.obj fexist.obj
-	$(LINK) $(LFLAGS) NAME ulc.exe FILE ulcsort.obj, ulcomp.obj, ulc.obj, nllog.obj, string.obj, julian.obj, fexist.obj, nldate.obj, nlfind.obj, trail.obj, patmat.obj $(LIBS)
+ulc.exe: ulcsort.obj ulcomp.obj ulc.obj nllog.obj string.obj julian.obj nldate.obj nlfind.obj trail.obj
+	$(LINK) $(LFLAGS) NAME ulc.exe FILE ulcsort.obj, ulcomp.obj, ulc.obj, nllog.obj, string.obj, julian.obj, nldate.obj, nlfind.obj, trail.obj $(LIBS)
 
-nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj patmat.obj trail.obj fexist.obj
-	$(LINK) $(LFLAGS) NAME nlupdate.exe FILE nlupdate.obj, fexist.obj, nllog.obj, string.obj, nldate.obj, julian.obj, nlfind.obj, patmat.obj, trail.obj $(LIBS)
+nlupdate.exe: nlupdate.obj nllog.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
+	$(LINK) $(LFLAGS) NAME nlupdate.exe FILE nlupdate.obj, nllog.obj, string.obj, nldate.obj, julian.obj, nlfind.obj, trail.obj $(LIBS)
 
 .IGNORE
 
