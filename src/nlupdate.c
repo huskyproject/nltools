@@ -7,6 +7,9 @@
 #include <errno.h>
 #ifdef UNIX
 #include <sys/stat.h> /* S_I... constants */
+#include <unistd.h>
+#else
+#incluse <io.h>
 #endif
 
 #include <smapi/compiler.h>
@@ -29,11 +32,12 @@
 /* store the nldiff command name */
 static char *differ = NULL;
 
+/*
 # if 0
-
+*/
 /* This is not needed now because I imported fexist.c from smapi, and the
    routines in fexist.c are a little more intelligent than this one! */
-
+/*
 static int nl_fexist(char *filename)
 {
    FILE *f = fopen(filename, "rb");
@@ -46,7 +50,7 @@ static int nl_fexist(char *filename)
 #else
 #define nl_fexist fexist
 #endif
-
+*/
 
 static char *mk_uncompressdir(char *nldir)
 {
@@ -248,9 +252,9 @@ static char *get_uncompressed_filename(s_fidoconfig *config,
 
         adaptcase(rv);
         w_log(LL_DEBUG, "Expected uncompressed filename after adaptcase(): %s", rv);
-        if (!nl_fexist(rv))
+        if (access(rv, F_OK|R_OK))
         {
-            w_log(LL_WARN, "Uncompressed file '%s' not exist", rv);
+            w_log(LL_WARN, "Uncompressed file '%s' does not exist", rv);
             free(rv);
             return NULL;
         }
