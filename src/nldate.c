@@ -26,7 +26,7 @@ static char *monthnames[]=
 };*/
 
 /* this routine does a relaxed check of the header, thus allowing for
-   non-standard othernet lodelist headers */
+   non-standard othernet nodelist headers */
 
 long parse_nodelist_date(char *filename)
 {
@@ -80,7 +80,7 @@ long parse_nodelist_date(char *filename)
     return get_julian_date(day, 0, year);
 
 invalid:
-    w_log(LL_ERROR, "Iinvalid header in %s", filename);
+    w_log(LL_ERROR, "Invalid header in %s", filename);
     return -1L;
 }
 
