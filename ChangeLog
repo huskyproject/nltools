@@ -1,3 +1,8 @@
+2002-10-11 Friday 04:52  sfpavel
+
+	* src/nlupdate.c (nltools-1_2-stable.1): Fix OS/2 build (patch from
+	Andy Luk'yanov)
+
 2002-10-08 Tuesday 08:54  sfpavel
 
 	* src/: nldiff.c (1.9), nlupdate.c (1.26), ulc.c (1.13), ulc.h
