@@ -1,3 +1,11 @@
+2002-07-17 Wednesday 20:15  stas
+
+	* src/: crc16.c (1.5), fexist.c (1.5), nldate.c (1.5): Fix warnings
+
+2002-07-17 Wednesday 19:59  stas
+
+	* src/nlfind.c (1.7): fix debug log message
+
 2002-07-04 Thursday 13:20  stas
 
 	* src/: nlfind.c (1.6), nlupdate.c (1.20): Add debug messages
