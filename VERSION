@@ -1,1 +1,3 @@
 1.1-stable
+requires fidoconf-0.10-stable
+requires huskybse-0.1-stable
