@@ -65,7 +65,6 @@ clean:
 	-$(RM) $(RMOPT) nldate$(OBJ)
 	-$(RM) $(RMOPT) nlupdate$(OBJ)
 	-$(RM) $(RMOPT) string$(OBJ)
-	-$(RM) $(RMOPT) patmat$(OBJ)
 
 distclean: clean
 	-$(RM) $(RMOPT) nlcrc$(EXE)
