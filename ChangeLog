@@ -1,3 +1,8 @@
+2002-07-04 Thursday 13:20  stas
+
+	* src/: nlfind.c (1.6), nlupdate.c (1.20): Add debug messages
+	(loglevel 'X')
+
 2002-06-19 Wednesday 10:37  stas
 
 	* .cvs2cl (1.1): Use standard husky ChangeLog generation feature.
