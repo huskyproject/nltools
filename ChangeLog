@@ -1,3 +1,8 @@
+2004-06-07 Monday 11:46  sfpavel
+
+	* debian/compat (1.1): file compat was initially added on branch
+	nltools-1_4-stable.
+
 2004-01-14 Wednesday 04:40  andr_lukyanov
 
 	* h/version.h (1.3), src/nlcrc.c (1.6), src/nldiff.c (1.15),
