@@ -8,7 +8,7 @@ TLIB=   lib -nologo
 
 FCONFL=	..\..\fidoconf\fconfmvc.lib 
 SMAPIL=	..\..\smapi\smapimvc.lib
-NLTOOLSL=	nltoolsmvc.lib
+NLTOOLSL= nltoolsmvc.lib
 SRC_DIR=..\src\
 
 OBJS    = ulcsort.obj ulcomp.obj crc16.obj string.obj nldate.obj julian.obj nlfind.obj trail.obj
@@ -22,10 +22,10 @@ $(NLTOOLSL): $(OBJS)
 	$(TLIB) /out:$@ $(OBJS)
 
 nldiff.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nldiff.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nldiff.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
 
 nlcrc.exe:
-        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlcrc.c $(FCONFL) $(NLTOOLSL)
+        $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\nlcrc.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
 
 ulc.exe:
         $(CC) $(CFLAGS) $(COPT) $(CDEFS) -Fe$@ $(SRC_DIR)\ulc.c $(FCONFL) $(SMAPIL) $(NLTOOLSL)
