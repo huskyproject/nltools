@@ -2,19 +2,20 @@
 CC=gcc
 RM=del
 
-CDEFS=-D__NT__  -c -I../h
+CDEFS=-D__NT__  -c -I../h -I../..
 CFLAGS=-Wall
 COPT=-O3
 
 LFLAGS=-L../../smapi -L../../fidoconf
 LIBS=-lfidoconfigmgw -lsmapimgw
+SRC_DIR=../src/
 
 OBJ=.o
 EXE=.exe
 
 include makefile.inc
 
-%.o: %.c
+%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) $*.c
 
 all: commonprogs

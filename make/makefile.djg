@@ -6,14 +6,15 @@ CC=gcc
 OBJ=.o
 EXE=.exe
 RM=del
-CFLAGS=-O3 -I../h -DDOS -DMSDOS -D__FLAT__ -DFLAT -DNOSEMAPHORES
+CFLAGS=-O3 -I../h -I../.. -DDOS -DMSDOS -D__FLAT__ -DFLAT -DNOSEMAPHORES
 LFLAGS=-s -O3 -mcpu=i486
 LIBS=../../fidoconf/fconfdjg.a ../../smapi/smapidjg.a
+SRC_DIR=../src/
 
 .SUFFIXES:
 .SUFFIXES: .c .o .exe
 
-.c.o:
+%$(OBJ): $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -c $<
 
 include makefile.inc

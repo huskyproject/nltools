@@ -4,15 +4,16 @@
 
 .PHONY: default
 
+SRC_DIR=../src/
 OBJ=.o
 CC=gcc
 RM=rm
 EXE=
-CFLAGS=-O3 -I../h -DUNIX
+CFLAGS=-O3 -I../h -I../.. -DUNIX
 LFLAGS=-s -L../../fidoconf -L../../smapi
 LIBS= -lfidoconfigbe -lsmapibe
 
-.c.o:
+{$(SRC_DIR)}.c$(OBJ):
 	$(CC) $(CFLAGS) -c $<
 
 include makefile.inc

@@ -6,11 +6,11 @@ CC=gcc
 OBJ=.o
 RM=rm
 EXE=
-CFLAGS=-O3 -I../h -DUNIX
+CFLAGS=-O3 -I../h -I../.. -DUNIX
 LFLAGS=-s -L../../fidoconf -L../../smapi
 LIBS= -lfidoconfiglnx -lsmapilnx
 
-.c.o: 
+%$(OBJ): $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -c $<
 
 include makefile.inc

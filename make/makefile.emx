@@ -10,14 +10,15 @@ OBJ=.o
 RM=del
 EXE=.exe
 
-CFLAGS = -DOS2 -I. -I../h -c -O3
+CFLAGS = -DOS2 -I. -I../h -I../.. -c -O3
 LFLAGS = -Zcrtdll
 LIBS   =../../fidoconf/fconfemx.a ../../smapi/smapiemx.a
+SRC_DIR=../src
 
 .SUFFIXES:
 .SUFFIXES: .c .o .exe
 
-.c.o:
+%$(OBJ): $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -c $<
 
 include makefile.inc

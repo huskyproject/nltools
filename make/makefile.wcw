@@ -7,13 +7,14 @@ CC=wcl386
 OBJ=.obj
 RM=del
 
-CFLAGS=-I..\h -zq -wx -bt=nt -l=nt -DNT -DWINNT -D__NT__
+CFLAGS=-I..\h -I..\.. -zq -wx -bt=nt -l=nt -DNT -DWINNT -D__NT__
 COPT = -oneatx -5
 LFLAGS=system nt
+SRC_DIR=..\src\
 
 OBJS = ulcsort.obj ulcomp.obj crc16.obj nlcrc.obj nldiff.obj ulc.obj nlupdate.obj string.obj nldate.obj julian.obj nlfind.obj
 
-.c.obj: 
+{$(SRC_DIR)}.c.obj: 
 	$(CC) $(CFLAGS) $(COPT) -c $<
 
 all: $(OBJS) nldiff.exe nlcrc.exe ulc.exe nlupdate.exe

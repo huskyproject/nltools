@@ -9,11 +9,12 @@ CC    = gcc
 RM    = rm
 EXE   =
 OBJ   = .o
-CFLAGS= -I../h -DUNIX
+CFLAGS= -I../h -I../.. -DUNIX
 LFLAGS= -s -L../../fidoconf -L../../smapi
 LIBS  = -lfidoconfigsun -lsmapisun
+SRC_DIR=../src/
 
-.c.o: 
+{$(SRC_DIR)}.c.o: 
 	$(CC) $(CFLAGS) -c $<
 
 include makefile.inc

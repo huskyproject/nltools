@@ -1,6 +1,6 @@
 # Legacy makefile: Borland C for Windows
 
-
+SRC_DIR=..\src\
 CC=bcc32 -O1 -WC
 OBJ=.obj
 RM=del
@@ -15,19 +15,19 @@ include makefile.inc
 .SUFFIXES:
 .SUFFIXES: .c .obj .exe
 
-.c.obj:
+{$(SRC_DIR)}.c$(OBJ):
 	$(CC) $(CFLAGS) -c $<
 	$(TLIB) bcwtmp.lib -+$@
 
-ulc.obj: ulc.c
-	$(CC) $(CFLAGS) -c ulc.c
+ulc.obj: {$(SRC_DIR)}.ulc.c
+	$(CC) $(CFLAGS) -c {$(SRC_DIR)}.ulc.c
 
-nldiff.obj: nldiff.c
-	$(CC) $(CFLAGS) -c nldiff.c
-nlcrc.obj: nlcrc.c
-	$(CC) $(CFLAGS) -c nlcrc.c
-nlupdate.obj: nlupdate.c
-	$(CC) $(CFLAGS) -c nlupdate.c
+nldiff.obj: {$(SRC_DIR)}.nldiff.c
+	$(CC) $(CFLAGS) -c {$(SRC_DIR)}.nldiff.c
+nlcrc.obj: {$(SRC_DIR)}.nlcrc.c
+	$(CC) $(CFLAGS) -c {$(SRC_DIR)}.nlcrc.c
+nlupdate.obj: {$(SRC_DIR)}.nlupdate.c
+	$(CC) $(CFLAGS) -c {$(SRC_DIR)}.nlupdate.c
 
 
 nldiff.exe:  $(NLDIFFOBJS)
