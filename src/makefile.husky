@@ -1,0 +1,44 @@
+include ../../huskymak.cfg
+
+.PHONY: default
+
+default: nldiff$(EXE) nlcrc$(EXE) ulc$(EXE) nlupdate$(EXE)
+
+CFLAGS=-O3 -I$(INCDIR)
+LFLAGS=-s
+CDEFS=-D$(OSTPYPE) $(ADDCDEFS)
+
+.c$(OBJ): 
+	$(CC) $(CFLAGS) -c $<
+
+nldiff: nldiff$(OBJ) crc16$(OBJ)
+	$(CC) $(LFLAGS) -o nldiff nldiff$(OBJ) crc16$(OBJ)
+
+nlcrc: crc16$(OBJ) nlcrc$(OBJ)
+	$(CC) $(LFLAGS) -o nlcrc crc16$(OBJ) nlcrc$(OBJ)
+
+ulc: ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) nllog$(OBJ) string$(OBJ) \
+     nldate$(OBJ) julian$(OBJ) nlfind$(OBJ)  patmat$(OBJ)
+	$(CC) $(LFLAGS) -o ulc ulcsort$(OBJ) ulcomp$(OBJ) ulc$(OBJ) \
+          nllog$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) \
+          patmat$(OBJ) -lfidoconfig
+
+nlupdate: nlupdate$(OBJ) nllog$(OBJ) string$(OBJ) nldate$(OBJ) julian$(OBJ) \
+          nlfind$(OBJ) patmat$(OBJ)
+	$(CC) $(LFLAGS) -o nlupdate nlupdate$(OBJ) nllog$(OBJ) string$(OBJ) \
+          nldate$(OBJ) julian$(OBJ) nlfind$(OBJ) patmat$(OBJ) -lfidoconfig
+
+clean:
+	-$(RM) crc16$(OBJ) nlcrc$(OBJ) nldiff$(OBJ) ulc$(OBJ) ulcomp$(OBJ) \
+          ulcsort$(OBJ) nllog$(OBJ) julian$(OBJ) nlfind$(OBJ) nldate$(OBJ) \
+          nlupdate$(OBJ) string$(OBJ) patmat$(OBJ)
+	-$(RM) nlcrc$(EXE)
+	-$(RM) nldiff$(EXE)
+	-$(RM) ulc$(EXE)
+	-$(RM) nlupdate$(EXE)
+
+install:
+	cp ulc $(BINDIR)/ulc
+	cp nldiff $(BINDIR)/nldiff
+	cp nlcrc $(BINDIR)/nlcrc
+	cp nlupdate $(BINDIR)/nlupdate
