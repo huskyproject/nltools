@@ -1,3 +1,9 @@
+2002-07-27 Saturday 10:51  mche
+
+	* src/: nldate.c (1.7), nlfind.c (1.9), nlupdate.c (1.22), ulc.c
+	(1.12), ulc.h (1.6), ulcsort.c (1.4): fix problems with new log
+	system
+
 2002-07-24 Wednesday 15:00  mche
 
 	* src/.cvsignore (1.1): no message
