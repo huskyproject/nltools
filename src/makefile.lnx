@@ -18,7 +18,7 @@ nlcrc: crc16.o nlcrc.o
 	$(CC) $(LFLAGS) -o nlcrc crc16.o nlcrc.o
 
 ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o
-	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o  -lfidoconfig -lsmapiunix
+	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o  -lfidoconfig -lsmapilnx
 
 nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o
 	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o -lfidoconfig -lsmapilnx
