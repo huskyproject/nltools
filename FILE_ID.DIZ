@@ -13,4 +13,4 @@ config integrated,  but can also be used
 standalone. Public Domain software  with 
 source code, compiles a lot of Unix sys-
 tems.  Executables for OS/2, Windows 95/
-98/NT and Linux are also included.
+98/NT, DOS(DPMI) and Linux included.

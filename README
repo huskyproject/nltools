@@ -1,5 +1,7 @@
-Husky Nodelist Utilities
-========================
+Windows Users: If this file is not displayed correctly, use Wordpad to view it!
+
+Husky Nodelist Utilities Documentation
+======================================
 
 Written 1999 by Tobias Ernst and released to the Public Domain.
 
@@ -24,6 +26,10 @@ software that requires an V7 nodelist index.
 The tools can be compiled on Unix, as well as a lot of other platforms (OS/2,
 Win32, DOS/DJGPP), provided you have a working fidoconfig library and
 installation for that platform.
+
+A major advantage of these tools on Unix is that they have no case
+sensitivity problems. I.e. nodelist files and nodelist updates are found no
+matter if they are in lower, capital, or MiXeD case.
 
 II) About Fidoconfig
 
@@ -189,11 +195,11 @@ existing fidoconfig file if you have one.
    This configures the unpackers to use. It is crucial that you get these
    lines right. For details, please consider the Fidoconfig manual. Below, I
    simply give examples that work. I assume that you use the Freeware unrar
-   (available for OS/2, Windows, and in Source for Unix), the Freeware
+   (available for OS/2, DOS, Windows, and in Source for Unix), the Freeware
    Infozip unzip program (dito), and ARC 5.21. This last packer is required
    for Fidonet node diffs especially; you can get it by f'requesting
    ARC521_2.ZIP at 2:2476/418. This file contains a family mode executable 
-   (DOS + OS/2 also runs on Windows 95 and NT), as well as source code that 
+   (DOS + OS/2, also runs on Windows 95 and NT), as well as source code that 
    can be compiled on Unix without major problems.
 
    On Unix/Linux, use the follwing (adapt the path if necessary):
@@ -202,7 +208,7 @@ existing fidoconfig file if you have one.
    Unpack "/usr/local/bin/unrar e -o+ -y -c- -p- $a $p/ >/dev/null" 0 52617221
    Unpack "/usr/local/bin/arc eno $a $p'/*.*'" 0 1a
 
-   On OS/2 and Windows, use the following:
+   On DOS, OS/2 and Windows, use the following:
 
    Unpack "unzip -joLqq $a -d $p" 0 504b0304 
    Unpack "unrar e -o+ -y -c- -p- $a $p\ >/dev/null" 0 52617221
