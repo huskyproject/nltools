@@ -1,0 +1,27 @@
+# Legacy makefile for SUN(tm) Solaris
+#
+# Not support for husky build enviroment (without makefile.cfg)
+# Use GNU version of make
+
+.PHONY: default
+
+CC    = gcc
+RM    = rm
+EXE   =
+OBJ   = .o
+CFLAGS= -I../h -DUNIX
+LFLAGS= -s -L../../fidoconf -L../../smapi
+LIBS  = -lfidoconfigsun -lsmapisun
+
+.c.o: 
+	$(CC) $(CFLAGS) -c $<
+
+include makefile.inc
+
+all: commonprogs
+
+default: all
+
+clean: commonclean
+
+commondistclean: commonclean commondistclean

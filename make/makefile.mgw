@@ -1,0 +1,26 @@
+
+CC=gcc
+RM=del
+
+CDEFS=-D__NT__  -c -I../h
+CFLAGS=-Wall
+COPT=-O3
+
+LFLAGS=-L../../smapi -L../../fidoconf
+LIBS=-lfidoconfigmgw -lsmapimgw
+
+OBJ=.o
+EXE=.exe
+
+include makefile.inc
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) $*.c
+
+all: commonprogs
+
+default: all
+
+clean: commonclean
+
+distclean: commondistclean

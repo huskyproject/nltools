@@ -1,0 +1,28 @@
+# This builds a DOS DPMI executable with DJGPP
+
+.PHONY: default
+
+CC=gcc
+OBJ=.o
+EXE=.exe
+RM=del
+CFLAGS=-O3 -I../h -DDOS -DMSDOS -D__FLAT__ -DFLAT -DNOSEMAPHORES
+LFLAGS=-s -O3 -mcpu=i486
+LIBS=../../fidoconf/fconfdjg.a ../../smapi/smapidjg.a
+
+.SUFFIXES:
+.SUFFIXES: .c .o .exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+include makefile.inc
+
+all: commonprogs
+
+default: all
+
+clean:
+	-$(RM) *$(OBJ)
+
+distclean: clean commondistclean

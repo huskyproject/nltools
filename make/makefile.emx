@@ -1,0 +1,32 @@
+# $Id$
+#
+# Legacy makefile for IBM OS/2 + EMX Runtime library
+# Do not support husky build enviroment
+
+.PHONY: default
+
+CC=gcc
+OBJ=.o
+RM=del
+EXE=.exe
+
+CFLAGS = -DOS2 -I. -I../h -c -O3
+LFLAGS = -Zcrtdll
+LIBS   =../../fidoconf/fconfemx.a ../../smapi/smapiemx.a
+
+.SUFFIXES:
+.SUFFIXES: .c .o .exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+include makefile.inc
+
+all: commonprogs
+
+default: all
+
+clean:  commonclean
+	-$(RM) $(OBJS)
+
+distclean: clean commondistclean

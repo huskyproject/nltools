@@ -1,0 +1,24 @@
+# Legacy makefile for Linux
+#
+# Not support for husky build enviroment (makefile.cfg)
+
+CC=gcc
+OBJ=.o
+RM=rm
+EXE=
+CFLAGS=-O3 -I../h -DUNIX
+LFLAGS=-s -L../../fidoconf -L../../smapi
+LIBS= -lfidoconfiglnx -lsmapilnx
+
+.c.o: 
+	$(CC) $(CFLAGS) -c $<
+
+include makefile.inc
+
+all: commonprogs
+
+default: all
+
+clean: commonclean
+
+commondistclean: commonclean commondistclean

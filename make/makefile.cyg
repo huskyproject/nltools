@@ -1,0 +1,29 @@
+# Legacy makefile for Cygwin/mingw
+#
+# Don't use Husky build enviroment
+
+.PHONY: default
+
+CC=gcc
+OBJ=.o
+RM=rm
+EXE=.exe
+CFLAGS=-O3 -D__NT__ -I../h -Wall -pedantic -Wno-char-subscripts -mno-cygwin
+LFLAGS=-mno-cygwin
+LIBS=../../fidoconf/libfidoconfigcyg.a ../../smapi/libsmapicyg.a  -lmingwex
+
+.SUFFIXES:
+.SUFFIXES: .c .o .exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+include makefile.inc
+
+all: commonprogs
+
+default: all
+
+clean:  commonclean
+
+distclean: clean commondistclean
