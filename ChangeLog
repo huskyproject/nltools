@@ -1,3 +1,12 @@
+2003-04-15 Tuesday 07:12  andr_lukyanov
+
+	* make/: makefile.djg, makefile.inc (nltools-1_4-stable.[3,2]):
+	Fixed DJGPP compilation
+
+2003-04-15 Tuesday 06:31  andr_lukyanov
+
+	* make/makefile.mvc (nltools-1_4-stable.3): Fixed MSVC compilation
+
 2003-02-27 Thursday 00:01  sfpavel
 
 	* src/nlupdate.c (nltools-1_4-stable.1): Fix C++ comments
