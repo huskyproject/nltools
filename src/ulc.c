@@ -5,6 +5,9 @@
 
 #include <fidoconf/fidoconf.h>
 #include <fidoconf/log.h>
+#include <fidoconf/xstr.h>
+#include <fidoconf/common.h>
+
 
 #include "ulc.h"
 #if !(defined(_MSC_VER) && (_MSC_VER >= 1200))
@@ -127,10 +130,13 @@ int main(void)
 {
     s_fidoconfig *config = readConfig(NULL);
     int rv;
+    char *tp=NULL;
 
     if (config != NULL)
     {
-        openLog(LOGNAME, "ulc " REV, config);
+        xstrscat( &tp, config->logFileDir, LOGNAME, NULL );
+        openLog( tp, "ulc " REV, config);
+        nfree(tp);
 
         w_log(LL_START, "ulc - userlist compiler rev. %s", REV);
 
