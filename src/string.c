@@ -36,4 +36,30 @@ int ncasecmp(const char *s, const char *t, size_t x)
         return -1;
     }
 }
+
+
+int casecmp(const char *s, const char *t)
+{
+    while (tolower(*s) == tolower(*t))
+    {
+        if (*s == '\0')
+        {
+            /* equal */
+            return 0;
+        }
+        s++;
+        t++;
+    }
+
+    /* fell through, not equal */
+    if (tolower(*s) > tolower(*t))
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
 #endif

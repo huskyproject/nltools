@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include "nlstring.h"
 #include "ulc.h"
 
 enum { T_ZONE, T_REGION, T_HOST, T_HUB, T_NODE };
@@ -168,7 +169,7 @@ static int ulc_line(FILE *fin, FILE *fout, unsigned format,
                 switch (k)
                 {
                 case 0:
-                    if (!stricmp(ptr, "BOSS"))
+                    if (!casecmp(ptr, "BOSS"))
                     {
                         type = T_HOST;
                     }
