@@ -1,13 +1,12 @@
 .PHONY: default
 
 INSTDIR = /home/fido/sbin
-LIBDIR = /home/fido/lib
 
 default: nldiff nlcrc ulc nlupdate
 
 CC=cc
 CFLAGS=-g -I../../smapi -I../../fidoconfig -DUNIX
-LFLAGS=-g -L$(LIBDIR)
+LFLAGS=-g
 
 .c.o: 
 	$(CC) $(CFLAGS) -c $<
@@ -22,7 +21,7 @@ ulc: ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o
 	$(CC) $(LFLAGS) -o ulc ulcsort.o ulcomp.o ulc.o nllog.o string.o nldate.o julian.o nlfind.o  -lfidoconfig -lsmapiunix
 
 nlupdate: nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o
-	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o -lfidoconfig -lsmapiunix
+	$(CC) $(LFLAGS) -o nlupdate nlupdate.o nllog.o string.o nldate.o julian.o nlfind.o -lfidoconfig -lsmapibsd
 
 clean:
 	-rm crc16.o nlcrc.o nldiff.o ulc.o ulcomp.o ulcsort.o nllog.o julian.o nlfind.o nldate.o nlupdate.o string.o

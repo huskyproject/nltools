@@ -236,7 +236,7 @@ static int uncompress(s_fidoconfig *config, char *directory, char *filename,
         free(tmp);
         return 0;
     }
-    adaptcase_refresh_dir(directory);
+    adaptcase_refresh_dir(tempdir);
     
     free(tmp);
     return 1;

@@ -33,7 +33,7 @@ unsigned short analyze_first_line(FILE *f)
                 state = FINISH;
             }
         }
-        else if isdigit(c)
+        else if (isdigit(c))
         {
             switch (state)
             {
