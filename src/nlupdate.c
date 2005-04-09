@@ -57,11 +57,19 @@ static int nl_fexist(char *filename)
 #endif
 */
 
-static char *mk_uncompressdir(char *nldir)
+static char *mk_uncompressdir(s_fidoconfig *config)
 {
+    char *nldir = NULL;
     char *upath = NULL;
     size_t l;
     FILE *f;
+
+    if (!config) return NULL;
+    if (config->tempDir)
+        nldir = config->tempDir;
+    else
+        nldir = config->nodelistDir;
+
     l = strlen(nldir) + 12;
     /* construct a temporary directory name below nodelist dir */
     xstrscat(&upath,nldir,"nlupdate.tmp",NULL);
@@ -788,7 +796,7 @@ static int process(s_fidoconfig *config)
         return 8;
     }
 
-    if ((tmpdir = mk_uncompressdir(config->nodelistDir)) != NULL)
+    if ((tmpdir = mk_uncompressdir(config)) != NULL)
     {
         for (i = 0; i < config->nodelistCount; i++)
         {

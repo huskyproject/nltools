@@ -45,7 +45,7 @@ long parse_nodelist_date(char *filename)
     if (fgets(buffer, sizeof(buffer), f) == NULL)
     {
         fclose(f);
-        w_log(LL_ERROR, "I/O error reading %s: %s", filename, strerror(errno));
+        w_log(LL_ERROR, "Empty file or I/O error reading %s: %s", filename, strerror(errno));
         return -1L;
     }
 
