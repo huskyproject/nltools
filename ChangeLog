@@ -1,3 +1,8 @@
+2005-04-09 Saturday 12:38  d_sergienko
+
+	* src/: nldate.c, nlupdate.c (nltools-1_4-stable.[1,3]): - use
+	tempDir if available - tell if EOF found instead of printing error
+
 2005-03-20 Sunday 01:47  sfpavel
 
 	* debian/changelog (nltools-1_4-stable.8): 1.4-RC3 release
