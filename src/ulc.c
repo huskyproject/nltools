@@ -119,7 +119,8 @@ int process(s_fidoconfig *config)
         if (rv < 8) rv = 8;
     }
 
-    fclose(fin);
+    if (fin)
+	fclose(fin);
     fclose(fout);
     return rv;
 }
