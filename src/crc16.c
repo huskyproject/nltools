@@ -26,5 +26,5 @@ void crc16_process(unsigned short *crcptr, const unsigned char *buffer, size_t l
 
 void crc16_finalize(unsigned short *crcptr)
 {
-/*    unused(crcptr); */
+    unused(crcptr);
 }
