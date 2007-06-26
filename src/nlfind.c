@@ -81,7 +81,8 @@ int add_match(nlist *pnl, char *match)
         w_log(LL_CRIT, "Out of memory.");
         return 0;
     }
-    if ( !pnl && !(pnl = make_nlist()) )
+    if ( pnl == NULL &&
+         (pnl = make_nlist()) == NULL )
         return 0;
 
     if (pnl->n == pnl->nmax)
@@ -173,7 +174,7 @@ nlist *find_nodelistfiles(char *path, char *base, int allowarc)
     return pnl;
 }
 
-char *findNodelist(s_fidoconfig *config, int i)
+char *findNodelist(s_fidoconfig *config, unsigned int i)
 {
     char *nl;
     nlist *pnl;

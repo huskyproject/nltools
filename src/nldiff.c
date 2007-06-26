@@ -348,8 +348,8 @@ int main(int argc, char **argv)
 {
     FILE *fn = NULL, *fd = NULL, *fo = NULL;
     char *listname = NULL, *diffname = NULL, *tempname = NULL;
-    int cmd, arg, i, hascrc, rv;
-    unsigned short crc, newday, expnewday;
+    int cmd, arg, i, hascrc, rv, expnewday;
+    unsigned short crc, newday;
     int crci = 0;
     int flags = 0;
 

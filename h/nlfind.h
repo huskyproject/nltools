@@ -24,6 +24,6 @@ int add_match(nlist *pnl, char *match);
 
 /* find the raw nodelist (look in nodelistdir)
  */
-char *findNodelist(s_fidoconfig *config, int i);
+char *findNodelist(s_fidoconfig *config, unsigned int i);
 
 #endif

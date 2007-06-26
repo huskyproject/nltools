@@ -61,7 +61,7 @@ static int parsednode(FILE *fout, unsigned zone, unsigned net, unsigned node,
     else
     {
         for (cp = rev_username + strlen(rev_username);
-             cp - rev_username < ENTRYLENGTH - strlen(nodenr) - 1;
+             cp - rev_username < ENTRYLENGTH - (signed)strlen(nodenr) - 1;
              cp++)
         {
             *cp = ' ';

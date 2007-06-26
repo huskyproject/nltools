@@ -17,7 +17,8 @@
 
 int process(s_fidoconfig *config)
 {
-    int i, rv=0;
+    unsigned int i;
+    int rv=0;
     char *fidouserlist, *nodelist;
     FILE *fin, *fout;
     fin = fout = NULL;
