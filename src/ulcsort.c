@@ -28,9 +28,9 @@ static int ulcomp(const void *p1, const void *p2)
 
 int ul_sort(FILE *f)
 {
-    long filelen;
-    long reclen;
-    long n;
+    unsigned long filelen;
+    unsigned long reclen;
+    unsigned long n;
     void *buffer;
     char buf[200];
 
