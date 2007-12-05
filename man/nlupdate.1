@@ -2,7 +2,7 @@
 .SH NAME
 nlupdate \- Manages your Nodelists and keeps them up to date.
 .SH SYNOPSIS
-.B nlupdate
+.B nlupdate [-hvq] [-c configfile]
 .SH "DESCRIPTION"
 .B nlupdate
 manages your nodelists and keeps them up to date. For each
@@ -24,6 +24,20 @@ process of updating your nodelist files for you.
 is part of the Husky Project (nlupdate module) and it shares config file
 (named fidoconfig) with other Husky programs. All configuration statements is
 described in the Fidoconfig Manual.
+.SH OPTIONS
+.TP 10
+.B -c configfile
+Specify alternate config file. See also section
+.B ENVIRONMENT.
+.TP 10
+.B -h
+Display version and usage information and exit.
+.TP 10
+.B -v
+Display version information and exit.
+.TP 10
+.B -q
+Quiet mode: supress normal screen output, only error messages may be displayed.
 .SH EXIT STATUS
 .TP 5
 .B 0

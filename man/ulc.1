@@ -2,7 +2,7 @@
 .SH NAME
 ulc \- Husky Fido Userlist Compiler
 .SH SYNOPSIS
-.B ulc
+.B ulc [-hvq] [-c configfile]
 .SH "DESCRIPTION"
 .B ulc
 is the Husky Fido Userlist Compiler.
@@ -36,6 +36,20 @@ implement a node lookup at all, because Msged's V7 routines are flawed.
 is part of the Husky Project (nlupdate module) and it shares config file
 (named fidoconfig) with other Husky programs. All configuration statements is
 described in the Fidoconfig Manual.
+.SH OPTIONS
+.TP 10
+.B -c configfile
+Specify alternate config file. See also section
+.B ENVIRONMENT.
+.TP 10
+.B -h
+Display version and usage information and exit.
+.TP 10
+.B -v
+Display version information and exit.
+.TP 10
+.B -q
+Quiet mode: supress normal screen output, only error messages may be displayed.
 .SH EXIT STATUS
 .B 0
 \t FIDOUSER.LST is generated sussessfully.

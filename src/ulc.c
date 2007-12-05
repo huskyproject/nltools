@@ -5,6 +5,7 @@
 
 #include <fidoconf/fidoconf.h>
 #include <fidoconf/log.h>
+#include <fidoconf/common.h>
 
 #include "ulc.h"
 #if !(defined(_MSC_VER) && (_MSC_VER >= 1200))
@@ -13,6 +14,8 @@
 #include "nlstring.h"
 #include "nlfind.h"
 #include "version.h"
+
+static char *versionStr = NULL;
 
 int process(s_fidoconfig *config)
 {
@@ -125,19 +128,71 @@ int process(s_fidoconfig *config)
     return rv;
 }
 
-int main(void)
+static void printversion()
 {
-    s_fidoconfig *config = readConfig(NULL);
+  printf ("%s\n\n", versionStr);
+}
+
+static void usage()
+{
+  printversion();
+  fprintf( stderr, "USAGE:\n"
+                   "\tulc [-qvh] [-c config]\n"
+                   "where\n"
+                   "\t-h\tprint this text and exit\n"
+                   "\t-v\tprint version information and exit\n"
+                   "\t-q\tdon't print version information (quiet mode)\n"
+                   "\t-c\tuse specified configuration file\n"
+          );
+}
+
+int main(int argc, char **argv)
+{
+    s_fidoconfig *config = NULL;
     int rv;
-    char *versionStr = NULL;
+    char *configfile = NULL;
+    int flag_quiet=0;
 
     versionStr = GenVersionStr( "ulc", VER_MAJOR, VER_MINOR, VER_PATCH,
                                VER_BRANCH, cvs_date );
 
-    fprintf (stderr, "%s\n\n", versionStr);
+  {
+    int i;
+    for (i=1; i<argc; i++)
+    { int j,plen;
+      if (argv[i][0]=='-')
+      {
+        int plen=sstrlen(argv[i]);
+        for (j=1; j<plen; j++)
+          switch (argv[i][j])
+          {
+            case 'h':
+                     usage();
+                     return 0;
+            case 'v':
+                     printversion();
+                     return 0;
+            case 'c':
+                     if (plen>++j)
+                       configfile = argv[i]+j;
+                     else if (argc<++i)
+                       configfile = argv[i];
+                     else
+                     { fprintf (stderr, "Fatal: parameter after -c is required\n");
+                       return 1;
+                     }
+            case 'q': flag_quiet=1;
+          }
+      }
+    }
+  }
 
+    if (!flag_quiet) printversion();
+
+    config = readConfig(configfile);
     if (config != NULL)
     {
+       if (flag_quiet) config->logEchoToScreen=0;
         openLog(LOGNAME, versionStr, config);
 
         w_log(LL_START, "Start");
@@ -152,7 +207,7 @@ int main(void)
     }
     else
     {
-        fprintf (stderr, "Fatal: Cannot open fidoconfig.\n");
+/*        fprintf (stderr, "Fatal: Cannot open fidoconfig.\n"); */
         return 8;
     }
 }

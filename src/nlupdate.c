@@ -36,6 +36,7 @@
 
 /* store the nldiff command name */
 static char *differ = NULL;
+static char *versionStr = NULL;
 
 /*
 # if 0
@@ -870,17 +871,67 @@ static int process(s_fidoconfig *config)
     return rv;
 }
 
+static void printversion()
+{
+  printf ("%s\n\n", versionStr);
+}
+
+static void usage()
+{
+  printversion();
+  fprintf( stderr, "USAGE:\n"
+                   "\tnlupdate [-qvh] [-c config]\n"
+                   "where\n"
+                   "\t-h\tprint this text and exit\n"
+                   "\t-v\tprint version information and exit\n"
+                   "\t-q\tdon't print version information (quiet mode)\n"
+                   "\t-c\tuse specified configuration file\n"
+          );
+}
+
 int main(int argc, char **argv)
 {
-    s_fidoconfig *config = readConfig(NULL);
+    s_fidoconfig *config = NULL;
     int rv;
     int l = 0;
-    char *versionStr = NULL;
+    char *configfile = NULL;
+    int flag_quiet=0;
+    int i;
 
     versionStr = GenVersionStr( "nlupdate", VER_MAJOR, VER_MINOR, VER_PATCH,
                                VER_BRANCH, cvs_date );
 
-    fprintf (stderr, "%s\n\n", versionStr);
+    for (i=1; i<argc; i++)
+    { int j,plen;
+      if (argv[i][0]=='-')
+      {
+        int plen=sstrlen(argv[i]);
+        for (j=1; j<plen; j++)
+          switch (argv[i][j])
+          {
+            case 'h':
+                     usage();
+                     return 0;
+            case 'v':
+                     printversion();
+                     return 0;
+            case 'c':
+                     if (plen>++j)
+                       configfile = argv[i]+j;
+                     else if (argc<++i)
+                       configfile = argv[i];
+                     else
+                     { fprintf (stderr, "Fatal: parameter after -c is required\n");
+                       return 1;
+                     }
+            case 'q': flag_quiet=1;
+          }
+      }
+    }
+
+    if (!flag_quiet) printversion();
+
+    config = readConfig(configfile);
 
     /* construct the name of the nldiff command */
     if (argc)
@@ -901,6 +952,7 @@ int main(int argc, char **argv)
     /* run the main program */
     if (config != NULL)
     {
+        if (flag_quiet) config->logEchoToScreen=0;
         openLog(LOGNAME, versionStr, config);
         w_log(LL_START, "Start");
 
@@ -915,7 +967,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        fprintf (stderr, "Fatal: Cannot open fidoconfig.\n");
+/*        fprintf (stderr, "Fatal: Cannot open fidoconfig.\n"); */
         free(differ);
         return 8;
     }
