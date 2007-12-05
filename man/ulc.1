@@ -1,44 +1,84 @@
-.TH ULC 1 "ulc" "04 April 2001" "Husky - Portable Fidonet Software"
+.TH ULC 1 "ulc" "05 December 2007" "Husky - Portable Fidonet Software"
 .SH NAME
 ulc \- Husky Fido Userlist Compiler
 .SH SYNOPSIS
 .B ulc
 .SH "DESCRIPTION"
 .B ulc
-is the Husky Fido Userlist Compiler. ulc reads all nodelists that are
-configured in Fidoconfig (via the "nodelist" keyword) and creates the
-FIDOUSER.LST file (the name has to be configured with the "fidouserlist"
+is the Husky Fido Userlist Compiler.
+.B ulc
+reads all nodelists that are configured in Fidoconfig (see the "nodelist"
+keyword in Fidoconfig Manual) and creates the
+.IB FIDOUSER.LST
+file (the name has to be configured with the "fidouserlist"
 keyword). ulc does not take any command line options; it uses fidoconfig
 to determine where to find the nodelist files. A log file named
 "nltools.log" is placed in the fidoconfig log file directory.
-
-The FIDOUSER.LST file format is defined as follows: The file consists of
+.P
+The
+.IB FIDOUSER.LST
+file format is defined as follows: The file consists of
 text records of fixed length (65 characters including the terminal \\r\\n
 sequence). The name of the sysop is left-aligned in the line in reverse
 order (e.g. "Tobias_Ernst" would become "Ernst, Tobias"). Aligned to the
 right of the record is the node number of the user. The records are sorted
 alphabetically, so that a program can use a binary search algorithm to
-find the corresponding node number for a given user name very fast.
-
-The FIDOUSER.LST file format is supported by many mail readers, e.g. Timed
+find the corresponding node number for a given user name very fast. This
+format is described in FTS-5002.
+.P
+The
+.IB FIDOUSER.LST
+file format is supported by many mail readers, e.g. Timed
 and Msged. For Msged, FIDOUSER.LST is currently the best method to
 implement a node lookup at all, because Msged's V7 routines are flawed.
-
+.P
+.B uls
+is part of the Husky Project (nlupdate module) and it shares config file
+(named fidoconfig) with other Husky programs. All configuration statements is
+described in the Fidoconfig Manual.
+.SH EXIT STATUS
+.B 0
+\t FIDOUSER.LST is generated sussessfully.
 .br
-.sp 2
-This manual page was written for the Debian GNU/Linux distribution
-because the original program does not have a manual page (but a good README :) )
+.B 4
+\t Instance of some nodelist is not found.
+.br
+.B 8
+\t Fatal error (can't open file, etc).
+.SH USAGE
+.B ulc
+uses following fidoconfig statements:
+.RS
+ LogFileDir
+ NodelistDir
+ FidoUserList
+ NodeList
+ Nodelistformat
+.RE
+See The Fidoconfig Manual for detailed description of these statements.
+.sp 1
+Don't forget to run
+.B tparser
+utility after any change of fidoconfig file.
 .SH FILES
-.br
-.nf
-.\" set tabstop to longest possible filename, plus a wee bit
-.ta \w'/fido/etc/config   'u
-\fI/fido/etc/config\fR  Default Fidoconfig.
+.HP
+.I /fido/etc/config
+ Default Fidoconfig.
+.SH ENVIRONMENT
+.HP
+.B FIDOCONFIG
+ pathname of the config file
+.SH "SEE ALSO"
+nlupdate(1), nldiff(1), nlcrc(1), info fidoconfig
+.SH CONFORMING TO
+.B nlc
+is conformed with FTS-5000.001, (obsoleted) FTS-0005 and partially conformed
+with FTS-5002.001 (don't supports the "Point" format and recognize extends
+of the "Boss" format).
 .SH NOTES
 All Husky-Software is written by various developers. For detailed information
 about the Husky-Team take a look at 
-http://husky.sf.net/team.html.
+http://husky.sourceforge.net/team.html.
 .SH AUTHOR
-This manual page was written by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
-for the Debian GNU/Linux system (but may be used by others).
-
+This manual page was written initially by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
+and modified by other husky developers.
