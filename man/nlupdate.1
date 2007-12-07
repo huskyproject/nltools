@@ -1,38 +1,111 @@
-.TH NLUPDATE 1 "nlupdate" "04 April 2001" "Husky - Portable Fidonet Software"
+.TH NLUPDATE 1 "nlupdate" "05 December 2007" "Husky - Portable Fidonet Software"
 .SH NAME
 nlupdate \- Manages your Nodelists and keeps them up to date.
 .SH SYNOPSIS
-.B nlupdate
+.B nlupdate [-hvq] [-c configfile]
 .SH "DESCRIPTION"
 .B nlupdate
 manages your nodelists and keeps them up to date. For each
 nodelist that you have configured with a "Nodelist" statement,
 it will search the latest nodelist in the "NodelistDir", then
 caluclate the day number of the difference file that is needed to 
-update this nodelist (the algorithm is Y2K safe and knows that 2000 is a
-leap year), then searches the difference file, unpacks it if necessary,
-and applies it to the nodelist using nldiff. nlupdate can also find full
+update this nodelist, then searches the difference file, unpacks
+it if necessary, and applies it to the nodelist using
+.B nldiff
+utility.
+.B nlupdate
+can also find full
 replacement files if you configure this, and just unpack them and copy
 them over the old nodelist. This is usefule for othernets that do not have
 nodediff files.  - With only a few keywords, nlupdate manages the whole
 process of updating your nodelist files for you.
+.sp 1
+.B nlupdate
+is part of the Husky Project (nlupdate module) and it shares config file
+(named fidoconfig) with other Husky programs. All configuration statements is
+described in the Fidoconfig Manual.
+.SH OPTIONS
+.TP 10
+.B -c configfile
+Specify alternate config file. See also section
+.B ENVIRONMENT.
+.TP 10
+.B -h
+Display version and usage information and exit.
+.TP 10
+.B -v
+Display version information and exit.
+.TP 10
+.B -q
+Quiet mode: supress normal screen output, only error messages may be displayed.
+.SH EXIT STATUS
+.TP 5
+.B 0
+new nodelists is generated
+.TP 5
+.B 8
+nlupdate don't make new nodelist on several reason
+.SH USAGE
+.B nlupdate
+uses following fidoconfig statements:
+.RS
+ LogFileDir
+ NodelistDir
+ Unpack
+ NodeList
+ DiffUpdate
+ FullUpdate
+ Defaultzone
+ Nodelistformat
+.RE
+See The Fidoconfig Manual for detailed description of these statements.
+.SS SAMPLE CONFIG
+The following lines show a nlupdate-related part of sample configuration file.
+If you are only interested in the nodelist tools, you can just copy those
+commands into a text file, modify them according to your needs (OS/2, Win and
+DOS users may of course use backslashes instead of forward slashes, and drive
+letters), and point the FIDOCONFIG variable to this file. Don't forget to run
+.B tparser
+utility after any change of fidoconfig file (see The Fidoconfig Manual).
+.sp 1
+.RS
+   NodelistDir /var/spool/fido/nodelist
+.sp 1
+   Nodelist nodelist
 .br
-.sp 2
-This manual page was written for the Debian GNU/Linux distribution
-because the original program does not have a manual page (but a nice README).
+   DiffUpdate /var/spool/fido/filebase/nodediff/nodediff
+.br
+   NodelistFormat Standard
+.sp 1
+   Nodelist pointlst
+.br
+   DiffUpdate /var/spool/fido/filebase/24000/pr24diff
+.br
+   DefaultZone 2
+.br
+   NodelistFormat Points4D
+.RE
 .SH FILES
-.br
-.nf
-.\" set tabstop to longest possible filename, plus a wee bit
-.ta \w'/fido/etc/config   'u
-\fI/fido/etc/config\fR  Default Fidoconfig.
+.HP
+.I /etc/fido/config
+ default Fidoconfig.
+.SH ENVIRONMENT
+.HP
+.B FIDOCONFIG
+ pathname of the config file
 .SH "SEE ALSO"
-ulc(1), nldiff(1), nlcrc(1)
+ulc(1), nldiff(1), nlcrc(1), info fidoconfig
+.SH BUGS
+1st line with nodelist date and CRC is required for full-updated nodelists.
+This restriction is discourages to use nlupdate for (local) network segments
+of the nodelist.
+.SH CONFORMING TO
+.B nlupdate
+is conformed with FTS-5000.001, (obsoleted) FTS-0005 and FTS-5002.001
 .SH NOTES
 All Husky-Software is written by various developers. For detailed information
-about the Husky-Team take a look at 
-http://husky.sf.net/team.html.
+about the Husky-Team take a look at
+http://husky.sourceforge.net/team.html.
 .SH AUTHOR
-This manual page was written by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
-for the Debian GNU/Linux system (but may be used by others).
-
+This manual page was written initially by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
+and modified by other husky developers.

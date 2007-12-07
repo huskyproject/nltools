@@ -4,7 +4,7 @@ Husky Nodelist Utilities Documentation
 ======================================
 
 Written 2000 by Tobias Ernst and released to the Public Domain.
-Updated by Husky Team (for members see http://husky.sf.net/team)
+Updated by Husky Team (for members see http://husky.sourceforge.net/team.html)
 
 I) Abstract
 
@@ -43,9 +43,9 @@ binaries have the fidoconfig linked in statically.
 
 But if you want to compile the tools, you do need the fidoconfig library. 
 If you do not know what Fidoconfig is, visit
-http://husky.sf.net. This release of the nltools is designed to be built
-against fidoconfig. You will also require the smapi library because of some
-header files only found therein.
+http://husky.sourceforge.net. This release of the nltools is designed to be
+built against fidoconfig. You will also require the smapi library because of
+some header files only found therein.
 
 If you only want to use the precompiled binaries, you must set the
 environment variable FIDOCONFIG to point to a fidoconfig-style configuration
@@ -57,12 +57,12 @@ below, in section V, or of course in the fidoconfig manual.
 
 III) General Considerations
 
-These tools expect the Nodelist and Nodediff files to be in the FTS-0005
-defined format, that means:  text lines that are finished with a CRLF
-sequence, and an EOF character after the last CRLF.  This is normally true on
-any DOSish computer, and also on a Unix system if you just extract the
-distribution archives of Nodelist and Nodediff without giving some sort of
-auto conversion option.  You might loose the CRs (^Ms) at the end when
+These tools expect the Nodelist and Nodediff files to be in the FTS-5000 (and
+obsoleted FTS-0005) defined format, that means:  text lines that are finished
+with a CRLF sequence, and an EOF character after the last CRLF.  This is
+normally true on any DOSish computer, and also on a Unix system if you just
+extract the distribution archives of Nodelist and Nodediff without giving some
+sort of auto conversion option.  You might loose the CRs (^Ms) at the end when
 working with a text editor on these files, though.  If the files do not have
 the ^M at the line end, the CRC checks will fail.
 
@@ -80,9 +80,9 @@ a) nlcrc
    If there is not any output, the check succeeded and the return code will
    be zero.  If the file does not contain a CRC checksum, a message will be
    printed to stderr and the return code will be 4.  If a file I/O error or
-   similar happens, the return code will be 8.  If the file has a checksum,
-   but the check fails, a message will be printed to stderr and the return
-   code will be 16.
+   similar happens, a message will be printed to stderr and the return code
+   will be 8.  If the file has a checksum, but the check fails, a message
+   will be printed to stderr and the return code will be 16.
 
 
 b) nldiff
@@ -133,7 +133,7 @@ c) ulc
    implement a node lookup at all, because Msged's V7 routines are flawed.
 
 d) nlupdate
-   
+
    Nlupdate manages your nodelists and keeps them up to date. For each
    nodelist that you have configured with a "Nodelist" statement (see
    below), it will search the latest nodelist in the "NodelistDir", then
@@ -194,7 +194,7 @@ existing fidoconfig file if you have one.
    Unpack
    ------
 
-   Syntax:  Unpacker "<unpacker command>" <id pos> <id bytes>
+   Syntax:  Unpack "<unpacker command>" <id pos> <id bytes>
    
    This configures the unpackers to use. It is crucial that you get these
    lines right. For details, please consider the Fidoconfig manual. Below, I
@@ -368,7 +368,7 @@ the nodelist tools therefore are also covered by the LGPL.
 
 In order to comply with the LGPL, I hereby invite you to download the source
 code of both the nodelist tools and fidoconfig from
-http://husky.sf.net.  Should you have any troubles in obtaining them
+http://husky.sourceforge.net.  Should you have any troubles in obtaining them
 from there, just contact me at the addresses below and I will send you the
 source code.
 
@@ -384,7 +384,7 @@ FIDO_UTIL conferences.
 
 For more information on the Husky project, our CVS server, and on how to
 obtain the most recent version of this software, visit
-http://husky.sf.net
+http://husky.sourceforge.net
 
 You can also visit my private projects site at
 http://www.physcip.uni-stuttgart.de/tobi/projects.html

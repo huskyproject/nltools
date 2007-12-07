@@ -1,4 +1,4 @@
-.TH NLDIFF 1 "nldiff" "04 April 2001" "Husky - Portable Fidonet Software"
+.TH NLDIFF 1 "nldiff" "05 December 2007" "Husky - Portable Fidonet Software"
 .SH NAME
 nldiff \- Applies a Nodediff file to a given Nodelist
 .SH SYNOPSIS
@@ -11,36 +11,63 @@ intelligence as to determining which of multiple Nodediff files is the
 correct one (you have to use other tools for this), but it expects the
 Nodelist filename and the Nodediff filename as explicit arguments with the
 correct day file name extension.
-.sp 2
-This manual page was written for the Debian GNU/Linux distribution
-because the original program does not have a manual page (but a good README).
-.SH OPTIONS
 .br
-.B [-d]
-Delete the Nodediff after the process succeeds.
-.br
-.B [-n]
-Delete the old Nodelist after the process succeeds.
-.br
-.B /path/to/nodelist
-The Nodelist to patch.
-.br
-.B /path/to/nodediff
-The Nodediff to be used.
-.SH EXAMPLES
-.B nldiff NODELIST.260 NODEDIFF.267
-.br
-Builds NODELIST.267 from NODELIST.260 and NODEDIFF.267
+You normally do not need to call nldiff manually, nldiff is designed to be
+called automatically by nlupdate.
 .sp 1
-.B nldiff -d -n NODELIST.260 NODEDIFF.267
-.br
-Same as above, but will delete old Nodelist and the Nodediff after process
-succeeds.
+.B nldiff
+is part of the Husky Project (nlupdate module) but
+.B nldiff
+don't uses common husky config file.
+.SH OPTIONS
+.TP 10
+.B -d
+Delete the Nodediff file after the process succeeds. This option may be omitted.
+.TP 10
+.B -n
+Delete the old Nodelist file after the process succeeds. This option may be omitted.
+.TP 10
+.BI /path/to/nodelist
+The Nodelist to patch. This parameter is mandatory.
+.TP 10
+.BI /path/to/nodediff
+The Nodediff to be used. This parameter is mandatory.
+.SH EXIT STATUS
+.TP 5
+.B 0
+new nodelist is generated
+.TP 5
+.B 8
+nldiff can't make new nodelist.
+.SH EXAMPLES
+.PP
+.RS 2
+.RB "nldiff NODELIST.260 NODEDIFF.267"
+.RE
+.PP
+Builds NODELIST.267 from NODELIST.260 and NODEDIFF.267
+.PP
+.RS 2
+.RB "nldiff -d -n NODELIST.260 NODEDIFF.267"
+.RE
+.PP
+Same as above, but will delete old Nodelist (NODELIST.260) and the used
+Nodediff (NODEDIFF.267) after process succeeds. New Nodelist (NODELIST.267)
+is stayed in nodelists directory.
+.SH "SEE ALSO"
+nlupdate(1), ulc(1), nlcrc(1), info fidoconfig
+.SH BUGS
+.B nldiff
+reports about any problem into standard error stream but not into log file.
+This fact is makes some troubles for using nldiff from nlupdate in scripts or
+via cron sheduler.
+.SH CONFORMING TO
+.B nlcrc
+is conformed with FTS-5000.001 and (obsoleted) FTS-0005.
 .SH NOTES
 All Husky-Software is written by various developers. For detailed information
 about the Husky-Team take a look at 
-http://husky.sf.net/team.html.
+http://husky.sourceforge.net/team.html.
 .SH AUTHOR
-This manual page was written by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
-for the Debian GNU/Linux system (but may be used by others).
-
+This manual page was written initially by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
+and modified by other husky developers.

@@ -1,23 +1,30 @@
-.TH NLCRC 1 "nlcrc" "04 April 2001" "Husky - Portable Fidonet Software"
+.TH NLCRC 1 "nlcrc" "05 December 2007" "Husky - Portable Fidonet Software"
 .SH NAME
-nlcrc \- Checks the CRC Checksum in a given Nodelist.
+nlcrc \- Checks the CRC of a given Nodelist.
 .SH SYNOPSIS
 .B nlcrc
-[/path/to/nodelist]
+.BR [/path/to/nodelist]
 .SH "DESCRIPTION"
 .B nlcrc
-checks the CRC checksum in a given Nodelist (not Nodediff!) file. 
-.br
-.sp 2
-This manual page was written for the Debian GNU/Linux distribution
-because the original program does not have a manual page (but a fine README).
+checks the CRC of a given Nodelist file and return result code.
+.sp 1
+You do not need to call nlcrc manually, unless you are curious.
+.sp 1
+.B nldiff
+is part of the Husky Project (nlupdate module) but
+.B nldiff
+don't uses common husky config file.
 .SH OPTIONS
 .B [/path/to/nodelist]
 The Nodelist to check.
-.SH "RETURN VALUE"
+.SH EXIT STATUS
 .B 0
 Check succeeded.
-.SH ERRORS
+.SS ERRORS
+.B 1
+Illegal (unknown) option in comand line.
+.B 2
+Extra parameter(s) in command line or nodelist file name isn't specified.
 .B 4
 File Does not contain a CRC Checksum.
 .br
@@ -25,12 +32,16 @@ File Does not contain a CRC Checksum.
 File IO Error.
 .br
 .B 16
-Checksumtest failed.
+Checksum test failed.
+.SH "SEE ALSO"
+ulc(1), nldiff(1), nlupdate(1), info fidoconfig
+.SH CONFORMING TO
+.B nlcrc
+is conformed with FTS-5000.001 and (obsoleted) FTS-0005.
 .SH NOTES
 All Husky-Software is written by various developers. For detailed information
 about the Husky-Team take a look at 
-http://husky.sf.net/team.html.
-
+http://husky.sourceforge.net/team.html.
 .SH AUTHOR
-This manual page was written by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
-for the Debian GNU/Linux system (but may be used by others).
+This manual page was written initially by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
+and modified by other husky developers.
