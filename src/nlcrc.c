@@ -15,13 +15,17 @@
 #include "version.h"
 
 enum {SCANCOLON, SCANDIGIT, CRCVAL, AFTERCRCVAL, FINISH};
+enum {ok=0, unknown_option=1, illegal_parameter=2, nodelist_without_crc=4, error_nodelist=8, error_CRC=16} exit_codes;
+
+#define PROGRAM "nlcrc"
+char *versionStr = "";
 
 unsigned short analyze_first_line(FILE *f)
 {
     char c=0;
     int state = SCANCOLON;
     unsigned short crc = 0;
-    
+
     while (state != FINISH)
     {
         fread(&c, 1, 1, f);
@@ -30,7 +34,7 @@ unsigned short analyze_first_line(FILE *f)
             if (state < CRCVAL)
             {
                 fprintf (stderr, "Warning: File does not contain checksum.\n");
-                exit(4);
+                exit (nodelist_without_crc);
             }
             else
             {
@@ -86,7 +90,7 @@ unsigned short analyze_rest(FILE *f)
 
     crc16_init(&crc);
 
-    errno = 0;         
+    errno = 0;
     while (((l = fread(buffer, 1, BUFSZ, f)) > 0) && p == NULL)
     {
         buffer[l] = '\0';
@@ -103,30 +107,75 @@ unsigned short analyze_rest(FILE *f)
     crc16_finalize(&crc);
 
     return crc;
-}   
+}
 
+void usage()
+{
+  printf ("\nUsage: " PROGRAM " <FILENAME>\n\n"
+          "\tIf nothing is printed ans exit code is zero, the CRC was OK. If the CRC is not\n"
+          "\tOK, an error message and a exit code 8 is given.\n"
+         );
+}
+
+static void printversion()
+{
+  printf ("%s\n\n", versionStr);
+}
 
 int main(int argc, char **argv)
 {
-    FILE *f;
-    unsigned short should, is;
-    char *versionStr;
+  FILE *f;
+  unsigned short should, is;
+  int flag_quiet;
+  char* nlname=NULL;
 
-    if (argc != 2)
-    {
-    versionStr = GenVersionStr( "nlcrc", VER_MAJOR, VER_MINOR, VER_PATCH,
-                               VER_BRANCH, cvs_date );
-        fprintf (stderr, "%s\n", versionStr);
-        fprintf (stderr, "\nUsage: nlcrc <FILENAME>\n\n");
-        fprintf (stderr, "\tIf nothing is printed, the CRC was OK. If the CRC is not OK, an\n");
-        fprintf (stderr, "\terror message and a return code>0 is given.\n");
-        return 8;
+  versionStr = GenVersionStr( PROGRAM, VER_MAJOR, VER_MINOR, VER_PATCH,
+                              VER_BRANCH, cvs_date );
+
+  { int i;
+    for (i=1; i<argc; i++)
+    { int j,plen;
+      if (argv[i][0]=='-')
+      {
+        int plen=sstrlen(argv[i]);
+        for (j=1; j<plen; j++)
+          switch (argv[i][j])
+          {
+            case 'h':
+                     usage();
+                     return ok;
+            case 'v':
+                     printversion();
+                     return ok;
+            case 'q': flag_quiet=1;
+                     break;
+            default:
+                     printf ("Illegal option '%c'!\n\n", argv[i][j]);
+                     usage();
+                     return unknown_option;
+          }
+      }
+      else if (!nlname) nlname = argv[i];
+      else
+      {
+         printf ("Illegal call: supports only one nodelist file name!\n"
+                 "Detected filename: \"%s\"\n"
+                 "Extra parameter is \"%s\"\nExit.",
+                 nlname, argv[i]);
+         return illegal_parameter;
+      }
     }
+    if (!nlname)
+      printf("Illegal call: nodelist filename is needed!\n");
+      return illegal_parameter;
+  }
 
-    if ((f = fopen(argv[1], "rb")) == NULL)
+  if (!flag_quiet) printversion();
+
+  if ((f = fopen(nlname, "rb")) == NULL)
     {
         fprintf (stderr, "Cannot open %s.\n", argv[1]);
-        return 8;
+        return error_nodelist;
     }
 
     should = analyze_first_line(f);
@@ -138,8 +187,8 @@ int main(int argc, char **argv)
     {
         fprintf (stderr, "Nodelist %s fails CRC check (%u != %u)\n",
                  argv[1], (unsigned)should, (unsigned)is);
-        return 16;
+        return error_CRC;
     }
 
-    return 0;
+    return ok;
 }
