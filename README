@@ -195,7 +195,7 @@ existing fidoconfig file if you have one.
    ------
 
    Syntax:  Unpack "<unpacker command>" <id pos> <id bytes>
-   
+
    This configures the unpackers to use. It is crucial that you get these
    lines right. For details, please consider the Fidoconfig manual. Below, I
    simply give examples that work. I assume that you use the Freeware unrar
@@ -372,15 +372,11 @@ http://husky.sourceforge.net.  Should you have any troubles in obtaining them
 from there, just contact me at the addresses below and I will send you the
 source code.
 
-IX)  CONTATCT
 
-If you have questions, you can reach me at:
-
-    Fido:   Tobias Ernst @ 2:2476/418
-    e-mail: tobi@bland.fido.de
+IX)  CONTACTS
 
 Questions are also appropriate in the LINUX.FIDO.GER, FIDOSOFT.HUSKY, and
-FIDO_UTIL conferences.
+FIDO_UTIL international echoconferences, or RU.HUSKY russian echoconference.
 
 For more information on the Husky project, our CVS server, and on how to
 obtain the most recent version of this software, visit
@@ -388,5 +384,13 @@ http://husky.sourceforge.net
 
 You can also visit my private projects site at
 http://www.physcip.uni-stuttgart.de/tobi/projects.html
+
+
+X)  AUTHOR
+
+NLTools is written by Tobias Ernst:
+
+    Fido:   Tobias Ernst @ 2:2476/418
+    e-mail: tobi@bland.fido.de
 
 [EOF]

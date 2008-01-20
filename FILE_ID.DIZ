@@ -1,16 +1,14 @@
 NLTOOLS 1.4 ---- The Husky Nodelist Tools
 =========================================
 Written 2000 by Tobias Ernst,  updated by
-Husky Team (http://husky.sf.net).  A tool
-kit for keeping your nodelists up to date 
-(nlupdate automatically finds the  latest
-diff files  using an Y2K-safe  algorithm,
-unpacks them,  and  applies  them  to the
-nodelist),  and a FIDOUSER.LST  compiler.
-The FIDOUSER.LST  file  can be  used  for
-sysop/node  number lookup  in  Msged  and
-other mail editors.  The tools  are fido-
-config integrated,  but can also  be used
-standalone. Public Domain  software  with 
-source code,  compiles  on  a lot of Unix 
-systems and on OS/2, Win32 and DOS.
+Husky Team (http://husky.sourceforge.net)
+A tool kit for keeping  your nodelists up
+to date (nlupdate automatically finds the
+latest  diff  files,  unpacks  them,  and
+applies them  to  the  nodelist). NLTools
+also a FIDOUSER.LST compiler for Msged or
+another  mail  editors.  The NLTools  are
+fidoconfig integrated,  but  can also  be
+used standalone.  Public Domain  software
+with source  code,  compiles  on a lot of
+Unix systems and on OS/2, Win32 and DOS.
