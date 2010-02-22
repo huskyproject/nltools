@@ -910,8 +910,8 @@ int main( int argc, char **argv )
 {
   s_fidoconfig *config;
   int rv;
-  int l = 0, i, flag_quiet;
-  char *versionStr, *configfile;
+  int l = 0, i, flag_quiet = 0;
+  char *versionStr, *configfile = NULL;
 
   versionStr = GenVersionStr( "nlupdate", VER_MAJOR, VER_MINOR, VER_PATCH, VER_BRANCH, cvs_date );
 
@@ -986,7 +986,7 @@ int main( int argc, char **argv )
   }
   else
   {
-    fprintf( stderr, "Fatal: Cannot open fidoconfig.\n" );
+    w_log( LL_ERR, "Fatal: Cannot open fidoconfig.\n" );
     free( differ );
     return 8;
   }

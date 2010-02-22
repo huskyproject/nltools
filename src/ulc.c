@@ -133,33 +133,72 @@ int process( s_fidoconfig * config )
   return rv;
 }
 
-int main( void )
+void usage( void )
 {
-  s_fidoconfig *config = readConfig( NULL );
-  int rv;
-  char *versionStr;
+  printf( "Usage:\n"
+          "ulc [-hvq] [-c config]\n"
+          "where\n"
+          "      -h         print this help and exit\n"
+          "      -v         print version information\n"
+          "      -q         quiet mode\n" "      -c config  specify fidoconfig file\n" );
+}
 
+int main( int argc, char **argv )
+{
+  s_fidoconfig *config;
+  int rv, i, flag_quiet = 0;
+  char *versionStr, *configfile = NULL;
   versionStr = GenVersionStr( "ulc", VER_MAJOR, VER_MINOR, VER_PATCH, VER_BRANCH, cvs_date );
-  fprintf( stderr, "%s\n", versionStr );
+  for( i = 1; i < argc; i++ )
+  {
+    int j, plen;
+    if( argv[i][0] == '-' )
+    {
+      int plen = sstrlen( argv[i] );
+      for( j = 1; j < plen; j++ )
+        switch ( argv[i][j] )
+        {
+        case 'h':
+          printversion(  );
+          usage(  );
+          return 0;
+        case 'v':
+          printversion(  );
+          return 0;
+        case 'c':
+          if( plen > ++j )
+            configfile = argv[i] + j;
+          else if( argc < ++i )
+            configfile = argv[i];
+          else
+          {
+            w_log( LL_ERR, "Fatal: parameter after -c is required\n" );
+            return 1;
+          }
+        case 'q':
+          flag_quiet = 1;
+        }
+    }
+  }
 
+  if( !flag_quiet )
+    printversion(  );
+  config = readConfig( configfile );
   if( config != NULL )
   {
     initLog( config->logFileDir, config->logEchoToScreen, config->loglevels,
              config->screenloglevels );
     openLog( LOGNAME, versionStr );
     w_log( LL_START, "Start" );
-
     rv = process( config );
-
     w_log( LL_STOP, "End" );
     closeLog(  );
     disposeConfig( config );
     return rv;
-
   }
   else
   {
-    fprintf( stderr, "Fatal: Cannot open fidoconfig.\n" );
+    w_log( LL_ERR, "Cannot open fidoconfig.\n" );
     return 8;
   }
 }
