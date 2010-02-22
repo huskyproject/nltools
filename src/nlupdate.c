@@ -891,10 +891,46 @@ static int process(s_fidoconfig *config)
 
 int main(int argc, char **argv)
 {
-    s_fidoconfig *config = readConfig(NULL);
+    s_fidoconfig *config;
     int rv;
-    int l = 0;
-    char *versionStr;
+    int l = 0, i, flag_quiet;
+    char *versionStr, *configfile;
+
+    versionStr = GenVersionStr( "nlupdate", VER_MAJOR, VER_MINOR, VER_PATCH,
+                                VER_BRANCH, cvs_date );
+
+    for (i=1; i<argc; i++)
+    { int j,plen;
+      if (argv[i][0]=='-')
+      {
+        int plen=sstrlen(argv[i]);
+        for (j=1; j<plen; j++)
+          switch (argv[i][j])
+        {
+          case 'h':
+            usage();
+            return 0;
+          case 'v':
+            printversion();
+            return 0;
+          case 'c':
+            if (plen>++j)
+              configfile = argv[i]+j;
+            else if (argc<++i)
+              configfile = argv[i];
+            else
+            {
+              w_log (LL_ERR, "Fatal: parameter after -c is required\n");
+              return 1;
+            }
+            case 'q': flag_quiet=1;
+        }
+      }
+    }
+
+    if (!flag_quiet) printversion();
+
+    config = readConfig(configfile);
 
     /* construct the name of the nldiff command */
     if (argc)
@@ -911,10 +947,6 @@ int main(int argc, char **argv)
     differ = malloc(l + 7);
     if (l) memcpy(differ, argv[0], l);
     strcpy(differ + l, "nldiff");
-
-    versionStr = GenVersionStr( "nlupdate", VER_MAJOR, VER_MINOR, VER_PATCH,
-                               VER_BRANCH, cvs_date );
-    fprintf (stderr, "%s\n", versionStr);
 
     /* run the main program */
     if (config != NULL)
@@ -939,4 +971,3 @@ int main(int argc, char **argv)
         return 8;
     }
 }
-
