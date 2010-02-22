@@ -1,6 +1,10 @@
-/* Tool to apply a Nodediff upon a nodelist.
-   Written 1999 by Tobias Ernst and released to the Public Domain.
-   References: FTS-0005
+/* $Id$
+   Written 1999 by Tobias Ernst and released do the Public Domain.
+   This file is part of NLTOOLS, the nodelist processor of the Husky fidonet
+   software project.
+
+   Tool to apply a Nodediff upon a Nodelist.
+   References: FTS-0005, FTS-5000
 */
 
 #include <stdio.h>

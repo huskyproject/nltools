@@ -2,6 +2,7 @@
 #define JULIAN_H
 
 /* ============================================================================
+   $Id$
    Julian Date Routines
    Written 1999 by Tobias Ernst and release to the Public Domain.
 

@@ -1,4 +1,5 @@
-/* ul_sort sorts a file in FIDOUSER.LST format alphabetically
+/* $Id$
+   The function ul_sort() sorts a file in FIDOUSER.LST format alphabetically
    (case-insensitive) by sysop name, so that message readers etc. can
    use a binary search mechanism to look up node numbers by sysop name.
 
@@ -6,6 +7,9 @@
    DOSish style even on UNIX!!!
 
    Written 1999 by Tobias Ernst and released to the Public Domain.
+
+   This file is part of NLTOOLS, the nodelist processor of the Husky fidonet
+   software project.
 */
 
 #include <stdio.h>

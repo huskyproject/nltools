@@ -1,4 +1,12 @@
-/* This program can be used to build ccitttab.h */
+/* $Id$
+
+   This program can be used to build ccitttab.h
+
+   Written 1999 by Tobias Ernst
+
+   This file is part of NLTOOLS, the nodelist processor of the Husky fidonet
+   software project.
+*/
 
 #include <stdio.h>
 

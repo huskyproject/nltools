@@ -1,4 +1,6 @@
-/*
+/* $Id$
+To be removed.
+
  *  SMAPI; Modified Squish MSGAPI
  *
  *  Squish MSGAPI0 is copyright 1991 by Scott J. Dudley.  All rights reserved.

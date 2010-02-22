@@ -1,4 +1,11 @@
-/* A CRC-16 CCITT checksum module */
+/* $Id$
+   A CRC-16 CCITT checksum module
+
+   Written 1999 by Tobias Ernst
+
+   This file is part of NLTOOLS, the nodelist processor of the Husky fidonet
+   software project.
+*/
 
 #include <stdio.h>
 #include <errno.h>

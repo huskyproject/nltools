@@ -1,6 +1,10 @@
-/* Fido Userlist Compiler
-   Written 1999 by Tobias Ernst and released to the Public Domain */
+/* $Id$
+   Written 1999 by Tobias Ernst and released do the Public Domain.
+   This file is part of NLTOOLS, the nodelist processor of the Husky fidonet
+   software project.
 
+   Fido Userlist Compiler routines
+*/
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>

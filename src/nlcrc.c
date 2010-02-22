@@ -1,6 +1,10 @@
-/* Tool to check the CRC value in a Fidonet Nodelist
+/* $Id$
    Written 1999 by Tobias Ernst and released do the Public Domain.
-   References: FTS-0005
+   This file is part of NLTOOLS, the nodelist processor of the Husky fidonet
+   software project.
+
+   Tool to check the CRC value in a Fidonet Nodelist
+   References: FTS-0005, FTS-5000
 */
 
 #include <stdio.h>

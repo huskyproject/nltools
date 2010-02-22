@@ -1,4 +1,7 @@
 /* $Id$ */
+   This file is part of NLTOOLS, the nodelist processor of the Husky fidonet
+   software project.
+*/
 
 #ifndef _VERSION_H
 #define _VERSION_H
