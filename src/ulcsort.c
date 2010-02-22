@@ -21,71 +21,68 @@
 
 int rl;
 
-static int ulcomp(const void *p1, const void *p2)
+static int ulcomp( const void *p1, const void *p2 )
 {
-    return ncasecmp((const char *)p1, (const char *)p2, rl);
+  return ncasecmp( ( const char * ) p1, ( const char * ) p2, rl );
 }
 
-int ul_sort(FILE *f)
+int ul_sort( FILE * f )
 {
-    unsigned long filelen;
-    unsigned long reclen;
-    unsigned long n;
-    void *buffer;
-    char buf[200];
+  unsigned long filelen;
+  unsigned long reclen;
+  unsigned long n;
+  void *buffer;
+  char buf[200];
 
 
-    if (fseek(f, 0L, SEEK_END))
-        return 0;
+  if( fseek( f, 0L, SEEK_END ) )
+    return 0;
 
-    if ((filelen = ftell(f)) == -1)
-        return 0;
+  if( ( filelen = ftell( f ) ) == -1 )
+    return 0;
 
-    if (fseek(f, 0L, SEEK_SET))
-        return 0;
+  if( fseek( f, 0L, SEEK_SET ) )
+    return 0;
 
-    if (fgets(buf, sizeof buf, f) != NULL)
-    {
-        reclen = strlen(buf);
-    }
-    else
-    {
-        return 0;
-    }
+  if( fgets( buf, sizeof buf, f ) != NULL )
+  {
+    reclen = strlen( buf );
+  }
+  else
+  {
+    return 0;
+  }
 
-    n = filelen / reclen;
+  n = filelen / reclen;
 
-    if ((filelen % reclen) > 1) /* allow for one byte Ctrl+Z garbage */
-        return 0;
+  if( ( filelen % reclen ) > 1 )        /* allow for one byte Ctrl+Z garbage */
+    return 0;
 
-    buffer = malloc(n * reclen);
+  buffer = malloc( n * reclen );
 
-    if (buffer == NULL)
-    {
-        w_log(LL_ERROR, "Out of memory (request for %ld bytes failed).",
-                 n * reclen);
-        return 0;
-    }
+  if( buffer == NULL )
+  {
+    w_log( LL_ERROR, "Out of memory (request for %ld bytes failed).", n * reclen );
+    return 0;
+  }
 
-    if (fseek(f, 0L, SEEK_SET))
-        return 0;
+  if( fseek( f, 0L, SEEK_SET ) )
+    return 0;
 
-    if (fread(buffer, reclen, n, f)!=n)
-        return 0;
+  if( fread( buffer, reclen, n, f ) != n )
+    return 0;
 
-    rl = reclen;
+  rl = reclen;
 
-    qsort(buffer, n, reclen, ulcomp);
+  qsort( buffer, n, reclen, ulcomp );
 
-    if (fseek(f, 0L, SEEK_SET))
-        return 0;
+  if( fseek( f, 0L, SEEK_SET ) )
+    return 0;
 
-    if (fwrite(buffer, reclen, n, f)!=n)
-        return 0;
+  if( fwrite( buffer, reclen, n, f ) != n )
+    return 0;
 
-    free(buffer);
+  free( buffer );
 
-    return 1;
+  return 1;
 }
-
-

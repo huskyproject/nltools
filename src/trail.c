@@ -20,9 +20,9 @@
 #include <string.h>
 
 #ifdef __TURBOC__
-#define smapilinkage pascal
+# define smapilinkage pascal
 #else
-#define smapilinkage
+# define smapilinkage
 #endif
 
 
