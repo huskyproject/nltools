@@ -1,4 +1,4 @@
-.TH NLUPDATE 1 "nlupdate" "05 December 2007" "Husky - Portable Fidonet Software"
+.TH NLUPDATE 1 "nlupdate" "28 February 2010" "Husky - Portable Fidonet Software"
 .SH NAME
 nlupdate \- Manages your Nodelists and keeps them up to date.
 .SH SYNOPSIS
@@ -8,21 +8,21 @@ nlupdate \- Manages your Nodelists and keeps them up to date.
 manages your nodelists and keeps them up to date. For each
 nodelist that you have configured with a "Nodelist" statement,
 it will search the latest nodelist in the "NodelistDir", then
-caluclate the day number of the difference file that is needed to 
-update this nodelist, then searches the difference file, unpacks
-it if necessary, and applies it to the nodelist using
+calculate the day number of the difference file that is needed to
+update this nodelist, then search the difference file, unpack
+it if necessary, and apply it to the nodelist using
 .B nldiff
 utility.
 .B nlupdate
 can also find full
 replacement files if you configure this, and just unpack them and copy
-them over the old nodelist. This is usefule for othernets that do not have
+them over the old nodelist. This is useful for othernets that do not have
 nodediff files.  - With only a few keywords, nlupdate manages the whole
 process of updating your nodelist files for you.
 .sp 1
 .B nlupdate
-is part of the Husky Project (nlupdate module) and it shares config file
-(named fidoconfig) with other Husky programs. All configuration statements is
+is a part of the Husky Project (nlupdate module) and it shares config file
+(named fidoconfig) with other Husky programs. All configuration statements are
 described in the Fidoconfig Manual.
 .SH OPTIONS
 .TP 10
@@ -44,7 +44,7 @@ Quiet mode: supress normal screen output, only error messages may be displayed.
 new nodelists is generated
 .TP 5
 .B 8
-nlupdate don't make new nodelist on several reason
+nlupdate didn't make new nodelist on several reason
 .SH USAGE
 .B nlupdate
 uses following fidoconfig statements:
@@ -108,4 +108,4 @@ about the Husky-Team take a look at
 http://husky.sourceforge.net/team.html.
 .SH AUTHOR
 This manual page was written initially by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
-and modified by other husky developers.
+and modified by other Husky developers.

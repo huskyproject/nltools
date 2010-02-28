@@ -1,4 +1,4 @@
-.TH NLCRC 1 "nlcrc" "05 December 2007" "Husky - Portable Fidonet Software"
+.TH NLCRC 1 "nlcrc" "28 February 2010" "Husky - Portable Fidonet Software"
 .SH NAME
 nlcrc \- Checks the CRC of a given Nodelist.
 .SH SYNOPSIS
@@ -6,14 +6,14 @@ nlcrc \- Checks the CRC of a given Nodelist.
 .BR [/path/to/nodelist]
 .SH "DESCRIPTION"
 .B nlcrc
-checks the CRC of a given Nodelist file and return result code.
+checks the CRC of a given Nodelist file and returns result code.
 .sp 1
 You do not need to call nlcrc manually, unless you are curious.
 .sp 1
-.B nldiff
-is part of the Husky Project (nlupdate module) but
-.B nldiff
-don't uses common husky config file.
+.B nlcrc
+is a part of the Husky Project (nlupdate module) but
+.B nlcrc
+doesn't uses common husky config file.
 .SH OPTIONS
 .B [/path/to/nodelist]
 The Nodelist to check.
@@ -22,10 +22,10 @@ The Nodelist to check.
 Check succeeded.
 .SS ERRORS
 .B 4
-File Does not contain a CRC Checksum.
+File does not contain a CRC checksum.
 .br
 .B 8
-File IO Error.
+File IO error.
 .br
 .B 16
 Checksum test failed.
@@ -40,4 +40,4 @@ about the Husky-Team take a look at
 http://husky.sourceforge.net/team.html.
 .SH AUTHOR
 This manual page was written initially by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
-and modified by other husky developers.
+and modified by other Husky developers.
