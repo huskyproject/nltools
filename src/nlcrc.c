@@ -123,11 +123,6 @@ void usage(  )
           "\tOK, an error message and a exit code 8 is given.\n" );
 }
 
-static void printversion(  )
-{
-  printf( "%s\n\n", versionStr );
-}
-
 int main( int argc, char **argv )
 {
   FILE *f;

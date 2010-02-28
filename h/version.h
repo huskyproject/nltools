@@ -16,4 +16,6 @@
 
 extern char      *versionStr;
 
+#define printversion(  ) { printf( "%s\n\n", versionStr ); }
+
 #endif
