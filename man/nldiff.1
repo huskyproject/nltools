@@ -6,7 +6,7 @@ nldiff \- Applies a Nodediff file to a given Nodelist
 [-d] [-n] /path/to/nodelist /path/to/nodediff
 .SH "DESCRIPTION"
 .B nldiff
-applies a Nodediff file to a given Nodelist.  It has no
+applies a Nodediff file to a given Nodelist. It has no
 intelligence as to determining which of multiple Nodediff files is the
 correct one (you have to use other tools for this), but it expects the
 Nodelist filename and the Nodediff filename as explicit arguments with the
@@ -16,9 +16,9 @@ You normally do not need to call nldiff manually, nldiff is designed to be
 called automatically by nlupdate.
 .sp 1
 .B nldiff
-is part of the Husky Project (nlupdate module) but
+is a part of the Husky Project (nlupdate module) but
 .B nldiff
-don't uses common husky config file.
+doesn't use common husky config file.
 .SH OPTIONS
 .TP 10
 .B -d
@@ -53,13 +53,13 @@ Builds NODELIST.267 from NODELIST.260 and NODEDIFF.267
 .PP
 Same as above, but will delete old Nodelist (NODELIST.260) and the used
 Nodediff (NODEDIFF.267) after process succeeds. New Nodelist (NODELIST.267)
-is stayed in nodelists directory.
+will stay in the nodelists directory.
 .SH "SEE ALSO"
 nlupdate(1), ulc(1), nlcrc(1), info fidoconfig
 .SH BUGS
 .B nldiff
-reports about any problem into standard error stream but not into log file.
-This fact is makes some troubles for using nldiff from nlupdate in scripts or
+reports about problems to standard error stream but not to log file.
+This fact makes some troubles for using nldiff from nlupdate in scripts or
 via cron sheduler.
 .SH CONFORMING TO
 .B nlcrc
@@ -70,4 +70,4 @@ about the Husky-Team take a look at
 http://husky.sourceforge.net/team.html.
 .SH AUTHOR
 This manual page was written initially by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
-and modified by other husky developers.
+and modified by other Husky developers.

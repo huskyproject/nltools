@@ -32,9 +32,9 @@ file format is supported by many mail readers, e.g. Timed
 and Msged. For Msged, FIDOUSER.LST is currently the best method to
 implement a node lookup at all, because Msged's V7 routines are flawed.
 .P
-.B uls
-is part of the Husky Project (nlupdate module) and it shares config file
-(named fidoconfig) with other Husky programs. All configuration statements is
+.B ulc
+is a part of the Husky Project (nlupdate module) and it shares config file
+(named fidoconfig) with other Husky programs. All configuration statements are
 described in the Fidoconfig Manual.
 .SH OPTIONS
 .TP 10
@@ -55,7 +55,7 @@ Quiet mode: supress normal screen output, only error messages may be displayed.
 \t FIDOUSER.LST is generated sussessfully.
 .br
 .B 4
-\t Instance of some nodelist is not found.
+\t Instances of some nodelists were not found.
 .br
 .B 8
 \t Fatal error (can't open file, etc).
@@ -87,7 +87,7 @@ nlupdate(1), nldiff(1), nlcrc(1), info fidoconfig
 .SH CONFORMING TO
 .B nlc
 is conformed with FTS-5000.001, (obsoleted) FTS-0005 and partially conformed
-with FTS-5002.001 (don't supports the "Point" format and recognize extends
+with FTS-5002.001 (doesn't support the "Point" format and recognize extends
 of the "Boss" format).
 .SH NOTES
 All Husky-Software is written by various developers. For detailed information
@@ -95,4 +95,4 @@ about the Husky-Team take a look at
 http://husky.sourceforge.net/team.html.
 .SH AUTHOR
 This manual page was written initially by Joerg Jaspert (JJ) <joerg@goliathbbs.dnsalias.net>,
-and modified by other husky developers.
+and modified by other Husky developers.
