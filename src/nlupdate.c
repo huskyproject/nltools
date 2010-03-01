@@ -906,6 +906,19 @@ static int process( s_fidoconfig * config )
   return rv;
 }
 
+void usage()
+{
+  printf(
+      "USAGE:\n"
+      "\tnlupdate [-h] [-v] [-q] [-c config]\n"
+      "where:\n"
+      "\t-h\t - print this help and exit;\n"
+      "\t-v\t - print version information and exit;\n"
+      "\t-q\t - quiet mode (supress normal output, print errors only).\n"
+      "\t-c config - read configuration from alternate fidoconfig file.\n"
+        );
+}
+
 int main( int argc, char **argv )
 {
   s_fidoconfig *config;
@@ -937,7 +950,7 @@ int main( int argc, char **argv )
             configfile = argv[i];
           else
           {
-            w_log( LL_ERR, "Fatal: parameter after -c is required\n" );
+            w_log( LL_ERR, "Fatal: parameter after '"-c\" is required\n" );
             return 1;
           }
         case 'q':
