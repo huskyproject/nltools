@@ -950,7 +950,7 @@ int main( int argc, char **argv )
             configfile = argv[i];
           else
           {
-            w_log( LL_ERR, "Fatal: parameter after '"-c\" is required\n" );
+            w_log( LL_ERR, "Fatal: parameter after \"-c\" is required\n" );
             return 1;
           }
         case 'q':
@@ -984,7 +984,7 @@ int main( int argc, char **argv )
   if( config != NULL )
   {
     initLog( config->logFileDir, config->logEchoToScreen, config->loglevels,
-             config->screenloglevels );
+             flag_quiet? "" : config->screenloglevels );
     openLog( LOGNAME, versionStr );
     w_log( LL_START, "Start" );
 
