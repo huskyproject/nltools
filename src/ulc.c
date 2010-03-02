@@ -189,8 +189,11 @@ int main( int argc, char **argv )
   config = readConfig( configfile );
   if( config != NULL )
   {
-    initLog( config->logFileDir, config->logEchoToScreen, config->loglevels,
-             config->screenloglevels );
+    {
+      char errloglevels[3] = { LL_ERR, LL_CRIT, '\0' };
+      initLog( config->logFileDir, config->logEchoToScreen, config->loglevels,
+               flag_quiet? errloglevels : config->screenloglevels );
+    }
     openLog( LOGNAME, versionStr );
     w_log( LL_START, "Start" );
     rv = process( config );
