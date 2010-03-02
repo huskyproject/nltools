@@ -174,13 +174,16 @@ int main(int argc, char **argv)
                      return 0;
             case 'c':
                      if (plen>++j)
-                       configfile = argv[i]+j;
+                     { configfile = argv[i]+j;
+                       j=plen;
+                     }
                      else if (argc<++i)
                        configfile = argv[i];
                      else
                      { fprintf (stderr, "Fatal: parameter after -c is required\n");
                        return 1;
                      }
+                     break;
             case 'q': flag_quiet=1;
           }
       }
