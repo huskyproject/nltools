@@ -946,13 +946,15 @@ int main( int argc, char **argv )
         case 'c':
           if( plen > ++j )
             configfile = argv[i] + j;
-          else if( argc < ++i )
+            j=plen;
+          else if( argc > ++i )
             configfile = argv[i];
           else
           {
             w_log( LL_ERR, "Fatal: parameter after \"-c\" is required\n" );
             return 1;
           }
+          break;
         case 'q':
           flag_quiet = 1;
         }
