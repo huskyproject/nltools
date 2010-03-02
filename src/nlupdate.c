@@ -945,9 +945,9 @@ int main( int argc, char **argv )
           return 0;
         case 'c':
           if( plen > ++j )
-            configfile = argv[i] + j;
+          { configfile = argv[i] + j;
             j=plen;
-          else if( argc > ++i )
+          }else if( argc > ++i )
             configfile = argv[i];
           else
           {
@@ -985,8 +985,11 @@ int main( int argc, char **argv )
   /* run the main program */
   if( config != NULL )
   {
-    initLog( config->logFileDir, config->logEchoToScreen, config->loglevels,
-             flag_quiet? "" : config->screenloglevels );
+    {
+      char errloglevels[3] = { LL_ERR, LL_CRIT, '\0' };
+      initLog( config->logFileDir, config->logEchoToScreen, config->loglevels,
+             flag_quiet? errloglevels : config->screenloglevels );
+    }
     openLog( LOGNAME, versionStr );
     w_log( LL_START, "Start" );
 
