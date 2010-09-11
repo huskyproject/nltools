@@ -36,7 +36,7 @@
 
 /* store the nldiff command name */
 static char *differ = NULL;
-static char *versionStr = NULL;
+char *versionStr = NULL;
 
 /*
 # if 0

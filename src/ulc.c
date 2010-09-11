@@ -15,7 +15,7 @@
 #include "nlfind.h"
 #include "version.h"
 
-static char *versionStr = NULL;
+char *versionStr = NULL;
 
 int process(s_fidoconfig *config)
 {
