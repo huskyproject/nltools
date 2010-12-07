@@ -34,20 +34,16 @@ programs: $(PROGRAMS)
 
 $(NLDIFF): $(NLDIFFOBJS)
 	@echo Create $(NLDIFF)
-	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
-	@strip$(_EXE) $@
+	@$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
 
 $(NLCRC): $(NLCRCOBJS)
 	@echo Create $(NLCRC)
-	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
-	@strip$(_EXE) $@
+	@$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
 
 $(ULC): $(ULCOBJS)
 	@echo Create $(ULC)
-	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
-	@strip$(_EXE) $@
+	@$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
 
 $(NLUPDATE): $(NLUPDATEOBJS)
 	@echo Create $(NLUPDATE)
-	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
-	@strip$(_EXE) $@
+	@$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
