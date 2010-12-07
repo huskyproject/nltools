@@ -1,26 +1,38 @@
-
-CC=gcc
-RM=del
-
-CDEFS=-D__NT__  -c -I../h -I../..
-CFLAGS=-Wall
-COPT=-O3
-
-LFLAGS=-L../../smapi -L../../fidoconf
-LIBS=-lfidoconfigmgw -lsmapimgw
-SRC_DIR=../src/
-
-OBJ=.o
-EXE=.exe
-
+## include common makefiles part ##
+include ../../huskybse/huskymak.mgw
 include makefile.inc
 
-%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) $*.c
+CINCL  += -I$(H_DIR) -I../../fidoconf -I../../huskylib
 
-all: commonprogs
+LIBS   += ../../fidoconf/make/$(LIBPREFIX)fidoconfig$(LIBSUFFIX)$(_LIB) \
+	  ../../huskylib/make/$(LIBPREFIX)husky$(LIBSUFFIX)$(_LIB)
 
 default: all
+
+all:	programs
+
+programs: $(PROGRAMS)
+
+%$(_OBJ): $(_SRC_DIR)%$(_C)
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(OBJOPT) $<
+
+$(NLDIFF): $(NLDIFFOBJS)
+	@echo Create $(NLDIFF)
+	@$(CC) $(CFLAGS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
+$(NLCRC): $(NLCRCOBJS)
+	@echo Create $(NLCRC)
+	@$(CC) $(CFLAGS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
+$(ULC): $(ULCOBJS)
+	@echo Create $(ULC)
+	@$(CC) $(CFLAGS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
+$(NLUPDATE): $(NLUPDATEOBJS)
+	@echo Create $(NLUPDATE)
+	@$(CC) $(CFLAGS) $(CINCL) $(EXENAMEFLAG) $@ $^ $(LIBS)
+
 
 clean: commonclean
 
