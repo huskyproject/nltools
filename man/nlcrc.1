@@ -1,4 +1,4 @@
-.TH NLCRC 1 "nlcrc" "05 December 2007" "Husky - Portable Fidonet Software"
+.TH NLCRC 1 "nltools" "18 April 2012" "Husky - Portable Fidonet Software"
 .SH NAME
 nlcrc \- Checks the CRC of a given Nodelist.
 .SH SYNOPSIS
@@ -6,14 +6,15 @@ nlcrc \- Checks the CRC of a given Nodelist.
 .BR [/path/to/nodelist]
 .SH "DESCRIPTION"
 .B nlcrc
+are utility in the nltools package. It
 checks the CRC of a given Nodelist file and returns result code.
 .sp 1
 You do not need to call nlcrc manually, unless you are curious.
 .sp 1
-.B nldiff
-is a part of the Husky Project (nlupdate module) but
-.B nldiff
-doesn't use common husky config file.
+.B nlcrc
+is a part of the Husky Project (nltools module) but
+.B nlcrc
+doesn't use config file.
 .SH OPTIONS
 .B [/path/to/nodelist]
 The Nodelist to check.
@@ -34,7 +35,7 @@ File IO Error.
 .B 16
 Checksum test failed.
 .SH "SEE ALSO"
-ulc(1), nldiff(1), nlupdate(1), info fidoconfig
+ulc(1), nldiff(1), nlupd(1), info fidoconfig
 .SH CONFORMING TO
 .B nlcrc
 is conformed with FTS-5000.001 and (obsoleted) FTS-0005.

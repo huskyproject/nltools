@@ -52,9 +52,9 @@ ulc$(_EXE): ulcsort$(_OBJ) ulcomp$(_OBJ) ulc$(_OBJ) string$(_OBJ) \
           string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ) \
          $(LIBS)
 
-nlupdate$(_EXE): nlupdate$(_OBJ) string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) \
+nlupd$(_EXE): nlupdate$(_OBJ) string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) \
           nlfind$(_OBJ)
-	$(CC) $(LFLAGS) -o nlupdate$(_EXE) nlupdate$(_OBJ) string$(_OBJ) \
+	$(CC) $(LFLAGS) -o nlupd$(_EXE) nlupdate$(_OBJ) string$(_OBJ) \
           nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ) $(LIBS)
 
 clean:
@@ -75,16 +75,16 @@ distclean: clean
 	-$(RM) $(RMOPT) nlcrc$(_EXE)
 	-$(RM) $(RMOPT) nldiff$(_EXE)
 	-$(RM) $(RMOPT) ulc$(_EXE)
-	-$(RM) $(RMOPT) nlupdate$(_EXE)
+	-$(RM) $(RMOPT) nlupd$(_EXE)
 
-install: ulc$(_EXE) nldiff$(_EXE) nlcrc$(_EXE) nlupdate$(_EXE)
+install: ulc$(_EXE) nldiff$(_EXE) nlcrc$(_EXE) nlupd$(_EXE)
 	$(INSTALL) $(IBOPT) ulc$(_EXE) $(DESTDIR)$(BINDIR)
 	$(INSTALL) $(IBOPT) nldiff$(_EXE) $(DESTDIR)$(BINDIR)
 	$(INSTALL) $(IBOPT) nlcrc$(_EXE) $(DESTDIR)$(BINDIR)
-	$(INSTALL) $(IBOPT) nlupdate$(_EXE) $(DESTDIR)$(BINDIR)
+	$(INSTALL) $(IBOPT) nlupd$(_EXE) $(DESTDIR)$(BINDIR)
 
 uninstall:
 	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)ulc$(_EXE)
 	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nldiff$(_EXE)
 	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlcrc$(_EXE)
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlupdate$(_EXE)
+	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlupd$(_EXE)

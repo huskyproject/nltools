@@ -1,4 +1,4 @@
-.TH NLDIFF 1 "nldiff" "05 December 2007" "Husky - Portable Fidonet Software"
+.TH NLDIFF 1 "nltools" "18 April 2012" "Husky - Portable Fidonet Software"
 .SH NAME
 nldiff \- Applies a Nodediff file to a given Nodelist
 .SH SYNOPSIS
@@ -6,6 +6,7 @@ nldiff \- Applies a Nodediff file to a given Nodelist
 [-d] [-n] /path/to/nodelist /path/to/nodediff
 .SH "DESCRIPTION"
 .B nldiff
+are utility in the nltools package. It
 applies a Nodediff file to a given Nodelist. It has no
 intelligence as to determining which of multiple Nodediff files is the
 correct one (you have to use other tools for this), but it expects the
@@ -16,9 +17,9 @@ You normally do not need to call nldiff manually, nldiff is designed to be
 called automatically by nlupdate.
 .sp 1
 .B nldiff
-is a part of the Husky Project (nlupdate module) but
+is a part of the Husky Project (nltools module) but
 .B nldiff
-doesn't use common husky config file.
+doesn't use config file.
 .SH OPTIONS
 .TP 10
 .B -d

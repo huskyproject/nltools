@@ -31,7 +31,7 @@ H_DIR	= ../h/
 NLDIFF	= $(B)nldiff$(_EXE)
 NLCRC	= $(B)nlcrc$(_EXE)
 ULC	= $(B)ulc$(_EXE)
-NLUPDATE= $(B)nlupdate$(_EXE)
+NLUPDATE= $(B)nlupd$(_EXE)
 
 HEADERS	= $(H)ccitttab.h $(H)crc16.h $(H)julian.h $(H)nldate.h $(H)nlfind.h \
 	$(H)nlstring.h $(H)ulc.h $(H)version.h $(H)cvsdate.h
