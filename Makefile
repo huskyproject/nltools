@@ -52,7 +52,7 @@ ulc$(_EXE): ulcsort$(_OBJ) ulcomp$(_OBJ) ulc$(_OBJ) string$(_OBJ) \
           string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ) \
          $(LIBS)
 
-nlupdate$(_EXE): nlupdate$(_OBJ) string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) \
+nlupd$(_EXE): nlupdate$(_OBJ) string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) \
           nlfind$(_OBJ)
 	$(CC) $(LFLAGS) -o nlupd$(_EXE) nlupdate$(_OBJ) string$(_OBJ) \
           nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ) $(LIBS)
