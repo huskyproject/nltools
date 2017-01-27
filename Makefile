@@ -13,7 +13,7 @@ endif
 
 all: default
 
-default: nldiff$(_EXE) nlcrc$(_EXE) ulc$(_EXE) nlupdate$(_EXE)
+default: nldiff$(_EXE) nlcrc$(_EXE) ulc$(_EXE) nlupd$(_EXE)
 
 ifeq ($(DEBUG), 1)
   CFLAGS= -I$(INCDIR) -Ih $(DEBCFLAGS)
