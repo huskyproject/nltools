@@ -78,6 +78,7 @@ distclean: clean
 	-$(RM) $(RMOPT) nlupd$(_EXE)
 
 install: ulc$(_EXE) nldiff$(_EXE) nlcrc$(_EXE) nlupd$(_EXE)
+	-$(MKDIR) $(MKDIROPT) $(DESTDIR)$(BINDIR)
 	$(INSTALL) $(IBOPT) ulc$(_EXE) $(DESTDIR)$(BINDIR)
 	$(INSTALL) $(IBOPT) nldiff$(_EXE) $(DESTDIR)$(BINDIR)
 	$(INSTALL) $(IBOPT) nlcrc$(_EXE) $(DESTDIR)$(BINDIR)
