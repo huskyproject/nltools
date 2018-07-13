@@ -1,12 +1,15 @@
-Windows Users: If this file is not displayed correctly, use Wordpad to view it!
+# nltools
+[![Build Status](https://travis-ci.org/huskyproject/nltools.svg?branch=master)](https://travis-ci.org/huskyproject/nltools)
+[![Build status](https://ci.appveyor.com/api/projects/status/w31hn6m0xwqbh8c1/branch/master?svg=true)](https://ci.appveyor.com/project/dukelsky/nltools/branch/master)
+
 
 Husky Nodelist Utilities Documentation
 ======================================
 
 Written 2000 by Tobias Ernst and released to the Public Domain.
-Updated by Husky Team (for members see http://husky.sourceforge.net/team.html)
+Updated by Husky Team.
 
-I) Abstract
+## I) Abstract
 
 This archive contains a set of nodelist management utilities, in source code
 and, if you got a full distribution, also with binaries for some common
@@ -32,7 +35,7 @@ A major advantage of these tools on Unix is that they have no case
 sensitivity problems. I.e. nodelist files and nodelist updates are found no
 matter if they are in lower, capital, or MiXeD case.
 
-II) About Fidoconfig
+## II) About Fidoconfig
 
 These tools are written as an addition to the Husky suite of Fidonet
 software.  The tools do not read a separate configuration file, but rather
@@ -41,11 +44,15 @@ mean that you need to install the whole Husky suite - you can just use the
 programs of this package stand alone if you like, because the precompiled
 binaries have the fidoconfig linked in statically.
 
-But if you want to compile the tools, you do need the fidoconfig library. 
-If you do not know what Fidoconfig is, visit
-http://husky.sourceforge.net. This release of the nltools is designed to be
-built against fidoconfig. You will also require the smapi library because of
-some header files only found therein.
+But if you want to compile the tools, you do need the 
+[fidoconfig](https://github.com/huskyproject/fidoconf) library. 
+If you do not know what Fidoconfig is, visit 
+[Husky project](https://github.com/huskyproject) or its 
+[homepage](https://huskyproject.github.io/).
+This release of the nltools is designed to be built against fidoconfig. 
+You will also require the [huskylib](https://github.com/huskyproject/huskylib)
+and [smapi](https://github.com/huskyproject/smapi) libraries because of some 
+header files only found therein.
 
 If you only want to use the precompiled binaries, you must set the
 environment variable FIDOCONFIG to point to a fidoconfig-style configuration
@@ -55,7 +62,7 @@ CONFIG.SYS file.  On DOS, put the same command into autoexec.bat
 The keywords that you can use in this configuration file will be explained
 below, in section V, or of course in the fidoconfig manual.
 
-III) General Considerations
+## III) General Considerations
 
 These tools expect the Nodelist and Nodediff files to be in the FTS-5000 (and
 obsoleted FTS-0005) defined format, that means:  text lines that are finished
@@ -66,9 +73,9 @@ sort of auto conversion option.  You might loose the CRs (^Ms) at the end when
 working with a text editor on these files, though.  If the files do not have
 the ^M at the line end, the CRC checks will fail.
 
-IV) About the tools
+## IV) About the tools
 
-a) nlcrc
+### a) nlcrc
 
    You normally do not need to call nlcrc manually, unless you are curious.
 
@@ -85,7 +92,7 @@ a) nlcrc
    will be printed to stderr and the return code will be 16.
 
 
-b) nldiff
+### b) nldiff
 
    You normally do not need to call nldiff manually. nldiff is designed to be
    called automatically by nlupdate.
@@ -111,7 +118,7 @@ b) nldiff
 
       nldiff -d -n NODELIST.260 NODEDIFF.267
 
-c) ulc
+### c) ulc
 
    ulc is the Husky Fido Userlist Compiler. ulc reads all nodelists that are
    configured in Fidoconfig (via the "nodelist" keyword) and creates the
@@ -132,7 +139,7 @@ c) ulc
    and Msged. For Msged, FIDOUSER.LST is currently the best method to
    implement a node lookup at all, because Msged's V7 routines are flawed.
 
-d) nlupdate
+### d) nlupdate
 
    Nlupdate manages your nodelists and keeps them up to date. For each
    nodelist that you have configured with a "Nodelist" statement (see
@@ -156,14 +163,14 @@ need to put the two commands
 into your weekly maintainance script and all the nodelist tasks are done for
 you.
 
-V) CONFIGURATION SYNTAX
+## V) CONFIGURATION SYNTAX
 
 The following text describes the configuration statements in the fidoconfig
 file that control the behaviour of ulc and nlupdate.  Just put the
 appropriate configuration statements into a text file and point the
 FIDOCONFIG environment variable to this file, or add the statements to your
 existing fidoconfig file if you have one.
-
+```
    LogFileDir
    ----------
    Syntax:   logFileDir <path>
@@ -193,9 +200,8 @@ existing fidoconfig file if you have one.
 
    Unpack
    ------
-
    Syntax:  Unpack "<unpacker command>" <id pos> <id bytes>
-   
+```   
    This configures the unpackers to use. It is crucial that you get these
    lines right. For details, please consider the Fidoconfig manual. Below, I
    simply give examples that work. I assume that you use the Freeware unrar
@@ -204,27 +210,26 @@ existing fidoconfig file if you have one.
    for Fidonet node diffs especially; you can get it by f'requesting
    ARC521_2.ZIP at 2:2476/418. This file contains a family mode executable 
    (DOS + OS/2, also runs on Windows 95 and NT), as well as source code that 
-   can be compiled on Unix without major problems. BeOS users can get a BeOS
-   version of ARC 5.2.1 in the file ARC521BE.ZIP from 2:2476/418 or from
-   http://www.physcip.uni-stuttgart.de/tobi/bin/arc521be.zip.
+   can be compiled on Unix without major problems.
 
-   On Unix/Linux, use the follwing (adapt the path if necessary):
-
+   On Unix/Linux, use the following (adapt the path if necessary):
+```
    Unpack "/usr/local/bin/unzip -joLqq $a -d $p" 0 504b0304 
    Unpack "/usr/local/bin/unrar e -o+ -y -c- -p- $a $p/ >/dev/null" 0 52617221
    Unpack "/usr/local/bin/arc eno $a $p'/*.*'" 0 1a
-
+```
    On DOS, OS/2 and Windows, use the following:
-
+```
    Unpack "unzip -joLqq $a -d $p" 0 504b0304 
    Unpack "unrar e -o+ -y -c- -p- $a $p\ >/dev/null" 0 52617221
    Unpack "arc eno $a $p\*.*" 0 1a
-
+```
+```
    FidoUserList
    -------------
    Syntax:   fidoUserList <filename>
    Example:  fidoUserList fidouser.lst
-
+```
    If this keyword is present, the nodelist compiler (ulc) is instructed to
    build a user list file with the given filename in the nodelist directory
    (see nodelistdir).  This is a simple text file with fixed line length that
@@ -233,12 +238,12 @@ existing fidoconfig file if you have one.
    insensitive), so that it can be bsearched to implement a quick node numer
    lookup functinality.  The fido user list file format is understood by
    Msged, for example.
-
+```
    NodeList
    --------
    Syntax:  Nodelist <name>
    Example: Nodelist points24
-
+```
    This statement starts a new nodelist definition.  All the following
    nodelist-related stamtements change the configuration of this nodelist
    until a new nodeelist statement is found.
@@ -248,12 +253,12 @@ existing fidoconfig file if you have one.
    ulc and nlupdate match the file name case-insensitively, but other tools
    may need the exact spelling.  The raw nodelist file is expected to reside
    in the nodelist directory (see nodelistdir)-
-
+```
    DiffUpdate
    ----------
    Syntax:  DiffUpdate <path_and_basename>
    Example: DiffUpdate /var/spool/filebase/nodediff/nodediff
-
+```
    Here you can specify the base filename of nodelist difference files
    (nodediffs) that are used to keep the corresponding nodelist up to date.
    The argument to the DiffUpdate is the full file name with path of a
@@ -261,44 +266,44 @@ existing fidoconfig file if you have one.
    file area at /var/spool/filebase/24000, where your ticker places the
    updates for the German Pointlist, and those update files are called
    points24.a26, points24.a33, and so on, you would use
-
+```
        DiffUpdate /var/spool/filebase/24000/points24
-
+```
    The Diffupdate keyword is used by nlupdate, for example.  The nodelist
    updater will unpack the difference file (if it is archived, of course,
    unpacked diffs are also supported), apply the diff to the corresponding
    nodelist, and delete the temporary unpacked diff again.
-
+```
    FullUpdate
    ----------
    Syntax:  FullUpdate <path_and_basename>
    Example: FullUpdate /var/spool/filebase/nodelist/nodelist
-
+```
    This statement works like DiffUpdate.  The difference is that here you
    don't specify the location of a nodelist difference file, but the
    locations where complete nodelist files/archives can be found.  Some
    othernets do not (regularly) distribute a nodediff file, but just hatch a
    new nodelist every few weeks.  In this case, you need the FullUpdate
    statement.
-
+```
    Defaultzone
    -----------
    Syntax:  DefaultZone <zone>
    Example: DefaultZone 2
-
+```
    Some nodelist files do not start with a Zone entry.  This is the case for
    the German Points24 list, for example, but could also happen for othernets
    that only have one zone.  In this case, you can use the DefaultZone
    keyword to specify the default zone number for all nodes listed in this
    nodelist.
-
+```
    Nodelistformat
    --------------
    Syntax:  Nodelistformat <format>
    Example: NodelistFormat Standard
    Example: NodelistFormat Points24
    Example: NodelistFormat Points4D
-
+```
    Here you can specify the format of the unpacked nodelist.  The default is
    "standard":  this is the normal Fidonet nodelist format.  You can also
    specify "points24", which is needed for the nodelist compiler to recognise
@@ -307,7 +312,7 @@ existing fidoconfig file if you have one.
    "points4d", which means a 4D point list with "Boss" entries.
 
 
-VI) SAMPLE CONFIG
+## VI) SAMPLE CONFIG
 
 The following lines show a sample configuration file.  If you are only
 interested in the nodelist tools, you can just copy those commands into a
@@ -316,7 +321,7 @@ of course use backslashes instead of forward slashes, and drive letters), and
 point the FIDOCONFIG variable to this file.  If, on the other hand, you
 already have a fidoconfig installtion, you can copy these commands into your
 existing fidoconfig file.
-
+```
    NodelistDir /var/spool/fido/nodelist
    FidoUserList fidouser.lst
 
@@ -328,8 +333,8 @@ existing fidoconfig file.
    DiffUpdate /var/spool/fido/filebase/24000/pr24diff
    DefaultZone 2
    NodelistFormat Points24
-
-VII) COMPILING
+```
+## VII) COMPILING
 
 You can compile nltools as part of the Husky project using the top level
 Makefile and a proper huskymak.cfg. This works particularly well and easy on
@@ -349,12 +354,12 @@ way, but must use legacy makefiles.
   INSTDIR and LIBDIR variables according to your needs.
 - Type "make"
 - If you get an unresolved symbol error for "fexist", upgrade your
-  fidoconfig source code to the latest CVS level.
+  fidoconfig source code to the latest git level.
 - If it worked, type "make install" (Unix only)
 - If you like, type "make clean".
 
 
-VIII) LICENCSE
+## VIII) LICENCSE
 
 These tools are donated to the Public Domain, which means that you can do with
 with the SOURCE CODE whatever you want, but also that the author does not
@@ -368,25 +373,12 @@ the nodelist tools therefore are also covered by the LGPL.
 
 In order to comply with the LGPL, I hereby invite you to download the source
 code of both the nodelist tools and fidoconfig from
-http://husky.sourceforge.net.  Should you have any troubles in obtaining them
-from there, just contact me at the addresses below and I will send you the
-source code.
+https://github.com/huskyproject.
 
-IX)  CONTATCT
+## IX)  CONTACT
 
-If you have questions, you can reach me at:
+Questions are appropriate in the LINUX.FIDO.GER, FIDOSOFT.HUSKY, and
+FIDO_UTIL Fidonet echo conferences.
 
-    Fido:   Tobias Ernst @ 2:2476/418
-    e-mail: tobi@bland.fido.de
-
-Questions are also appropriate in the LINUX.FIDO.GER, FIDOSOFT.HUSKY, and
-FIDO_UTIL conferences.
-
-For more information on the Husky project, our CVS server, and on how to
-obtain the most recent version of this software, visit
-http://husky.sourceforge.net
-
-You can also visit my private projects site at
-http://www.physcip.uni-stuttgart.de/tobi/projects.html
-
-[EOF]
+For more information see the [Husky project](https://github.com/huskyproject)
+and its [homepage](https://huskyproject.github.io/).
