@@ -1,7 +1,7 @@
 # nltools
 [![Build Status](https://travis-ci.org/huskyproject/nltools.svg?branch=master)](https://travis-ci.org/huskyproject/nltools)
 [![Build status](https://ci.appveyor.com/api/projects/status/w31hn6m0xwqbh8c1/branch/master?svg=true)](https://ci.appveyor.com/project/dukelsky/nltools/branch/master)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c1970dc5395945839afbae7c79b66a3a)](https://www.codacy.com/app/huskyproject/nltools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=huskyproject/nltools&amp;utm_campaign=Badge_Grade)
 
 Husky Nodelist Utilities Documentation
 ======================================
