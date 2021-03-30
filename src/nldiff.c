@@ -471,7 +471,6 @@ int main( int argc, char **argv )
   }
 
   /* Compare the CRC values */
-  crc16_finalize( &actualcrc );
   if( hascrc && actualcrc != crc )
   {
     fprintf( stderr, "New file does not pass CRC test.\n" );

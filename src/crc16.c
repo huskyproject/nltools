@@ -12,8 +12,6 @@
 #include "crc16.h"
 #include "ccitttab.h"
 
-#define unused(x) (x)
-
 void crc16_init( unsigned short *crcptr )
 {
   *crcptr = 0x0UL;
@@ -28,9 +26,4 @@ void crc16_process( unsigned short *crcptr, const unsigned char *buffer, size_t 
   {
     *crcptr = ( ( ( *crcptr ) << 8 ) ^ ccitt_table[( ( *crcptr ) >> 8 ) ^ ( *ptr )] ) & 0xFFFF;
   }
-}
-
-void crc16_finalize( unsigned short *crcptr )
-{
-  unused( crcptr );
 }
