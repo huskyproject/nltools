@@ -930,7 +930,7 @@ int main( int argc, char **argv )
 
   for( i = 1; i < argc; i++ )
   {
-    int j, plen;
+    int j;
     if( argv[i][0] == '-' )
     {
       int plen = sstrlen( argv[i] );

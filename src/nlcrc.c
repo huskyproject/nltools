@@ -111,8 +111,6 @@ unsigned short analyze_rest( FILE * f )
     crc16_process( &crc, buffer, l );
   }
 
-  crc16_finalize( &crc );
-
   return crc;
 }
 
@@ -136,7 +134,7 @@ int main( int argc, char **argv )
     int i;
     for( i = 1; i < argc; i++ )
     {
-      int j, plen;
+      int j;
       if( argv[i][0] == '-' )
       {
         int plen = sstrlen( argv[i] );
