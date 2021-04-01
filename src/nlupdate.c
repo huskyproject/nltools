@@ -25,6 +25,10 @@
 # include <unistd.h>
 #endif
 
+#ifdef HAS_DIRECT_H
+#include <direct.h>
+#endif
+
 #include <huskylib/dirlayer.h>
 
 #include <fidoconf/fidoconf.h>
