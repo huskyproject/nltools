@@ -1,0 +1,87 @@
+#
+#  Makefile for Open Watcom 2.0
+#
+#  Use Watcom Make:
+#
+#  wmake -f makefile.watcom NT=1
+#
+#    or
+#
+#  wmake -f makefile.watcom OS2=1
+#
+#  Set DEBUG=1 to enable debugging.
+#
+
+CC=wcl386
+WLIB=wlib -q -b
+
+#  wcl386 in Windows & OS/2 will not accept forward slashes as path
+#  separators with the -I parameter unless you put the path in
+#  double quotes:
+
+INC=-I"../h" -I"../../huskylib" -I"../../fidoconf" -I"../../smapi"
+
+SRC_DIR=../src
+
+CFLAGS=-zq -bt=nt -l=nt
+LIBS=../../huskylib/make/huskywcw.lib ../../fidoconf/make/fconfwcw.lib &
+ ../../smapi/make/smapiwcw.lib ../../areafix/make/afixwcw.lib
+
+!ifdef OS2
+CFLAGS=-zq -bt=os2v2 -l=os2v2
+LIBS=../../huskylib/make/huskywco.lib ../../fidoconf/make/fconfwco.lib &
+ ../../smapi/make/smapiwco.lib ../../areafix/make/afixwco.lib
+!endif
+
+!ifdef DEBUG
+CFLAGS+= -d2
+!endif
+
+BIN1=nldiff.exe
+SRC1=$(SRC_DIR)/nldiff.c &
+ $(SRC_DIR)/crc16.c
+
+BIN2=nlcrc.exe
+SRC2=$(SRC_DIR)/nlcrc.c &
+ $(SRC_DIR)/crc16.c
+
+BIN3=ulc.exe
+SRC3=$(SRC_DIR)/ulc.c &
+ $(SRC_DIR)/ulcsort.c &
+ $(SRC_DIR)/ulcomp.c &
+ $(SRC_DIR)/string.c &
+ $(SRC_DIR)/julian.c &
+ $(SRC_DIR)/nldate.c &
+ $(SRC_DIR)/nlfind.c &
+ $(SRC_DIR)/trail.c
+
+BIN4=nlupdate.exe
+SRC4=$(SRC_DIR)/nlupdate.c &
+ $(SRC_DIR)/string.c &
+ $(SRC_DIR)/nldate.c &
+ $(SRC_DIR)/julian.c &
+ $(SRC_DIR)/nlfind.c &
+ $(SRC_DIR)/trail.c
+
+BINS=$(BIN1) $(BIN2) $(BIN3) $(BIN4)
+
+{$(SRC_DIR)}.c.obj:
+	$(CC) $(CFLAGS) $(INC) -fo=$@ -c $<
+
+all: $(BINS)
+
+$(BIN1): $(SRC1)
+	$(CC) $(CFLAGS) $(INC) -Fe=$(BIN1) $(SRC1) $(LIBS)
+
+$(BIN2): $(SRC2)
+	$(CC) $(CFLAGS) $(INC) -Fe=$(BIN2) $(SRC2) $(LIBS)
+
+$(BIN3): $(SRC3)
+	$(CC) $(CFLAGS) $(INC) -Fe=$(BIN3) $(SRC3) $(LIBS)
+
+$(BIN4): $(SRC4)
+	$(CC) $(CFLAGS) $(INC) -Fe=$(BIN4) $(SRC4) $(LIBS)
+
+.IGNORE
+clean: .SYMBOLIC
+	rm $(BINS)
