@@ -465,7 +465,7 @@ static int try_full_update( s_fidoconfig * config, char *rawnl, char *fullbase,
 
 static int do_update( s_fidoconfig * config, int nl, char *rawnl, long today, char *tmpdir )
 {
-  long julian, i;
+  long julian, i, days;
   int ndnr;
   int checkdiff = 1;
   int j = 0;
@@ -480,7 +480,7 @@ static int do_update( s_fidoconfig * config, int nl, char *rawnl, long today, ch
   if( ( julian = parse_nodelist_date( rawnl ) ) == -1 )
     return 0;
 
-  if( today - julian < 7 )
+  if( (today - julian < 7) && (config->nodelists[nl].dailynodelist == 0) )
   {
     w_log( LL_INFO, "%s younger than 7 days, no update necessary", rawnl );
     return 1;
@@ -548,7 +548,14 @@ static int do_update( s_fidoconfig * config, int nl, char *rawnl, long today, ch
 
   /* search for diffs or full updates */
 
-  for( i = julian + 7; i <= today && rawnl; i += 7 )
+  /* check for dailylist */
+
+  if ( config->nodelists[nl].dailynodelist == 1 )
+	  days = 1;
+  else
+	  days = 7;
+
+  for( i = julian + days; i <= today && rawnl; i += days )
   {
     decode_julian_date( i, NULL, NULL, NULL, &ndnr );
     hit = 0;
