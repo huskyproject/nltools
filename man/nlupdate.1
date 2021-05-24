@@ -20,6 +20,9 @@ replacement files if you configure this, and just unpack them and copy
 them over the old nodelist. This is useful for othernets that do not have
 nodediff files. With only a few keywords, nlupd manages the whole
 process of updating your nodelist files for you.
+.B nlupd
+can also process
+daily nodelists files if you configure this with the Dailynodelist statement.
 .sp 1
 .B nlupd
 is a part of the Husky Project (nltools module) and it shares config file
@@ -58,6 +61,7 @@ uses following fidoconfig statements:
  FullUpdate
  Defaultzone
  Nodelistformat
+ Dailynodelist
 .RE
 See The Fidoconfig Manual for detailed description of these statements.
 .SS SAMPLE CONFIG
