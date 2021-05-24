@@ -150,7 +150,8 @@ the ^M at the line end, the CRC checks will fail.
    and applies it to the nodelist using nldiff. nlupdate can also find full
    replacement files if you configure this, and just unpack them and copy
    them over the old nodelist. This is useful for othernets that do not have
-   nodediff files.  - With only a few keywords, nlupdate manages the whole
+   nodediff files. nlupdate can also process daily nodelists full updates if
+   you configure this.  - With only a few keywords, nlupdate manages the whole
    process of updating your nodelist files for you.
 
 After you have set the configuration file up properly (see below), you just
@@ -285,6 +286,17 @@ existing fidoconfig file if you have one.
    othernets do not (regularly) distribute a nodediff file, but just hatch a
    new nodelist every few weeks.  In this case, you need the FullUpdate
    statement.
+```
+   Dailynodelist
+   ----------
+   Syntax:  Dailynodelist <On/Off>
+   Example: Dailynodelist On
+```
+   This statement tells to nlupdate to process a daily nodelist, you have
+   to set fullupdate and dailynodelist statements and not the diffupdate 
+   statement. With Dailynodelist set to "On", nlupdate does a fullupdate of 
+   the nodelist on a daily basis, instead to check if the new nodelist is 
+   7 days newer
 ```
    Defaultzone
    -----------
