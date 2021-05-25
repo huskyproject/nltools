@@ -292,11 +292,11 @@ existing fidoconfig file if you have one.
    Syntax:  Dailynodelist <On/Off>
    Example: Dailynodelist On
 ```
-   This statement tells to nlupdate to process a daily nodelist, you have
-   to set fullupdate and dailynodelist statements and not the diffupdate 
-   statement. With Dailynodelist set to "On", nlupdate does a fullupdate of 
-   the nodelist on a daily basis, instead to check if the new nodelist is 
-   7 days newer
+   This statement tells nlupdate to process a daily nodelist. You have
+   to set "FullUpdate" and "Dailynodelist" statements and not the "DiffUpdate"
+   statement. With "Dailynodelist" set to "On", nlupdate does a full update of
+   the nodelist on a daily basis, instead of checking if the new nodelist is 
+   7 days newer.
 ```
    Defaultzone
    -----------
