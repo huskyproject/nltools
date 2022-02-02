@@ -921,7 +921,7 @@ void usage()
 {
   printf(
       "USAGE:\n"
-      "\tnlupdate [-h] [-v] [-q] [-c config]\n"
+      "\tnlupd [-h] [-v] [-q] [-c config]\n"
       "where:\n"
       "\t-h\t - print this help and exit;\n"
       "\t-v\t - print version information and exit;\n"
