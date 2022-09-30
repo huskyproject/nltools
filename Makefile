@@ -1,91 +1,151 @@
-# $Id$
-# Makefile for nltools with Husky build enviroment
-# Use GNU version of 'make' program
+# nltools/Makefile
+#
+# This file is part of nltools, part of the Husky fidonet software project
+# Use with GNU make v.3.82 or later
+# Requires: husky enviroment
+#
 
-ifeq ($(DEBIAN), 1)
-# Every Debian-Source-Paket has one included.
-include /usr/share/husky/huskymak.cfg
+nltools_LIBS := $(fidoconf_TARGET_BLD) \
+		$(smapi_TARGET_BLD) $(huskylib_TARGET_BLD)
+
+nltools_CDEFS := $(CDEFS) \
+			-I$(fidoconf_ROOTDIR) \
+			-I$(smapi_ROOTDIR) \
+			-I$(huskylib_ROOTDIR) \
+			-I$(nltools_ROOTDIR)$(nltools_H_DIR)
+
+ifneq ($(USE_HPTZIP), 0)
+    ifeq ($(DYNLIBS), 1)
+	nltools_LIBZ = -lz
+    else
+	nltools_LIBZ = -Xlinker -l:libz.a
+    endif
+    nltools_LIBS += $(hptzip_TARGET_BLD)
+    nltools_CFLAGS += -DUSE_HPTZIP
+    nltools_CDEFS  += -I$(hptzip_ROOTDIR)
+endif
+
+nltools_TARGET	   = nlupd$(_EXE) ulc$(_EXE) nlcrc$(_EXE) nldiff$(_EXE)
+nltools_TARGET_OBJ = $(addprefix $(nltools_OBJDIR), $(nltools_TARGET))
+nltools_TARGET_BLD = $(addprefix $(nltools_BUILDDIR), $(nltools_TARGET))
+nltools_TARGET_DST = $(addprefix $(BINDIR_DST), $(nltools_TARGET))
+
+nldiff_OBJS = $(nltools_OBJDIR)nldiff$(_OBJ) $(nltools_OBJDIR)crc16$(_OBJ)
+
+nlcrc_OBJS  = $(nltools_OBJDIR)crc16$(_OBJ) $(nltools_OBJDIR)nlcrc$(_OBJ)
+
+ulc_OBJS    = $(nltools_OBJDIR)ulcsort$(_OBJ) $(nltools_OBJDIR)trail$(_OBJ) \
+	      $(nltools_OBJDIR)ulcomp$(_OBJ) $(nltools_OBJDIR)ulc$(_OBJ) \
+	      $(nltools_OBJDIR)string$(_OBJ) $(nltools_OBJDIR)nldate$(_OBJ) \
+	      $(nltools_OBJDIR)julian$(_OBJ) $(nltools_OBJDIR)nlfind$(_OBJ)
+
+nlupd_OBJS  = $(nltools_OBJDIR)nlupdate$(_OBJ) $(nltools_OBJDIR)trail$(_OBJ) \
+	      $(nltools_OBJDIR)string$(_OBJ) $(nltools_OBJDIR)nldate$(_OBJ) \
+	      $(nltools_OBJDIR)julian$(_OBJ) $(nltools_OBJDIR)nlfind$(_OBJ)
+
+
+ifdef MAN1DIR
+    nltools_MAN1PAGES := nlcrc.1 nldiff.1 nlupdate.1 ulc.1
+    nltools_MAN1BLD := $(foreach man,$(nltools_MAN1PAGES),$(nltools_BUILDDIR)$(man).gz)
+    nltools_MAN1DST := $(foreach man,$(nltools_MAN1PAGES),$(DESTDIR)$(MAN1DIR)$(DIRSEP)$(man).gz)
+endif
+
+
+.PHONY: nltools_build nltools_install nltools_uninstall nltools_clean nltools_distclean \
+	nltools_depend nltools_rmdir_DEP nltools_rm_DEPS \
+	nltools_clean_OBJ nltools_main_distclean
+
+nltools_build: $(nltools_TARGET_BLD) $(nltools_MAN1BLD)
+
+ifneq ($(MAKECMDGOALS), depend)
+ ifneq ($(MAKECMDGOALS), distclean)
+  ifneq ($(MAKECMDGOALS), uninstall)
+   include $(nltools_DEPS)
+  endif
+ endif
+endif
+
+
+# Build application
+$(nltools_BUILDDIR)nlcrc$(_EXE): $(nlcrc_OBJS) $(nltools_LIBS) | do_not_run_make_as_root
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $^ $(nltools_LIBZ)
+
+$(nltools_BUILDDIR)nldiff$(_EXE): $(nldiff_OBJS) $(nltools_LIBS) | do_not_run_make_as_root
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $^ $(nltools_LIBZ)
+
+$(nltools_BUILDDIR)ulc$(_EXE): $(ulc_OBJS) $(nltools_LIBS) | do_not_run_make_as_root
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $^ $(nltools_LIBZ)
+
+$(nltools_BUILDDIR)nlupd$(_EXE): $(nlupd_OBJS) $(nltools_LIBS) | do_not_run_make_as_root
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $^ $(nltools_LIBZ)
+
+# Compile .c files
+$(nltools_ALL_OBJS): $(nltools_OBJDIR)%$(_OBJ): $(nltools_SRCDIR)%.c | $(nltools_OBJDIR)
+	$(CC) $(nltools_CFLAGS) $(nltools_CDEFS) -o $(nltools_OBJDIR)$*$(_OBJ) $(nltools_SRCDIR)$*.c
+
+$(nltools_OBJDIR): | $(nltools_BUILDDIR) do_not_run_make_as_root
+	[ -d $@ ] || $(MKDIR) $(MKDIROPT) $@
+
+
+# Build man pages
+ifdef MAN1DIR
+    $(nltools_MAN1BLD): $(nltools_BUILDDIR)%.gz: $(nltools_MANDIR)% | do_not_run_make_as_root
+	gzip -c $(nltools_MANDIR)$* > $(nltools_BUILDDIR)$*.gz
 else
-include ../huskymak.cfg
+    $(nltools_MAN1BLD): ;
 endif
 
-.PHONY: default
 
-all: default
-
-default: nldiff$(_EXE) nlcrc$(_EXE) ulc$(_EXE) nlupd$(_EXE)
-
-ifeq ($(DEBUG), 1)
-  CFLAGS= -I$(INCDIR) -Ih $(DEBCFLAGS)
-  LFLAGS=$(DEBLFLAGS)
+# Install
+ifneq ($(MAKECMDGOALS), install)
+    nltools_install: ;
 else
-  CFLAGS= -I$(INCDIR) -Ih $(OPTCFLAGS)
-  LFLAGS=$(OPTLFLAGS)
+    nltools_install: $(nltools_TARGET_DST) nltools_install_man ;
 endif
-ifeq ($(SHORTNAME), 1)
-  LIBS=-L$(LIBDIR) -lfidoconf -lsmapi -lhusky
+
+$(nltools_TARGET_DST): $(nltools_TARGET_BLD) | $(DESTDIR)$(BINDIR)
+	$(INSTALL) $(IBOPT) $< $(DESTDIR)$(BINDIR); \
+	$(TOUCH) "$@"
+
+ifndef MAN1DIR
+    nltools_install_man: ;
 else
-  LIBS=-L$(LIBDIR) -lfidoconfig -lsmapi -lhusky
+    nltools_install_man: $(nltools_MAN1DST)
+
+    $(nltools_MAN1DST): $(DESTDIR)$(MAN1DIR)$(DIRSEP)%: $(nltools_BUILDDIR)% | \
+	$(DESTDIR)$(MAN1DIR)
+	$(INSTALL) $(IMOPT) $(nltools_BUILDDIR)$* $(DESTDIR)$(MAN1DIR); \
+	$(TOUCH) "$(DESTDIR)$(MAN1DIR)$(DIRSEP)$*"
 endif
 
-ifeq ($(USE_HPTZIP), 1)
-  LIBS+= -lhptzip -lz
-  CFLAGS += -DUSE_HPTZIP
+
+# Clean
+nltools_clean: nltools_clean_OBJ
+	-[ -d "$(nltools_OBJDIR)" ] && $(RMDIR) $(nltools_OBJDIR) || true
+
+nltools_clean_OBJ:
+	-$(RM) $(RMOPT) $(nltools_OBJDIR)*
+
+# Distclean
+nltools_distclean: nltools_main_distclean nltools_rmdir_DEP
+	-[ -d "$(nltools_BUILDDIR)" ] && $(RMDIR) $(nltools_BUILDDIR) || true
+
+nltools_rmdir_DEP: nltools_rm_DEPS
+	-[ -d "$(nltools_DEPDIR)" ] && $(RMDIR) $(nltools_DEPDIR) || true
+
+nltools_rm_DEPS:
+	-$(RM) $(RMOPT) $(nltools_DEPDIR)*
+
+nltools_main_distclean: nltools_clean
+	-$(RM) $(RMOPT) $(nltools_TARGET_BLD)
+ifdef MAN1DIR
+	-$(RM) $(RMOPT) $(nltools_MAN1BLD)
 endif
 
-CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 
-%$(_OBJ): src$(DIRSEP)%.c
-	$(CC) $(CFLAGS) $(CDEFS) -c $<
-
-nldiff$(_EXE): nldiff$(_OBJ) crc16$(_OBJ)
-	$(CC) $(LFLAGS) -o nldiff$(_EXE) nldiff$(_OBJ) crc16$(_OBJ) \
-              $(LIBS)
-
-nlcrc$(_EXE): crc16$(_OBJ) nlcrc$(_OBJ)
-	$(CC) $(LFLAGS) -o nlcrc$(_EXE) crc16$(_OBJ) nlcrc$(_OBJ) \
-              $(LIBS)
-
-ulc$(_EXE): ulcsort$(_OBJ) ulcomp$(_OBJ) ulc$(_OBJ) string$(_OBJ) \
-     nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ)
-	$(CC) $(LFLAGS) -o ulc$(_EXE) ulcsort$(_OBJ) ulcomp$(_OBJ) ulc$(_OBJ) \
-          string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ) \
-         $(LIBS)
-
-nlupd$(_EXE): nlupdate$(_OBJ) string$(_OBJ) nldate$(_OBJ) julian$(_OBJ) \
-          nlfind$(_OBJ)
-	$(CC) $(LFLAGS) -o nlupd$(_EXE) nlupdate$(_OBJ) string$(_OBJ) \
-          nldate$(_OBJ) julian$(_OBJ) nlfind$(_OBJ) $(LIBS)
-
-clean:
-	-$(RM) $(RMOPT) crc16$(_OBJ)
-	-$(RM) $(RMOPT) nlcrc$(_OBJ)
-	-$(RM) $(RMOPT) nldiff$(_OBJ)
-	-$(RM) $(RMOPT) ulc$(_OBJ)
-	-$(RM) $(RMOPT) ulcomp$(_OBJ)
-	-$(RM) $(RMOPT) ulcsort$(_OBJ)
-	-$(RM) $(RMOPT) julian$(_OBJ)
-	-$(RM) $(RMOPT) nlfind$(_OBJ)
-	-$(RM) $(RMOPT) nldate$(_OBJ)
-	-$(RM) $(RMOPT) nlupdate$(_OBJ)
-	-$(RM) $(RMOPT) string$(_OBJ)
-	-$(RM) $(RMOPT) patmat$(_OBJ)
-
-distclean: clean
-	-$(RM) $(RMOPT) nlcrc$(_EXE)
-	-$(RM) $(RMOPT) nldiff$(_EXE)
-	-$(RM) $(RMOPT) ulc$(_EXE)
-	-$(RM) $(RMOPT) nlupd$(_EXE)
-
-install: ulc$(_EXE) nldiff$(_EXE) nlcrc$(_EXE) nlupd$(_EXE)
-	-$(MKDIR) $(MKDIROPT) $(DESTDIR)$(BINDIR)
-	$(INSTALL) $(IBOPT) ulc$(_EXE) $(DESTDIR)$(BINDIR)
-	$(INSTALL) $(IBOPT) nldiff$(_EXE) $(DESTDIR)$(BINDIR)
-	$(INSTALL) $(IBOPT) nlcrc$(_EXE) $(DESTDIR)$(BINDIR)
-	$(INSTALL) $(IBOPT) nlupd$(_EXE) $(DESTDIR)$(BINDIR)
-
-uninstall:
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)ulc$(_EXE)
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nldiff$(_EXE)
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlcrc$(_EXE)
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)nlupd$(_EXE)
+# Uninstall
+nltools_uninstall:
+	-$(RM) $(RMOPT) $(nltools_TARGET_DST)
+ifdef MAN1DIR
+	-$(RM) $(RMOPT) $(nltools_MAN1DST)
+endif
