@@ -2,30 +2,30 @@
 #
 # This file is part of nltools, part of the Husky fidonet software project
 # Use with GNU make v.3.82 or later
-# Requires: husky enviroment
+# Requires: husky environment
 #
 
 nltools_LIBS := $(fidoconf_TARGET_BLD) \
-		$(smapi_TARGET_BLD) $(huskylib_TARGET_BLD)
+                $(smapi_TARGET_BLD) $(huskylib_TARGET_BLD)
 
 nltools_CDEFS := $(CDEFS) \
-			-I$(fidoconf_ROOTDIR) \
-			-I$(smapi_ROOTDIR) \
-			-I$(huskylib_ROOTDIR) \
-			-I$(nltools_ROOTDIR)$(nltools_H_DIR)
+                 -I$(fidoconf_ROOTDIR) \
+                 -I$(smapi_ROOTDIR) \
+                 -I$(huskylib_ROOTDIR) \
+                 -I$(nltools_ROOTDIR)$(nltools_H_DIR)
 
 ifneq ($(USE_HPTZIP), 0)
     ifeq ($(DYNLIBS), 1)
-	nltools_LIBZ = -lz
+        nltools_LIBZ = -lz
     else
-	nltools_LIBZ = -Xlinker -l:libz.a
+        nltools_LIBZ = -Xlinker -l:libz.a
     endif
     nltools_LIBS += $(hptzip_TARGET_BLD)
     nltools_CFLAGS += -DUSE_HPTZIP
     nltools_CDEFS  += -I$(hptzip_ROOTDIR)
 endif
 
-nltools_TARGET	   = nlupd$(_EXE) ulc$(_EXE) nlcrc$(_EXE) nldiff$(_EXE)
+nltools_TARGET     = nlupd$(_EXE) ulc$(_EXE) nlcrc$(_EXE) nldiff$(_EXE)
 nltools_TARGET_OBJ = $(addprefix $(nltools_OBJDIR), $(nltools_TARGET))
 nltools_TARGET_BLD = $(addprefix $(nltools_BUILDDIR), $(nltools_TARGET))
 nltools_TARGET_DST = $(addprefix $(BINDIR_DST), $(nltools_TARGET))
@@ -35,13 +35,13 @@ nldiff_OBJS = $(nltools_OBJDIR)nldiff$(_OBJ) $(nltools_OBJDIR)crc16$(_OBJ)
 nlcrc_OBJS  = $(nltools_OBJDIR)crc16$(_OBJ) $(nltools_OBJDIR)nlcrc$(_OBJ)
 
 ulc_OBJS    = $(nltools_OBJDIR)ulcsort$(_OBJ) $(nltools_OBJDIR)trail$(_OBJ) \
-	      $(nltools_OBJDIR)ulcomp$(_OBJ) $(nltools_OBJDIR)ulc$(_OBJ) \
-	      $(nltools_OBJDIR)string$(_OBJ) $(nltools_OBJDIR)nldate$(_OBJ) \
-	      $(nltools_OBJDIR)julian$(_OBJ) $(nltools_OBJDIR)nlfind$(_OBJ)
+              $(nltools_OBJDIR)ulcomp$(_OBJ) $(nltools_OBJDIR)ulc$(_OBJ) \
+              $(nltools_OBJDIR)string$(_OBJ) $(nltools_OBJDIR)nldate$(_OBJ) \
+              $(nltools_OBJDIR)julian$(_OBJ) $(nltools_OBJDIR)nlfind$(_OBJ)
 
 nlupd_OBJS  = $(nltools_OBJDIR)nlupdate$(_OBJ) $(nltools_OBJDIR)trail$(_OBJ) \
-	      $(nltools_OBJDIR)string$(_OBJ) $(nltools_OBJDIR)nldate$(_OBJ) \
-	      $(nltools_OBJDIR)julian$(_OBJ) $(nltools_OBJDIR)nlfind$(_OBJ)
+              $(nltools_OBJDIR)string$(_OBJ) $(nltools_OBJDIR)nldate$(_OBJ) \
+              $(nltools_OBJDIR)julian$(_OBJ) $(nltools_OBJDIR)nlfind$(_OBJ)
 
 
 ifdef MAN1DIR
@@ -52,8 +52,8 @@ endif
 
 
 .PHONY: nltools_build nltools_install nltools_uninstall nltools_clean nltools_distclean \
-	nltools_depend nltools_rmdir_DEP nltools_rm_DEPS \
-	nltools_clean_OBJ nltools_main_distclean
+        nltools_depend nltools_rmdir_DEP nltools_rm_DEPS \
+        nltools_clean_OBJ nltools_main_distclean
 
 nltools_build: $(nltools_TARGET_BLD) $(nltools_MAN1BLD)
 
@@ -103,9 +103,10 @@ else
     nltools_install: $(nltools_TARGET_DST) nltools_install_man ;
 endif
 
-$(nltools_TARGET_DST): $(nltools_TARGET_BLD) | $(DESTDIR)$(BINDIR)
-	$(INSTALL) $(IBOPT) $< $(DESTDIR)$(BINDIR); \
-	$(TOUCH) "$@"
+$(nltools_TARGET_DST): $(BINDIR_DST)% : $(nltools_BUILDDIR)% | \
+    $(DESTDIR)$(BINDIR)
+	$(INSTALL) $(IBOPT) $(nltools_BUILDDIR)$* $(DESTDIR)$(BINDIR); \
+	$(TOUCH) "$(BINDIR_DST)$*"
 
 ifndef MAN1DIR
     nltools_install_man: ;
