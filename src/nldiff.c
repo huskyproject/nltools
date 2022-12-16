@@ -334,7 +334,8 @@ int parse_args( int argc, char **argv, char **listname, char **diffname, int *pf
 
 void usage( void )
 {
-  versionStr = GenVersionStr( "nldiff", VER_MAJOR, VER_MINOR, VER_PATCH, VER_BRANCH, cvs_date );
+  versionStr = GenVersionStr( "nldiff", nltools_VER_MAJOR, nltools_VER_MINOR,
+                              nltools_VER_PATCH, nltools_VER_BRANCH, cvs_date );
   fprintf( stderr, "%s\n", versionStr );
   fprintf( stderr, "Usage:\n"
            "   nldiff [-n] [-d] LISTNAME.DNR DIFFNAME.DNR\n\n"

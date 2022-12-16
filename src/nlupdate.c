@@ -937,7 +937,8 @@ int main( int argc, char **argv )
   int l = 0, i, flag_quiet = 0;
   char *versionStr, *configfile = NULL;
 
-  versionStr = GenVersionStr( "nlupdate", VER_MAJOR, VER_MINOR, VER_PATCH, VER_BRANCH, cvs_date );
+  versionStr = GenVersionStr( "nlupdate", nltools_VER_MAJOR, nltools_VER_MINOR,
+                              nltools_VER_PATCH, nltools_VER_BRANCH, cvs_date );
 
   for( i = 1; i < argc; i++ )
   {

@@ -128,7 +128,8 @@ int main( int argc, char **argv )
   int flag_quiet;
   char *nlname = NULL;
 
-  versionStr = GenVersionStr( PROGRAM, VER_MAJOR, VER_MINOR, VER_PATCH, VER_BRANCH, cvs_date );
+  versionStr = GenVersionStr( PROGRAM, nltools_VER_MAJOR, nltools_VER_MINOR,
+                              nltools_VER_PATCH, nltools_VER_BRANCH, cvs_date );
 
   {
     int i;
