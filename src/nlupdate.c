@@ -386,7 +386,7 @@ static int try_full_update( s_fidoconfig * config, char *rawnl, char *fullbase,
 
   ufn = get_uncompressed_filename( config, fullbase, fulllist->matches[j], tmpdir, ndnr, &reason );
 
-  w_log( LL_FILENAME, "Uncomressed filename: %s", ufn );
+  w_log( LL_FILENAME, "Uncompressed filename: %s", ufn );
 
   if( !reason )
     fulllist->julians[j] = -1;
