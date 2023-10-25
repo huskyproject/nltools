@@ -46,8 +46,8 @@ nlupd_OBJS  = $(nltools_OBJDIR)nlupdate$(_OBJ) $(nltools_OBJDIR)trail$(_OBJ) \
 
 ifdef MAN1DIR
     nltools_MAN1PAGES := nlcrc.1 nldiff.1 nlupdate.1 ulc.1
-    nltools_MAN1BLD := $(foreach man,$(nltools_MAN1PAGES),$(nltools_BUILDDIR)$(man).gz)
-    nltools_MAN1DST := $(foreach man,$(nltools_MAN1PAGES),$(DESTDIR)$(MAN1DIR)$(DIRSEP)$(man).gz)
+    nltools_MAN1BLD := $(foreach man,$(nltools_MAN1PAGES),$(nltools_BUILDDIR)$(man)$(_COMPR))
+    nltools_MAN1DST := $(foreach man,$(nltools_MAN1PAGES),$(DESTDIR)$(MAN1DIR)$(DIRSEP)$(man)$(_COMPR))
 endif
 
 
@@ -89,8 +89,12 @@ $(nltools_OBJDIR): | $(nltools_BUILDDIR) do_not_run_make_as_root
 
 # Build man pages
 ifdef MAN1DIR
-    $(nltools_MAN1BLD): $(nltools_BUILDDIR)%.gz: $(nltools_MANDIR)% | do_not_run_make_as_root
-	gzip -c $(nltools_MANDIR)$* > $(nltools_BUILDDIR)$*.gz
+    $(nltools_MAN1BLD): $(nltools_BUILDDIR)%$(_COMPR): $(nltools_MANDIR)% | do_not_run_make_as_root
+    ifdef COMPRESS
+		$(COMPRESS) -c $(nltools_MANDIR)$* > $(nltools_BUILDDIR)$*$(_COMPR)
+    else
+		$(CP) $(CPOPT) $(nltools_MANDIR)$* $(nltools_BUILDDIR)$*
+    endif
 else
     $(nltools_MAN1BLD): ;
 endif
