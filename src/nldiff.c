@@ -36,7 +36,7 @@ enum
 
 int analyze_first_line( FILE * f, unsigned short *crcnum, int *has_crc, unsigned short *daynum )
 {
-  char c = 0;
+  char c = 0, pc = 0;
   int state = SCANDASH;
   unsigned short crc, day, hcrc, result = 1;
   crc = day = hcrc = 0;
@@ -84,7 +84,7 @@ int analyze_first_line( FILE * f, unsigned short *crcnum, int *has_crc, unsigned
       default:;
       }
     }
-    else if( c == '-' )
+    else if( pc == '-' && c == '-' )
     {
       switch ( state )
       {
@@ -94,7 +94,7 @@ int analyze_first_line( FILE * f, unsigned short *crcnum, int *has_crc, unsigned
       default:;
       }
     }
-    else if( c == ':' )
+    else if( pc == ' ' && c == ':' )
     {
       switch ( state )
       {
@@ -117,6 +117,8 @@ int analyze_first_line( FILE * f, unsigned short *crcnum, int *has_crc, unsigned
       default:;
       }
     }
+
+    pc = c;
   }
 
   *crcnum = crc;
