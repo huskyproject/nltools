@@ -125,7 +125,7 @@ int main( int argc, char **argv )
 {
   FILE *f;
   unsigned short should, is;
-  int flag_quiet;
+  int flag_quiet = 0;
   char *nlname = NULL;
 
   versionStr = GenVersionStr( PROGRAM, nltools_VER_MAJOR, nltools_VER_MINOR,
@@ -167,8 +167,10 @@ int main( int argc, char **argv )
       }
     }
     if( !nlname )
+    {
       printf( "Illegal call: nodelist filename is needed!\n" );
-    return illegal_parameter;
+      return illegal_parameter;
+    }
   }
 
   if( !flag_quiet )
@@ -176,7 +178,7 @@ int main( int argc, char **argv )
 
   if( ( f = fopen( nlname, "rb" ) ) == NULL )
   {
-    fprintf( stderr, "Cannot open %s.\n", argv[1] );
+    fprintf( stderr, "Cannot open %s.\n", nlname );
     return error_nodelist;
   }
 
@@ -188,7 +190,7 @@ int main( int argc, char **argv )
   if( should != is )
   {
     fprintf( stderr, "Nodelist %s fails CRC check (%u != %u)\n",
-             argv[1], ( unsigned ) should, ( unsigned ) is );
+             nlname, ( unsigned ) should, ( unsigned ) is );
     return error_CRC;
   }
 
